@@ -22,7 +22,7 @@ export default {
 		require("@tailwindcss/typography"),
 		plugin(({ addComponents }) => {
 			addComponents({
-				".cactus-link": {
+				".link": {
 					"&:hover": {
 						"@apply decoration-link decoration-2": {},
 					},
@@ -58,7 +58,7 @@ export default {
 				DEFAULT: {
 					css: {
 						a: {
-							"@apply cactus-link": "",
+							"@apply link": "",
 						},
 						blockquote: {
 							borderLeftWidth: "0",
@@ -182,7 +182,7 @@ export default {
 						},
 					},
 				},
-				cactus: {
+				joel: {
 					css: {
 						"--tw-prose-body": theme("colors.textColor / 1"),
 						"--tw-prose-bold": theme("colors.textColor / 1"),
