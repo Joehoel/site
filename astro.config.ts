@@ -9,7 +9,6 @@ import webmanifest from "astro-webmanifest";
 import { defineConfig, envField } from "astro/config";
 import { expressiveCodeOptions } from "./src/site.config";
 import { siteConfig } from "./src/site.config";
-import tsconfigPaths from 'vite-tsconfig-paths'
 
 // Remark plugins
 import remarkDirective from "remark-directive"; /* Handle ::: directives as nodes */
@@ -100,7 +99,7 @@ export default defineConfig({
 		optimizeDeps: {
 			exclude: ["@resvg/resvg-js"],
 		},
-		plugins: [rawFonts([".ttf", ".woff"]), tsconfigPaths()],
+		plugins: [rawFonts([".ttf", ".woff"])],
 	},
 	env: {
 		schema: {
