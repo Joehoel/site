@@ -10,7 +10,7 @@
 	function setTheme(newTheme) {
 		if (newTheme !== "light" && newTheme !== "dark") {
 			return console.warn(
-				`Invalid theme value '${newTheme}' received. Expected 'light' or 'dark'.`,
+				`Invalid theme value '${newTheme}' received. Expected 'light' or 'dark'.`
 			);
 		}
 
@@ -37,7 +37,6 @@
 	// View Transitions hook to restore theme
 	document.addEventListener("astro:after-swap", () => setTheme(getUserPref()));
 
-	// listen for theme-change custom event, fired in src/components/ThemeToggle.astro
 	document.addEventListener("theme-change", (e) => {
 		setTheme(e.detail.theme);
 	});

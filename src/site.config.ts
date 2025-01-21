@@ -2,9 +2,7 @@ import type { SiteConfig } from "@/types";
 import type { AstroExpressiveCodeOptions } from "astro-expressive-code";
 
 export const siteConfig: SiteConfig = {
-	// Used as both a meta property (src/components/BaseHead.astro L:31 + L:49) & the generated satori png (src/pages/og-image/[slug].png.ts)
 	author: "Joël Kuijper",
-	// Date.prototype.toLocaleDateString() parameters, found in src/utils/date.ts.
 	date: {
 		locale: "nl-NL",
 		options: {
@@ -13,13 +11,9 @@ export const siteConfig: SiteConfig = {
 			year: "numeric",
 		},
 	},
-	// Used as the default description meta property and webmanifest description
 	description: "Personal website of Joël Kuijper",
-	// HTML lang property, found in src/layouts/Base.astro L:18 & astro.config.ts L:48
 	lang: "nl-NL",
-	// Meta property, found in src/components/BaseHead.astro L:42
 	ogLocale: "nl_NL",
-	// Used to construct the meta title property found in src/components/BaseHead.astro L:11, and webmanifest name found in astro.config.ts L:42
 	title: "Joël",
 };
 
