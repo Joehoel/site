@@ -8,7 +8,7 @@ interface Props {
 }
 
 const {
-	content: { data },
+	content: { data, id },
 } = Astro.props;
 
 const dateTimeOptions: Intl.DateTimeFormatOptions = {
@@ -30,7 +30,7 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
 	)
 }
 {data.draft ? <span class="text-base text-red-500">(Draft)</span> : null}
-<h1 class="title">
+<h1 class="title" transition:name={`post-title-${id}`}>
 	{data.title}
 </h1>
 <div class="flex flex-wrap items-center gap-x-3 gap-y-2">

@@ -1,9 +1,10 @@
 ---
+import { ClientRouter } from "astro:transitions";
 import BaseHead from "@/components/base-head.astro";
-import SkipLink from "@/components/skip-link.astro";
-import ThemeProvider from "@/components/theme-provider.astro";
 import Footer from "@/components/layout/footer.astro";
 import Header from "@/components/layout/header.astro";
+import SkipLink from "@/components/skip-link.astro";
+import ThemeProvider from "@/components/theme-provider.astro";
 import { siteConfig } from "@/site.config";
 import type { SiteMeta } from "@/types";
 import Analytics from "@vercel/analytics/astro";
@@ -21,6 +22,7 @@ const {
 <html class="scroll-smooth" lang={siteConfig.lang}>
 	<head>
 		<BaseHead articleDate={articleDate} description={description} ogImage={ogImage} title={title} />
+		<ClientRouter />
 	</head>
 	<body
 		class="mx-auto flex min-h-screen max-w-3xl flex-col bg-bgColor px-4 pt-16 font-mono text-sm font-normal text-textColor antialiased sm:px-8"
@@ -36,4 +38,3 @@ const {
 		<SpeedInsights />
 	</body>
 </html>
-  
