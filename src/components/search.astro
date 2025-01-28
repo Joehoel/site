@@ -44,7 +44,7 @@ import "@pagefind/default-ui/css/ui.css";
 					</div>
 				) : (
 					<div class="search-container">
-						<div id="search" />
+						<div id="pagefind-search" />
 					</div>
 				)
 			}
@@ -117,7 +117,7 @@ import "@pagefind/default-ui/css/ui.css";
 				new PagefindUI({
 					baseUrl: import.meta.env.BASE_URL,
 					bundlePath: import.meta.env.BASE_URL.replace(/\/$/, "") + "/pagefind/",
-					element: "#search",
+					element: "#pagefind-search",
 					showImages: false,
 					showSubResults: true,
 				});
@@ -137,16 +137,16 @@ import "@pagefind/default-ui/css/ui.css";
 		--pagefind-ui-font: inherit;
 	}
 
-	#search .pagefind-ui__search-clear {
+	#pagefind-search .pagefind-ui__search-clear {
 		width: calc(60px * var(--pagefind-ui-scale));
 		padding: 0;
 		background-color: transparent;
 		overflow: hidden;
 	}
-	#search .pagefind-ui__search-clear:focus {
+	#pagefind-search .pagefind-ui__search-clear:focus {
 		outline: 1px solid theme("colors.accent-2");
 	}
-	#search .pagefind-ui__search-clear::before {
+	#pagefind-search .pagefind-ui__search-clear::before {
 		content: "";
 		-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' %3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M6 18L18 6M6 6l12 12'%3E%3C/path%3E%3C/svg%3E")
 			center / 60% no-repeat;
@@ -158,11 +158,11 @@ import "@pagefind/default-ui/css/ui.css";
 		height: 100%;
 	}
 
-	#search .pagefind-ui__result {
+	#pagefind-search .pagefind-ui__result {
 		border: 0;
 	}
 
-	#search .pagefind-ui__result-link {
+	#pagefind-search .pagefind-ui__result-link {
 		background-size: 100% 6px;
 		background-position: bottom;
 		background-repeat: repeat-x;
@@ -174,7 +174,7 @@ import "@pagefind/default-ui/css/ui.css";
 		);
 	}
 
-	#search .pagefind-ui__result-link:hover {
+	#pagefind-search .pagefind-ui__result-link:hover {
 		text-decoration: none;
 		background-image: linear-gradient(
 			transparent,
@@ -184,7 +184,7 @@ import "@pagefind/default-ui/css/ui.css";
 		);
 	}
 
-	#search mark {
+	#pagefind-search mark {
 		color: theme("colors.quote");
 		background-color: transparent;
 		font-weight: 600;
@@ -192,7 +192,7 @@ import "@pagefind/default-ui/css/ui.css";
 </style>
 
 <style>
-	#search {
+	#pagefind-search {
 		--pagefind-ui-primary: theme("colors.accent");
 		--pagefind-ui-text: theme("colors.textColor");
 		--pagefind-ui-background: theme("colors.bgColor");
