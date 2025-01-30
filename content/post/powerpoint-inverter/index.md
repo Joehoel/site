@@ -29,7 +29,7 @@ with open(input_path, "rb") as f:
     inverted_pptx = invert_presentation(f)
 ```
 
-This function takes the bytes and creates a `Presentation` object using[python-pptx](https://python-pptx.readthedocs.io/en/latest/). After that, it's very easy to loop over each slide and make modifications.
+This function takes the bytes and creates a `Presentation` object using [python-pptx](https://python-pptx.readthedocs.io/en/latest/). After that, it's very easy to loop over each slide and make modifications.
 
 ```python
 def invert_presentation(bytes_data):
