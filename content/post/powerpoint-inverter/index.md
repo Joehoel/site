@@ -16,9 +16,9 @@ I noticed that they were manually inverting these presentations from black-on-wh
 
 This process had to be repeated for hundreds of presentations.
 
-With my developer optimism, I thought I could automate it. And I did. And failed. But then succeeded.
+With my developer optimism, I thought I could automate it. And I did 🚀
 
-I came across a Python library called [python-pptx](), which allows for easy modification of existing PowerPoints.
+I came across a Python library called [python-pptx](https://python-pptx.readthedocs.io/en/latest/), which allows for easy modification of existing PowerPoints.
 
 Leaving all the CLI argument parsing for another time, here’s how I loaded the PowerPoint and processed it.
 
@@ -29,7 +29,7 @@ with open(input_path, "rb") as f:
     inverted_pptx = invert_presentation(f)
 ```
 
-This function takes the bytes and creates a `Presentation` object using `python-pptx`. After that, it's very easy to loop over each slide and make modifications.
+This function takes the bytes and creates a `Presentation` object using[python-pptx](https://python-pptx.readthedocs.io/en/latest/). After that, it's very easy to loop over each slide and make modifications.
 
 ```python
 def invert_presentation(bytes_data):
@@ -65,7 +65,7 @@ for shape in list(slide.shapes):
         process_image(shape, slide)
 ```
 
-Each image shape has access to its image data (blob), which we can read and process. For image inversion, I used the `Pillow` library, which is a popular library for handling image processing.
+Each image shape has access to its image data (blob), which we can read and process. For image inversion, I used the [Pillow](https://pillow.readthedocs.io/en/stable/) library, which is a popular library for handling image processing.
 
 ```python
 def process_image(shape, slide):
