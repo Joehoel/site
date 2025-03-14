@@ -46,6 +46,7 @@ export default {
 			},
 			fontFamily: {
 				// Add any custom fonts here
+				albert: ["Albert Sans Variable"],
 				sans: [...fontFamily.sans],
 				serif: [...fontFamily.serif],
 			},

@@ -9,6 +9,7 @@ import { siteConfig } from "@/site.config";
 import type { SiteMeta } from "@/types";
 import Analytics from "@vercel/analytics/astro";
 import SpeedInsights from "@vercel/speed-insights/astro";
+import "@fontsource-variable/albert-sans";
 
 interface Props {
 	meta: SiteMeta;
@@ -19,13 +20,13 @@ const {
 } = Astro.props;
 ---
 
-<html class="scroll-smooth" lang={siteConfig.lang}>
+<html class="scroll-smooth border-t-8 border-t-accent" lang={siteConfig.lang}>
 	<head>
 		<BaseHead articleDate={articleDate} description={description} ogImage={ogImage} title={title} />
 		<ClientRouter />
 	</head>
 	<body
-		class="mx-auto flex min-h-screen max-w-3xl flex-col bg-bgColor px-4 pt-16 font-mono text-sm font-normal text-textColor antialiased sm:px-8"
+		class="font-albert mx-auto flex min-h-screen max-w-3xl flex-col bg-bgColor px-4 pt-16 text-sm font-normal text-textColor antialiased sm:px-8"
 	>
 		<ThemeProvider />
 		<SkipLink />
