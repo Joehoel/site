@@ -12,15 +12,16 @@ const year = new Date().getFullYear();
 		&copy; {siteConfig.author}
 		{year}
 	</div>
-	<nav
-		aria-label="More on this site"
-		class="flex gap-x-2 sm:gap-x-0 sm:divide-x sm:divide-gray-500"
-	>
+	<nav aria-label="More on this site" class="flex gap-x-2 sm:gap-x-0">
 		{
-			menuLinks.map((link) => (
-				<a class="px-4 py-2 sm:py-0 sm:hover:text-textColor sm:hover:underline" href={link.path}>
-					{link.title}
-				</a>
+			menuLinks.map((link, index) => (
+				<>
+					{index > 0 && <span>×</span>}
+
+					<a class="px-4 py-2 sm:py-0 sm:hover:text-textColor sm:hover:underline" href={link.path}>
+						{link.title}
+					</a>
+				</>
 			))
 		}
 	</nav>

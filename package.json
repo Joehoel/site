@@ -4,7 +4,7 @@
 	"scripts": {
 		"dev": "astro dev",
 		"start": "astro dev",
-		"build": "astro build",
+		"build": "astro build --remote",
 		"postbuild": "pagefind --site dist",
 		"preview": "astro preview",
 		"lint": "biome lint .",
@@ -14,6 +14,7 @@
 		"check": "astro check"
 	},
 	"dependencies": {
+		"@astrojs/db": "^0.14.8",
 		"@astrojs/mdx": "4.2.0",
 		"@astrojs/rss": "4.0.11",
 		"@astrojs/sitemap": "3.2.1",
