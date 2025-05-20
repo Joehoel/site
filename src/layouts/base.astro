@@ -9,7 +9,6 @@ import { siteConfig } from "@/site.config";
 import type { SiteMeta } from "@/types";
 import Analytics from "@vercel/analytics/astro";
 import SpeedInsights from "@vercel/speed-insights/astro";
-import { Umami } from "astro-umami-analytics";
 import "@fontsource-variable/albert-sans";
 
 interface Props {
@@ -24,11 +23,14 @@ const {
 <html class="scroll-smooth border-t-8 border-t-accent" lang={siteConfig.lang}>
 	<head>
 		<BaseHead articleDate={articleDate} description={description} ogImage={ogImage} title={title} />
-    <script defer src="https://analytics.longux.xyz/script.js" data-website-id="f97a24ef-ad16-43c7-9598-9e961e4104a2"></script>
+		<script
+			defer
+			src="https://analytics.longux.xyz/script.js"
+			data-website-id="f97a24ef-ad16-43c7-9598-9e961e4104a2"></script>
 		<ClientRouter />
 	</head>
 	<body
-		class="font-albert mx-auto flex min-h-screen max-w-3xl flex-col bg-bgColor px-4 pt-16 font-normal text-textColor antialiased sm:px-8"
+		class="mx-auto flex min-h-screen max-w-3xl flex-col bg-bgColor px-4 pt-16 font-albert font-normal text-textColor antialiased sm:px-8"
 	>
 		<ThemeProvider />
 		<SkipLink />
