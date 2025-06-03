@@ -1,5 +1,9 @@
 ---
-import { menuLinks, siteConfig } from "@/site.config";
+import { siteConfig } from "@/site.config";
+
+import { ks } from "@/utils/keystatic";
+
+const navigation = await ks.singletons.navigation.read();
 
 const year = new Date().getFullYear();
 ---
@@ -14,12 +18,12 @@ const year = new Date().getFullYear();
 	</div>
 	<nav aria-label="More on this site" class="flex gap-x-2 sm:gap-x-0">
 		{
-			menuLinks.map((link, index) => (
+			navigation?.links.map((link, index) => (
 				<>
 					{index > 0 && <span>×</span>}
 
-					<a class="px-4 py-2 sm:py-0 sm:hover:text-textColor sm:hover:underline" href={link.path}>
-						{link.title}
+					<a class="px-4 py-2 sm:py-0 sm:hover:text-textColor sm:hover:underline" href={link.url}>
+						{link.label}
 					</a>
 				</>
 			))

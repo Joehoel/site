@@ -1,7 +1,9 @@
 ---
 import Search from "@/components/search.astro";
 import ThemeToggle from "@/components/theme-toggle.astro";
-import { menuLinks } from "@/site.config";
+import { ks } from "@/utils/keystatic";
+
+const navigation = await ks.singletons.navigation.read();
 ---
 
 <header
@@ -43,17 +45,17 @@ import { menuLinks } from "@/site.config";
 			id="navigation-menu"
 		>
 			{
-				menuLinks.map((link, index) => (
+				navigation?.links.map((link, index) => (
 					<>
 						{index > 0 && <span>×</span>}
 
 						<a
-							aria-current={Astro.url.pathname === link.path ? "page" : false}
+							aria-current={Astro.url.pathname === link.url ? "page" : false}
 							class="px-4 py-4 underline-offset-2 sm:py-0 sm:hover:underline"
 							data-astro-prefetch
-							href={link.path}
+							href={link.url}
 						>
-							{link.title}
+							{link.label}
 						</a>
 					</>
 				))

@@ -1,0 +1,9 @@
+links:
+  - label: Home
+    url: /
+  - label: Blog
+    url: /posts
+  - label: Notes
+    url: /notes
+  - label: Uses
+    url: /uses

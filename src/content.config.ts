@@ -9,6 +9,21 @@ const baseSchema = z.object({
 	title: z.string().max(60),
 });
 
+const page = defineCollection({
+	loader: glob({ base: "./content/page", pattern: "**/*.{md,mdx}" }),
+	schema: baseSchema.extend({
+		ogImage: z.string().optional(),
+		publishDate: z
+			.string()
+			.or(z.date())
+			.transform((val) => new Date(val)),
+		updatedDate: z
+			.string()
+			.optional()
+			.transform((str) => (str ? new Date(str) : undefined)),
+	}),
+});
+
 const post = defineCollection({
 	loader: glob({ base: "./content/post", pattern: "**/*.{md,mdx}" }),
 	schema: ({ image }) =>
@@ -20,7 +35,7 @@ const post = defineCollection({
 					src: image(),
 				})
 				.optional(),
-			draft: z.boolean().default(false),
+			draft: z.boolean().default(true),
 			ogImage: z.string().optional(),
 			tags: z.array(z.string()).default([]).transform(removeDupsAndLowerCase),
 			publishDate: z
@@ -45,4 +60,4 @@ const note = defineCollection({
 	}),
 });
 
-export const collections = { post, note };
+export const collections = { post, note, page };
