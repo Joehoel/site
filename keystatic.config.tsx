@@ -4,12 +4,16 @@ import { inline } from "@keystatic/core/content-components";
 import { parse } from "date-fns";
 
 export default config({
-	storage: {
-		kind: process.env.NODE_ENV === "production" ? "cloud" : "local",
-	},
-	cloud: {
-		project: "joehoel/site",
-	},
+	storage:
+		process.env.NODE_ENV === "production"
+			? {
+					kind: "github",
+					repo: {
+						owner: "joehoel",
+						name: "site",
+					},
+				}
+			: { kind: "local" },
 	locale: "en-US",
 	ui: {
 		brand: {
