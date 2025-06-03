@@ -1,5 +1,3 @@
-import RobotoMonoBold from "~/assets/roboto-mono-700.ttf";
-import RobotoMono from "~/assets/roboto-mono-regular.ttf";
 import { getAllPosts } from "@/data/post";
 import { siteConfig } from "@/site.config";
 import { getFormattedDate } from "@/utils/date";
@@ -7,6 +5,8 @@ import { Resvg } from "@resvg/resvg-js";
 import type { APIContext, InferGetStaticPropsType } from "astro";
 import satori, { type SatoriOptions } from "satori";
 import { html } from "satori-html";
+import RobotoMonoBold from "~/assets/roboto-mono-700.ttf";
+import RobotoMono from "~/assets/roboto-mono-regular.ttf";
 
 const ogOptions: SatoriOptions = {
 	// debug: true,
@@ -66,6 +66,7 @@ export async function GET(context: APIContext) {
 		month: "long",
 		weekday: "long",
 	});
+	// @ts-expect-error - satori is not typed correctly because we are using the astro react integration
 	const svg = await satori(markup(title, postDate), ogOptions);
 	const png = new Resvg(svg).render().asPng();
 	return new Response(png, {

@@ -14,10 +14,10 @@
 		"check": "astro check"
 	},
 	"dependencies": {
-		"@astrojs/db": "0.14.14",
-		"@astrojs/markdoc": "^0.14.2",
-		"@astrojs/mdx": "4.2.6",
-		"@astrojs/react": "^4.2.7",
+		"@astrojs/db": "0.15.0",
+		"@astrojs/markdoc": "0.15.0",
+		"@astrojs/mdx": "4.3.0",
+		"@astrojs/react": "4.3.0",
 		"@astrojs/rss": "4.0.11",
 		"@astrojs/sitemap": "3.4.0",
 		"@astrojs/tailwind": "6.0.2",
@@ -29,7 +29,7 @@
 		"@types/react-dom": "^19.1.5",
 		"@vercel/analytics": "^1.5.0",
 		"@vercel/speed-insights": "^1.2.0",
-		"astro": "5.7.13",
+		"astro": "5.8.1",
 		"astro-expressive-code": "^0.41.2",
 		"astro-icon": "^1.1.5",
 		"astro-robots-txt": "^1.0.0",
@@ -77,6 +77,11 @@
 	},
 	"packageManager": "pnpm@10.4.1",
 	"pnpm": {
-		"onlyBuiltDependencies": ["@biomejs/biome", "@vercel/speed-insights", "esbuild", "sharp"]
+		"onlyBuiltDependencies": [
+			"@biomejs/biome",
+			"@vercel/speed-insights",
+			"esbuild",
+			"sharp"
+		]
 	}
 }

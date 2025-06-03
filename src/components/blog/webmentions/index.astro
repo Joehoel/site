@@ -1,7 +1,7 @@
 ---
-import { getWebmentionsForUrl } from "@/utils/webmentions";
 import Comments from "@/components/blog/webmentions/comments.astro";
 import Likes from "@/components/blog/webmentions/likes.astro";
+import { getWebmentionsForUrl } from "@/utils/webmentions";
 
 const url = new URL(Astro.url.pathname, Astro.site);
 
