@@ -1,15 +1,15 @@
 ---
 title: Deploying Laravel on Railway
 draft: true
-description: >-
+description:
   Deploying a Laravel application on Railway with support for Inertia and
   Nightwatch
 tags:
   - deployment
   - laravel
 publishDate: 2025-06-22
-updatedDate: 2025-06-22
 ---
+
 Recently I have been busy with a side-project. I am building it in Laravel and was looking for a platform to deploy it on. I wanted it to be easy, cheap and reliable. I looked into self-hosting with Coolify, Laravel Forge and Cloud. But ultimately decided on Railway. I deployed some stuff on there before and I like the experience a lot and heard they made some improvements to reliability and speed of the deployments.&#x20;
 
 So I this is a guide for you on how to deploy your Laravel application on Railway. With some bonus info for adding Inertia, Pulse, Nightwatch and other Laravel services.
@@ -22,18 +22,16 @@ First you will need to create your project. Then you will see that there are mul
 
 Most application will require a database, so add that next. On railway we can 1-click install a template for MySQL, Postgress, MongoDB and Redis. I chose MySQL for my project, but you can pick any you like. Or link another external service like Neon (for Postgres) or Turso (for SQLite).
 
+```sh
+VITE_APP_NAME="${{APP_NAME}}"
 
+DB_HOST="${{MySQL.MYSQLHOST}}"
+DB_DATABASE="${{MySQL.MYSQL_DATABASE}}"
+DB_USERNAME="${{MySQL.MYSQLUSER}}"
+DB_PASSWORD="${{MySQL.MYSQLPASSWORD}}"
+DB_PORT="${{MySQL.MYSQLPORT}}"
 
-> ## Snippet for linking environment variables
->
-> ```env
-> VITE_APP_NAME="${{APP_NAME}}"
->
-> DB_HOST="${{MySQL.MYSQLHOST}}"
-> DB_DATABASE="${{MySQL.MYSQL_DATABASE}}"
-> DB_USERNAME="${{MySQL.MYSQLUSER}}"
-> DB_PASSWORD="${{MySQL.MYSQLPASSWORD}}"
-> DB_PORT="${{MySQL.MYSQLPORT}}"
->
-> APP_URL="https://${{RAILWAY_PUBLIC_DOMAIN}}"
-> ```
+APP_URL="https://${{RAILWAY_PUBLIC_DOMAIN}}"
+```
+
+> Snippet for linking environment variables
