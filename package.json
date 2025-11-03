@@ -14,7 +14,7 @@
 		"check": "astro check"
 	},
 	"dependencies": {
-		"@astrojs/db": "0.18.0",
+		"@astrojs/db": "0.18.2",
 		"@astrojs/markdoc": "0.15.8",
 		"@astrojs/mdx": "4.3.9",
 		"@astrojs/react": "4.4.0",
