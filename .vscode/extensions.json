@@ -1,4 +1,4 @@
 {
-	"recommendations": ["oxc.oxc-vscode", "vue.volar"],
-	"unwantedRecommendations": []
+  "recommendations": ["oxc.oxc-vscode", "vue.volar"],
+  "unwantedRecommendations": []
 }

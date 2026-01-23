@@ -1,39 +1,39 @@
 {
-	"name": "nuxt-app",
-	"private": true,
-	"type": "module",
-	"scripts": {
-		"build": "nuxt build",
-		"dev": "nuxt dev",
-		"generate": "nuxt generate",
-		"preview": "nuxt preview",
-		"postinstall": "nuxt prepare",
-		"lint": "oxlint .",
-		"lint:fix": "oxlint --fix .",
-		"format": "oxfmt .",
-		"format:check": "oxfmt --check .",
-		"fix": "bun run lint:fix && bun run format"
-	},
-	"dependencies": {
-		"@fontsource-variable/albert-sans": "^5.2.8",
-		"@nuxt/content": "3.11.0",
-		"@nuxt/image": "2.0.0",
-		"@nuxt/ui": "^4.4.0",
-		"@nuxtjs/color-mode": "4.0.0",
-		"@nuxtjs/sitemap": "7.5.2",
-		"@vercel/analytics": "^1.6.1",
-		"better-sqlite3": "^12.6.2",
-		"feed": "^5.2.0",
-		"nuxt": "^4.3.0",
-		"nuxt-studio": "^1.1.1",
-		"vue": "^3.5.27",
-		"vue-router": "^4.6.4"
-	},
-	"devDependencies": {
-		"oxfmt": "^0.26.0",
-		"oxlint": "1.40.0"
-	},
-	"volta": {
-		"node": "22.22.0"
-	}
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint --fix .",
+    "format": "oxfmt .",
+    "format:check": "oxfmt --check .",
+    "fix": "bun run lint:fix && bun run format"
+  },
+  "dependencies": {
+    "@fontsource-variable/albert-sans": "^5.2.8",
+    "@nuxt/content": "3.11.0",
+    "@nuxt/image": "2.0.0",
+    "@nuxt/ui": "^4.4.0",
+    "@nuxtjs/color-mode": "4.0.0",
+    "@nuxtjs/sitemap": "7.5.2",
+    "@vercel/analytics": "^1.6.1",
+    "better-sqlite3": "^12.6.2",
+    "feed": "^5.2.0",
+    "nuxt": "^4.3.0",
+    "nuxt-studio": "^1.1.1",
+    "vue": "^3.5.27",
+    "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "oxfmt": "^0.26.0",
+    "oxlint": "1.40.0"
+  },
+  "volta": {
+    "node": "22.22.0"
+  }
 }
