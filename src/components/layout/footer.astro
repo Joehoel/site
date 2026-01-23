@@ -1,9 +1,9 @@
 ---
 import { siteConfig } from "@/site.config";
 
-import { ks } from "@/utils/keystatic";
+import { reader } from "@/utils/keystatic";
 
-const navigation = await ks.singletons.navigation.read();
+const navigation = await reader.singletons.navigation.read();
 
 const year = new Date().getFullYear();
 ---

@@ -9,26 +9,26 @@ type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & {
 };
 
 const { as: Tag = "div", post, withDesc = false } = Astro.props;
-const { title, draft, description, publishDate } = post.data;
+const { title, draft, description, publishDate } = post;
 ---
 
 <FormattedDate
 	class="min-w-[120px] font-semibold text-gray-600 dark:text-gray-400"
-	date={publishDate}
+	date={new Date(publishDate)}
 />
 <Tag>
 	{
 		draft && (
-			<span transition:name={`post-draft-${post.id}`} class="text-red-500">
+			<span transition:name={`post-draft-${post.slug}`} class="text-red-500">
 				(Draft){" "}
 			</span>
 		)
 	}
 	<a
 		class="link"
-		transition:name={`post-title-${post.id}`}
+		transition:name={`post-title-${post.slug}`}
 		data-astro-prefetch
-		href={`/posts/${post.id}/`}
+		href={`/posts/${post.slug}/`}
 	>
 		{title}
 	</a>

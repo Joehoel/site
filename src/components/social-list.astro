@@ -1,9 +1,9 @@
 ---
 import { Icon } from "astro-icon/components";
 
-import { ks } from "@/utils/keystatic";
+import { reader } from "@/utils/keystatic";
 
-const socials = await ks.singletons.socials.read();
+const socials = await reader.singletons.socials.read();
 ---
 
 <div class="flex flex-wrap items-end gap-x-2">

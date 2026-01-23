@@ -1,28 +1,28 @@
 ---
-import { getCollection } from "astro:content";
-
 import Note from "@/components/note/note.astro";
+import { getAllNotes, getNote } from "@/data/post";
 import PageLayout from "@/layouts/base.astro";
-import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
+import type { GetStaticPaths } from "astro";
 
-// if you're using an adaptor in SSR mode, getStaticPaths wont work -> https://docs.astro.build/en/guides/routing/#modifying-the-slug-example-for-ssr
 export const getStaticPaths = (async () => {
-	const allNotes = await getCollection("note");
-	return allNotes.map((note) => ({
-		params: { slug: note.id },
-		props: { note },
+	const notes = await getAllNotes();
+	return notes.map((note) => ({
+		params: { slug: note.slug },
+		props: { slug: note.slug },
 	}));
 }) satisfies GetStaticPaths;
 
-export type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const { slug } = Astro.props;
+const note = await getNote(slug);
 
-const { note } = Astro.props;
+if (!note) {
+	return Astro.redirect("/404");
+}
 
 const meta = {
 	description:
-		note.data.description ||
-		`Read about my note posted on: ${note.data.publishDate.toLocaleDateString()}`,
-	title: note.data.title,
+		note.description || `Read about my note posted on: ${new Date(note.publishDate).toLocaleDateString()}`,
+	title: note.title,
 };
 ---
 

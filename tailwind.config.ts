@@ -49,6 +49,7 @@ export default {
 				albert: ["Albert Sans Variable"],
 				sans: [...fontFamily.sans],
 				serif: [...fontFamily.serif],
+				mono: ["DM Mono"],
 			},
 			transitionProperty: {
 				height: "height",

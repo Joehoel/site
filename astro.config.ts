@@ -1,6 +1,5 @@
 import fs from "node:fs";
 import db from "@astrojs/db";
-import mdx from "@astrojs/mdx";
 import node from "@astrojs/node";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
@@ -21,7 +20,6 @@ import { siteConfig } from "./src/site.config";
 import rehypeExternalLinks from "rehype-external-links";
 import rehypeUnwrapImages from "rehype-unwrap-images";
 
-import markdoc from "@astrojs/markdoc";
 import react from "@astrojs/react";
 
 import vercel from "@astrojs/vercel";
@@ -42,7 +40,6 @@ export default defineConfig({
 			nesting: true,
 		}),
 		sitemap(),
-		mdx(),
 		robotsTxt(),
 		webmanifest({
 			// See: https://github.com/alextim/astro-lib/blob/main/packages/astro-webmanifest/README.md
@@ -85,7 +82,6 @@ export default defineConfig({
 		}),
 		db(),
 		react(),
-		markdoc(),
 		keystatic(),
 	],
 

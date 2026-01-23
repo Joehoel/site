@@ -80,12 +80,12 @@ export async function GET(context: APIContext) {
 export async function getStaticPaths() {
 	const posts = await getAllPosts();
 	return posts
-		.filter((post) => !post.data.ogImage)
+		.filter((post) => !post.ogImage)
 		.map((post) => ({
-			params: { slug: post.id },
+			params: { slug: post.slug },
 			props: {
-				pubDate: post.data.updatedDate ?? post.data.publishDate,
-				title: post.data.title,
+				pubDate: post.updatedDate ?? post.publishDate,
+				title: post.title,
 			},
 		}));
 }

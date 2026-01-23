@@ -1,14 +1,14 @@
 ---
 import { Image } from "astro:assets";
 import FormattedDate from "@/components/formatted-date.astro";
-import type { Post } from "@/data/post";
+import type { PostWithContent } from "@/data/post";
 
 interface Props {
-	content: Post;
+	content: PostWithContent;
 }
 
 const { content: post } = Astro.props;
-const { coverImage, draft, title, publishDate, updatedDate, tags } = post.data;
+const { coverImage, draft, title, publishDate, updatedDate, tags } = post;
 
 const dateTimeOptions: Intl.DateTimeFormatOptions = {
 	month: "long",
@@ -32,25 +32,23 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
 }
 {
 	draft ? (
-		<span transition:name={`post-draft-${post.id}`} class="text-base text-red-500">
+		<span transition:name={`post-draft-${post.slug}`} class="text-base text-red-500">
 			(Draft)
 		</span>
 	) : null
 }
-<h1 class="title" transition:name={`post-title-${post.id}`}>
+<h1 class="title" transition:name={`post-title-${post.slug}`}>
 	{title}
 </h1>
 <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
 	<p class="font-semibold">
-		<FormattedDate date={publishDate} dateTimeOptions={dateTimeOptions} /> /{" "}
-		{/* @ts-ignore:next-line. TODO: add reading time to collection schema? */}
-		{post.data.readingTime}
+		<FormattedDate date={new Date(publishDate)} dateTimeOptions={dateTimeOptions} />
 	</p>
 	{
 		updatedDate && (
 			<span class="rounded-lg bg-quote/5 px-2 py-1 text-quote">
 				Updated:
-				<FormattedDate class="ms-1" date={updatedDate} dateTimeOptions={dateTimeOptions} />
+				<FormattedDate class="ms-1" date={new Date(updatedDate)} dateTimeOptions={dateTimeOptions} />
 			</span>
 		)
 	}
@@ -75,7 +73,7 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
 				<path d="M17.573 18.407l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-7.117 -7.116" />
 				<path d="M6 9h-.01" />
 			</svg>
-			{tags.map((tag, i) => (
+			{tags.map((tag: string, i: number) => (
 				<>
 					{/* prettier-ignore */}
 					<span class="contents">

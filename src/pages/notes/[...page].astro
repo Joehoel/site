@@ -1,21 +1,28 @@
 ---
-import { type CollectionEntry, getCollection } from "astro:content";
 import Note from "@/components/note/note.astro";
 import Pagination from "@/components/paginator.astro";
+import { getAllNotes, getNote, type Note as NoteType } from "@/data/post";
 import PageLayout from "@/layouts/base.astro";
-import { collectionDateSort } from "@/utils/date";
 import type { GetStaticPaths, Page } from "astro";
 import { Icon } from "astro-icon/components";
 
 export const getStaticPaths = (async ({ paginate }) => {
 	const MAX_NOTES_PER_PAGE = 10;
-	const allNotes = await getCollection("note");
-	return paginate(allNotes.sort(collectionDateSort), { pageSize: MAX_NOTES_PER_PAGE });
+	const allNotes = await getAllNotes();
+
+	// Get rendered content for all notes
+	const notesWithContent = await Promise.all(
+		allNotes.map(async (note) => {
+			const noteWithContent = await getNote(note.slug);
+			return noteWithContent!;
+		}),
+	);
+
+	return paginate(notesWithContent, { pageSize: MAX_NOTES_PER_PAGE });
 }) satisfies GetStaticPaths;
 
 interface Props {
-	page: Page<CollectionEntry<"note">>;
-	uniqueTags: string[];
+	page: Page<Awaited<ReturnType<typeof getNote>>>;
 }
 
 const { page } = Astro.props;
@@ -51,11 +58,13 @@ const paginationProps = {
 		</h1>
 		<ul class="mt-6 space-y-8 text-start">
 			{
-				page.data.map((note) => (
-					<li class="">
-						<Note note={note} as="h2" isPreview />
-					</li>
-				))
+				page.data.map((note) =>
+					note ? (
+						<li class="">
+							<Note note={note} as="h2" isPreview />
+						</li>
+					) : null,
+				)
 			}
 		</ul>
 		<Pagination {...paginationProps} />

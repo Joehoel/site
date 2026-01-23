@@ -1,0 +1,82 @@
+---
+import "@/styles/global.css";
+import { Icon } from "astro-icon/components";
+---
+
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+		<link rel="preconnect" href="https://fonts.bunny.net" />
+		<link
+			href="https://fonts.bunny.net/css?family=dm-mono:300,300i,400,400i,500,500i"
+			rel="stylesheet"
+		/>
+	</head>
+	<body class="text-md font-mono">
+		<header class="mx-auto flex max-w-5xl flex-row justify-between px-6 py-4">
+			<div>
+				<h1>Joël</h1>
+			</div>
+
+			<nav>
+				<a class="px-2 py-1 transition duration-100 hover:bg-orange-500 hover:text-white" href=""
+					>Blog</a
+				>
+				<span>/</span>
+				<a href="">Snippets</a>
+				<span>/</span>
+				<a href="">Search (CMD + K)</a>
+			</nav>
+		</header>
+
+		<main class="mx-auto flex max-w-5xl flex-col gap-4">
+			<div class="flex shrink-0 flex-col gap-3 border bg-gray-50 p-4">
+				<h2 class="text-xl font-semibold">Socials</h2>
+
+				<ul>
+					<li>
+						<a href="" class="flex flex-row gap-2 hover:underline">
+							<Icon
+								aria-hidden="true"
+								class="size-6 text-orange-500"
+								focusable="false"
+								name={"mdi:github"}
+							/>
+							<span>GitHub</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="flex shrink-0 flex-col gap-3 border bg-gray-50 p-4">
+				<div class="flex flex-row items-center gap-2">
+					<Icon
+						aria-hidden="true"
+						class="size-6 text-orange-500"
+						focusable="false"
+						name={"mdi:rss"}
+					/>
+
+					<h2 class="text-xl font-semibold">Latest Posts</h2>
+				</div>
+
+				<ul>
+					<li>
+						<a
+							href=""
+							class="flex flex-col gap-3 border p-4 transition duration-100 hover:border-orange-500 hover:bg-orange-100"
+						>
+							<div class="flex flex-row justify-between">
+								<h3>Deploying a Laravel app on Railway</h3>
+								<span class="text-xs text-gray-500">12/29/2024</span>
+							</div>
+							<p class="text-gray-700">
+								Dolor consectetur consectetur eu cillum magna incididunt nostrud id do.
+							</p>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</main>
+	</body>
+</html>

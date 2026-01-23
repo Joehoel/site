@@ -1,37 +1,46 @@
-import { type CollectionEntry, getCollection } from "astro:content";
+import {
+	type Note,
+	type Page,
+	type Post,
+	getNote,
+	getPage,
+	getPost,
+	reader,
+} from "@/utils/keystatic";
 
-export type Post = CollectionEntry<"post">;
-export type Page = CollectionEntry<"page">;
-export type Note = CollectionEntry<"note">;
+// Re-export types and single-item getters
+export type { Post, Page, Note };
+export type { PostWithContent, PageWithContent, NoteWithContent } from "@/utils/keystatic";
+export { getPost, getPage, getNote };
 
-/** filter out draft posts based on the environment */
+/** Get all posts, filtering out drafts in production */
 export async function getAllPosts(): Promise<Post[]> {
-	const posts = await getCollection("post");
+	const posts = await reader.collections.posts.all();
 
 	return posts
-		.filter((post) => (import.meta.env.PROD ? !post.data.draft : true))
-		.sort(
-			(a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime(),
-		);
+		.filter((p) => (import.meta.env.PROD ? !p.entry.draft : true))
+		.map((p) => ({ ...p.entry, slug: p.slug }))
+		.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
 }
 
+/** Get all pages */
 export async function getAllPages(): Promise<Page[]> {
-	return await getCollection("page");
+	const pages = await reader.collections.page.all();
+	return pages.map((p) => ({ ...p.entry, slug: p.slug }));
 }
 
+/** Get all notes, sorted by publish date */
 export async function getAllNotes(): Promise<Note[]> {
-	const notes = await getCollection("note");
-	return notes.sort(
-		(a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime(),
-	);
+	const notes = await reader.collections.notes.all();
+	return notes
+		.map((n) => ({ ...n.entry, slug: n.slug }))
+		.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
 }
 
-/** groups posts by year (based on publishDate), using the year as the key
- *  Note: This function doesn't filter draft posts, pass it the result of getAllPosts above to do so.
- */
+/** Groups posts by year using publishDate */
 export function groupPostsByYear(posts: Post[]) {
 	return posts.reduce<Record<string, Post[]>>((acc, post) => {
-		const publishDate = new Date(post.data.publishDate);
+		const publishDate = new Date(post.publishDate);
 		const year = publishDate.getFullYear();
 
 		if (!acc[year]) {
@@ -42,23 +51,17 @@ export function groupPostsByYear(posts: Post[]) {
 	}, {});
 }
 
-/** returns all tags created from posts (inc duplicate tags)
- *  Note: This function doesn't filter draft posts, pass it the result of getAllPosts above to do so.
- *  */
+/** Returns all tags from posts (including duplicates) */
 export function getAllTags(posts: Post[]) {
-	return posts.flatMap((post) => [...(post.data.tags ?? [])]);
+	return posts.flatMap((post) => [...(post.tags ?? [])]);
 }
 
-/** returns all unique tags created from posts
- *  Note: This function doesn't filter draft posts, pass it the result of getAllPosts above to do so.
- *  */
+/** Returns all unique tags from posts */
 export function getUniqueTags(posts: Post[]) {
 	return [...new Set(getAllTags(posts))];
 }
 
-/** returns a count of each unique tag - [[tagName, count], ...]
- *  Note: This function doesn't filter draft posts, pass it the result of getAllPosts above to do so.
- *  */
+/** Returns a count of each unique tag - [[tagName, count], ...] */
 export function getUniqueTagsWithCount(posts: Post[]): [string, number][] {
 	return [
 		...getAllTags(posts).reduce(

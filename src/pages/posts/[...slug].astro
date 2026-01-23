@@ -1,24 +1,25 @@
 ---
-import { render } from "astro:content";
-import { getAllPosts, type Post } from "@/data/post";
+import { MarkdocRenderer } from "@/components/markdoc-renderer";
+import { getAllPosts, getPost } from "@/data/post";
 import PostLayout from "@/layouts/blog-post.astro";
-import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
+import type { GetStaticPaths } from "astro";
 
-// if you're using an adaptor in SSR mode, getStaticPaths wont work -> https://docs.astro.build/en/guides/routing/#modifying-the-slug-example-for-ssr
 export const getStaticPaths = (async () => {
 	const posts = await getAllPosts();
 	return posts.map((post) => ({
-		params: { slug: post.id },
-		props: { post },
+		params: { slug: post.slug },
+		props: { slug: post.slug },
 	}));
 }) satisfies GetStaticPaths;
 
-type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const { slug } = Astro.props;
+const post = await getPost(slug);
 
-const { post } = Astro.props;
-const { Content, headings } = await render(post);
+if (!post) {
+	return Astro.redirect("/404");
+}
 ---
 
-<PostLayout post={post} headings={headings}>
-	<Content />
+<PostLayout post={post}>
+	<MarkdocRenderer client:load content={post.renderedContent} />
 </PostLayout>

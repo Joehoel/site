@@ -1,41 +1,36 @@
 ---
-import { render } from "astro:content";
-import Timestamp from "@/components/timestamp.astro";
-import { getAllPages, type Page } from "@/data/post";
+import { MarkdocRenderer } from "@/components/markdoc-renderer";
+import { getAllPages, getPage } from "@/data/post";
 import PageLayout from "@/layouts/base.astro";
-import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
+import type { GetStaticPaths } from "astro";
 
-// if you're using an adaptor in SSR mode, getStaticPaths wont work -> https://docs.astro.build/en/guides/routing/#modifying-the-slug-example-for-ssr
 export const getStaticPaths = (async () => {
 	const pages = await getAllPages();
-
 	return pages.map((page) => ({
-		params: { slug: page.id },
-		props: { page },
+		params: { slug: page.slug },
+		props: { slug: page.slug },
 	}));
 }) satisfies GetStaticPaths;
 
-type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const { slug } = Astro.props;
+const page = await getPage(slug);
 
-const { page } = Astro.props;
-const { Content } = await render(page);
+if (!page) {
+	return Astro.redirect("/404");
+}
 ---
 
 <PageLayout
 	meta={{
-		title: page.data.title,
-		ogImage: page.data.ogImage,
-		articleDate: page.data.publishDate.toISOString(),
+		title: page.title,
+		ogImage: page.ogImage ?? undefined,
+		articleDate: new Date(page.publishDate).toISOString(),
 	}}
 >
-	<h1 class="title mb-6">{page.data.title}</h1>
+	<h1 class="title mb-6">{page.title}</h1>
 	<div
 		class="prose prose-sm prose-joel mt-12 prose-headings:font-semibold prose-headings:text-accent-2 prose-headings:before:absolute prose-headings:before:-ms-4 prose-headings:before:text-accent sm:prose-headings:before:content-['#'] sm:prose-th:before:content-none"
 	>
-		<Content
-			components={{
-				Timestamp,
-			}}
-		/>
+		<MarkdocRenderer client:load content={page.renderedContent} />
 	</div>
 </PageLayout>
