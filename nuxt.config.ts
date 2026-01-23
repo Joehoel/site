@@ -1,6 +1,12 @@
 import type { BundledLanguage } from "shiki";
 
-const highlightLangs: BundledLanguage[] = ["python", "tsx", "toml", "dotenv", "ini"];
+const highlightLangs: BundledLanguage[] = [
+	"python",
+	"tsx",
+	"toml",
+	"dotenv",
+	"ini",
+];
 
 const highlightOptions = {
 	theme: {
@@ -32,8 +38,18 @@ export default defineNuxtConfig({
 		"@nuxtjs/sitemap",
 		"@nuxt/icon",
 		"@nuxtjs/color-mode",
-		...(process.env.NODE_ENV === "production" ? [] : ["nuxt-studio"]),
+		"nuxt-studio",
 	],
+
+	studio: {
+		route: "/admin",
+		repository: {
+			provider: "github",
+			owner: "Joehoel",
+			repo: "site",
+			branch: "master",
+		},
+	},
 
 	css: ["~/assets/css/main.css"],
 
@@ -61,6 +77,7 @@ export default defineNuxtConfig({
 
 	routeRules: {
 		"/admin/**": { ssr: true },
+		"/__nuxt_studio/**": { ssr: true },
 		"/**": { prerender: true },
 	},
 
@@ -86,7 +103,12 @@ export default defineNuxtConfig({
 				{ name: "viewport", content: "width=device-width, initial-scale=1" },
 			],
 			link: [
-				{ rel: "alternate", type: "application/rss+xml", title: "RSS Feed", href: "/rss.xml" },
+				{
+					rel: "alternate",
+					type: "application/rss+xml",
+					title: "RSS Feed",
+					href: "/rss.xml",
+				},
 				{
 					rel: "alternate",
 					type: "application/rss+xml",
