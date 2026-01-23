@@ -35,9 +35,6 @@ pnpm-debug.log*
 # Vercel
 .vercel
 
-# Pagefind temp output
-.pagefind-temp
-
 # Netlify (legacy)
 .netlify
 .env*.local

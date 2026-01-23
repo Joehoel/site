@@ -13,7 +13,7 @@ const year = new Date().getFullYear();
         <span v-if="index > 0">×</span>
         <NuxtLink
           :to="link.url"
-          class="px-4 py-2 sm:py-0 sm:hover:text-textColor sm:hover:underline"
+          class="px-4 py-2 sm:py-0 sm:hover:text-text-color sm:hover:underline"
         >
           {{ link.label }}
         </NuxtLink>

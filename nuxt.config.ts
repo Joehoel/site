@@ -18,9 +18,6 @@ const highlightOptions = {
 	compress: false,
 };
 
-// Allow overriding output dir for Pagefind static generation
-const pagefindOutputDir = process.env.PAGEFIND_OUTPUT_DIR;
-
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	compatibilityDate: "2025-07-15",
@@ -36,10 +33,9 @@ export default defineNuxtConfig({
 
 	modules: [
 		"@nuxt/content",
-		"@nuxtjs/tailwindcss",
+		"@nuxt/ui",
 		"@nuxt/image",
 		"@nuxtjs/sitemap",
-		"@nuxt/icon",
 		"@nuxtjs/color-mode",
 		"nuxt-studio",
 	],
@@ -70,10 +66,6 @@ export default defineNuxtConfig({
 		fallback: "light",
 	},
 
-	tailwindcss: {
-		cssPath: false, // We're using our own CSS file
-	},
-
 	site: {
 		url: "https://joelkuijper.me",
 	},
@@ -84,19 +76,16 @@ export default defineNuxtConfig({
 		"/**": { prerender: true },
 	},
 
-	runtimeConfig: {
-		public: {
-			dev: process.env.NODE_ENV !== "production",
-		},
-	},
-
 	nitro: {
-		preset: pagefindOutputDir ? "static" : "vercel",
-		output: pagefindOutputDir ? { dir: pagefindOutputDir } : undefined,
+		preset: "vercel",
 		prerender: {
 			// Don't fail on 404s - some content may link to draft posts
 			failOnError: false,
 		},
+	},
+
+	image: {
+		provider: "ipx",
 	},
 
 	app: {
