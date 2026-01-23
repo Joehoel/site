@@ -1,28 +1,33 @@
 <script setup lang="ts">
-const appConfig = useAppConfig() as any;
+const appConfig = useAppConfig();
 
 defineProps<{
 	post: {
-		_path?: string;
+		path?: string;
 		title: string;
 		description?: string;
 		publishDate: string | Date;
+		draft?: boolean;
 	};
+	withDesc?: boolean;
 }>();
 </script>
 
 <template>
-	<article>
-		<NuxtLink :to="post._path" class="group">
-			<h3 class="title text-xl group-hover:text-link">{{ post.title }}</h3>
+	<time
+		:datetime="new Date(post.publishDate).toISOString()"
+		:title="new Date(post.publishDate).toISOString()"
+		class="min-w-[120px] font-semibold text-gray-600 dark:text-gray-400"
+	>
+		{{
+			new Date(post.publishDate).toLocaleDateString(appConfig.date.locale, appConfig.date.options)
+		}}
+	</time>
+	<div>
+		<span v-if="post.draft" class="text-red-500">(Draft) </span>
+		<NuxtLink :to="post.path" class="link">
+			{{ post.title }}
 		</NuxtLink>
-		<p v-if="post.description" class="mt-1 text-gray-600 dark:text-gray-400">
-			{{ post.description }}
-		</p>
-		<time class="mt-2 block text-sm text-gray-500">
-			{{
-				new Date(post.publishDate).toLocaleDateString(appConfig.date.locale, appConfig.date.options)
-			}}
-		</time>
-	</article>
+	</div>
+	<q v-if="withDesc && post.description" class="line-clamp-3 italic">{{ post.description }}</q>
 </template>

@@ -24,7 +24,10 @@ export default defineContentConfig({
 
 		pages: defineCollection({
 			type: "page",
-			source: "pages/**/*.md",
+			source: {
+				include: "pages/**/*.md",
+				prefix: "/",
+			},
 			schema: z.object({
 				title: z.string(),
 				ogImage: z.string().optional(),

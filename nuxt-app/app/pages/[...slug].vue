@@ -1,9 +1,8 @@
 <script setup lang="ts">
 const route = useRoute();
-const slug = Array.isArray(route.params.slug) ? route.params.slug.join("/") : route.params.slug;
 
-const { data: page } = await useAsyncData(`page-${slug}`, () =>
-	queryCollection("pages").where("_stem", "=", slug).first(),
+const { data: page } = await useAsyncData(route.path, () =>
+	queryCollection("pages").path(route.path).first(),
 );
 
 if (!page.value) {
@@ -12,14 +11,17 @@ if (!page.value) {
 
 useSeoMeta({
 	title: page.value.title,
+	ogImage: page.value.ogImage ?? undefined,
 });
 </script>
 
 <template>
 	<div v-if="page">
-		<header class="mb-8">
-			<h1 class="title text-3xl">{{ page.title }}</h1>
-		</header>
-		<ContentRenderer :value="page" class="prose prose-lg max-w-none dark:prose-invert" />
+		<h1 class="title mb-6">{{ page.title }}</h1>
+		<div
+			class="prose prose-sm prose-joel mt-12 prose-headings:font-semibold prose-headings:text-accent-2 prose-headings:before:absolute prose-headings:before:-ms-4 prose-headings:before:text-accent sm:prose-headings:before:content-['#'] sm:prose-th:before:content-none"
+		>
+			<ContentRenderer :value="page" />
+		</div>
 	</div>
 </template>

@@ -1,21 +1,27 @@
 <script setup lang="ts">
-const appConfig = useAppConfig();
-
 const { data: notes } = await useAsyncData("all-notes", () =>
 	queryCollection("notes").order("publishDate", "DESC").all(),
 );
 
 useSeoMeta({
-	title: `Notes | ${appConfig.site.title}`,
-	description: "Quick notes and code snippets",
+	title: "Notes",
+	description: "Read my collection of notes",
 });
 </script>
 
 <template>
-	<div>
-		<h1 class="title mb-8 text-3xl">Notes</h1>
-		<div class="space-y-6">
-			<NoteCard v-for="note in notes" :key="note._path" :note="note" />
-		</div>
-	</div>
+	<section>
+		<h1 class="title mb-6 flex items-center gap-3">
+			Notes
+			<a class="text-accent" href="/notes/rss.xml" target="_blank">
+				<span class="sr-only">RSS feed</span>
+				<Icon aria-hidden="true" class="h-6 w-6" focusable="false" name="mdi:rss" />
+			</a>
+		</h1>
+		<ul class="mt-6 space-y-8 text-start">
+			<li v-for="note in notes" :key="note.path">
+				<NoteCard :note="note" is-preview />
+			</li>
+		</ul>
+	</section>
 </template>

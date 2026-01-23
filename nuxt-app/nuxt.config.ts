@@ -13,11 +13,17 @@ export default defineNuxtConfig({
 		"nuxt-studio",
 	],
 
+	css: ["~/assets/css/main.css"],
+
 	colorMode: {
 		classSuffix: "",
 		dataValue: "theme",
 		preference: "system",
 		fallback: "light",
+	},
+
+	tailwindcss: {
+		cssPath: false, // We're using our own CSS file
 	},
 
 	site: {
@@ -39,6 +45,15 @@ export default defineNuxtConfig({
 			meta: [
 				{ charset: "utf-8" },
 				{ name: "viewport", content: "width=device-width, initial-scale=1" },
+			],
+			link: [
+				{ rel: "alternate", type: "application/rss+xml", title: "RSS Feed", href: "/rss.xml" },
+				{
+					rel: "alternate",
+					type: "application/rss+xml",
+					title: "Notes RSS Feed",
+					href: "/notes/rss.xml",
+				},
 			],
 		},
 	},
