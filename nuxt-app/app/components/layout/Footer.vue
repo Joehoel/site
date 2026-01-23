@@ -21,3 +21,9 @@ const year = new Date().getFullYear();
 		</nav>
 	</footer>
 </template>
+
+<style scoped>
+footer {
+	view-transition-name: footer;
+}
+</style>

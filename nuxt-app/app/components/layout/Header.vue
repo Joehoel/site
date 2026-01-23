@@ -67,6 +67,8 @@ const toggleMenu = () => {
 				</template>
 			</nav>
 		</div>
+		<!-- Search -->
+		<Search />
 		<!-- Theme Toggle -->
 		<div class="ms-2 sm:ms-4">
 			<button
@@ -189,3 +191,9 @@ const toggleMenu = () => {
 		</button>
 	</header>
 </template>
+
+<style scoped>
+header {
+	view-transition-name: header;
+}
+</style>

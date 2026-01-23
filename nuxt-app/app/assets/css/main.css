@@ -6,7 +6,8 @@
 
 @layer base {
 	:root,
-	:root[data-theme="light"] {
+	:root[data-theme="light"],
+	html:not(.dark) {
 		color-scheme: light;
 		--theme-bg: 0deg 0% 98%;
 		--theme-link: 172deg 18% 41%;
@@ -16,7 +17,8 @@
 		--theme-quote: 351deg 66% 48%;
 	}
 
-	:root[data-theme="dark"] {
+	:root[data-theme="dark"],
+	html.dark {
 		color-scheme: dark;
 		--theme-bg: 210deg 6% 12%;
 		--theme-link: 330deg 49% 67%;
@@ -33,4 +35,34 @@
 	body {
 		@apply bg-bgColor text-textColor antialiased;
 	}
+
+	/* Inline code styling (not in code blocks) */
+	:not(pre) > code {
+		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+			"Courier New", monospace;
+		font-size: 0.875em;
+		padding: 0.2em 0.4em;
+		border-radius: 3px;
+		background-color: hsl(var(--theme-text) / 0.1);
+	}
+}
+
+/* Code block styling */
+pre {
+	font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+		"Courier New", monospace;
+	font-size: 0.875rem;
+	line-height: 1.7142857rem;
+	border-radius: 4px;
+	padding: 1rem;
+	overflow-x: auto;
+}
+
+pre code {
+	font-family: inherit;
+	font-size: inherit;
+	line-height: inherit;
+	padding: 0;
+	border-radius: 0;
+	background-color: transparent;
 }

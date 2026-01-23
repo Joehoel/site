@@ -5,7 +5,8 @@ const { data: post } = await useAsyncData(route.path, () =>
 	queryCollection("posts").path(route.path).first(),
 );
 
-if (!post.value) {
+// 404 if post not found or is a draft (in production)
+if (!post.value || (post.value.draft && !import.meta.dev)) {
 	throw createError({ statusCode: 404, message: "Post not found" });
 }
 

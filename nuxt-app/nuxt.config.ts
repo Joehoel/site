@@ -1,7 +1,29 @@
+import type { BundledLanguage } from "shiki";
+
+const highlightLangs: BundledLanguage[] = ["python", "tsx", "toml", "dotenv", "ini"];
+
+const highlightOptions = {
+	theme: {
+		default: "github-light",
+		light: "github-light",
+		dark: "github-dark",
+	},
+	langs: highlightLangs,
+	compress: false,
+};
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	compatibilityDate: "2025-07-15",
 	devtools: { enabled: true },
+
+	future: {
+		compatibilityVersion: 4,
+	},
+
+	experimental: {
+		viewTransition: true,
+	},
 
 	modules: [
 		"@nuxt/content",
@@ -10,14 +32,21 @@ export default defineNuxtConfig({
 		"@nuxtjs/sitemap",
 		"@nuxt/icon",
 		"@nuxtjs/color-mode",
-		"nuxt-studio",
+		...(process.env.NODE_ENV === "production" ? [] : ["nuxt-studio"]),
 	],
 
 	css: ["~/assets/css/main.css"],
 
+	content: {
+		build: {
+			markdown: {
+				highlight: highlightOptions,
+			},
+		},
+	},
+
 	colorMode: {
 		classSuffix: "",
-		dataValue: "theme",
 		preference: "system",
 		fallback: "light",
 	},
@@ -35,8 +64,18 @@ export default defineNuxtConfig({
 		"/**": { prerender: true },
 	},
 
+	runtimeConfig: {
+		public: {
+			dev: process.env.NODE_ENV !== "production",
+		},
+	},
+
 	nitro: {
 		preset: "vercel",
+		prerender: {
+			// Don't fail on 404s - some content may link to draft posts
+			failOnError: false,
+		},
 	},
 
 	app: {

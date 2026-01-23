@@ -1,6 +1,7 @@
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
 	post: {
+		path?: string;
 		slug?: string;
 		title: string;
 		description?: string;
@@ -11,6 +12,8 @@ defineProps<{
 		draft?: boolean;
 	};
 }>();
+
+const slug = computed(() => props.post.slug ?? props.post.path?.split("/").pop());
 
 const dateTimeOptions: Intl.DateTimeFormatOptions = {
 	month: "long",
@@ -30,7 +33,9 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
 		/>
 	</div>
 	<span v-if="post.draft" class="text-base text-red-500">(Draft)</span>
-	<h1 class="title">{{ post.title }}</h1>
+	<h1 class="title" :style="slug ? { viewTransitionName: `post-${slug}` } : {}">
+		{{ post.title }}
+	</h1>
 	<div class="flex flex-wrap items-center gap-x-3 gap-y-2">
 		<p class="font-semibold">
 			<time

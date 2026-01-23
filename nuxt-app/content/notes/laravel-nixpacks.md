@@ -1,6 +1,7 @@
 ---
 title: Nixpacks configration for deploying Laravel on Railway
-publishDate: 2025-06-22T18:07:00Z
+description: This is the Nixpacks configration file that I use to deploy Laravel apps on Railway. Check out my more in depth guide here.
+publishDate: 2025-06-22T18:07:00.000Z
 ---
 
 This is the Nixpacks configration file that I use to deploy Laravel apps on Railway. Check out my more in depth guide [here](/posts/deploying-laravel-on-railway/).

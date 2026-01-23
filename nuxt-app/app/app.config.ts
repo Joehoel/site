@@ -29,6 +29,6 @@ export default defineAppConfig({
 			day: "numeric",
 			month: "short",
 			year: "numeric",
-		} as Intl.DateTimeFormatOptions,
+		} satisfies Intl.DateTimeFormatOptions,
 	},
 });

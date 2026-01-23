@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const appConfig = useAppConfig();
 
-defineProps<{
+const props = defineProps<{
 	post: {
 		path?: string;
 		title: string;
@@ -11,6 +11,8 @@ defineProps<{
 	};
 	withDesc?: boolean;
 }>();
+
+const slug = computed(() => props.post.path?.split("/").pop());
 </script>
 
 <template>
@@ -25,7 +27,11 @@ defineProps<{
 	</time>
 	<div>
 		<span v-if="post.draft" class="text-red-500">(Draft) </span>
-		<NuxtLink :to="post.path" class="link">
+		<NuxtLink
+			:to="post.path"
+			class="link"
+			:style="slug ? { viewTransitionName: `post-${slug}` } : {}"
+		>
 			{{ post.title }}
 		</NuxtLink>
 	</div>

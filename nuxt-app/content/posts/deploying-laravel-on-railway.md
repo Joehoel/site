@@ -22,7 +22,7 @@ First you will need to create your project. Then you will see that there are mul
 
 Most application will require a database, so add that next. On railway we can 1-click install a template for MySQL, Postgress, MongoDB and Redis. I chose MySQL for my project, but you can pick any you like. Or link another external service like Neon (for Postgres) or Turso (for SQLite).
 
-```env
+```dotenv
 VITE_APP_NAME="${{APP_NAME}}"
 
 DB_HOST="${{MySQL.MYSQLHOST}}"
