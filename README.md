@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="public/icon.svg" alt="joelkuijper.me" width="120" />
+</p>
+
 <h1 align="center">joelkuijper.me</h1>
 
 <p align="center">
