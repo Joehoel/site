@@ -17,8 +17,8 @@ export default defineContentConfig({
 					})
 					.optional(),
 				ogImage: z.string().optional(),
-				publishDate: z.coerce.date(),
-				updatedDate: z.coerce.date().optional(),
+				publishDate: z.string().date(),
+				updatedDate: z.string().date().optional(),
 			}),
 		}),
 
@@ -31,8 +31,8 @@ export default defineContentConfig({
 			schema: z.object({
 				title: z.string(),
 				ogImage: z.string().optional(),
-				publishDate: z.coerce.date(),
-				updatedDate: z.coerce.date().optional(),
+				publishDate: z.string().date(),
+				updatedDate: z.string().date().optional(),
 			}),
 		}),
 

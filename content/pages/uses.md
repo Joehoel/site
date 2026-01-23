@@ -1,7 +1,7 @@
 ---
 title: Uses
 description: Here you will find a list of my favorite tools and apps that I use on a daily basis; for work and personal use.
-publishDate: 2025-06-03T00:00:00.000Z
+publishDate: 2025-06-03
 ---
 
 Here you will find a list of my favorite tools and apps that I use on a daily basis; for work and personal use.
