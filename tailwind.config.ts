@@ -4,7 +4,7 @@ import plugin from "tailwindcss/plugin";
 
 export default {
 	content: [], // Nuxt Tailwind module handles content paths
-	darkMode: ["class", '[data-theme="dark"]'],
+	darkMode: ["selector", "[data-theme='dark']"],
 	plugins: [
 		require("@tailwindcss/typography"),
 		plugin(({ addComponents }) => {

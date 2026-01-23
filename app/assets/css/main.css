@@ -69,7 +69,9 @@ pre code {
 
 /* Shiki dark mode theme switching */
 html.dark .shiki,
-html.dark .shiki span {
+html.dark .shiki span,
+[data-theme="dark"] .shiki,
+[data-theme="dark"] .shiki span {
 	color: var(--shiki-dark) !important;
 	background-color: var(--shiki-dark-bg) !important;
 }
