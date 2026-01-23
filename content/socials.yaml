@@ -1,9 +1,0 @@
-links:
-  - label: GitHub
-    url: https://github.com/joehoel
-    icon: mdi:github
-    isWebmention: true
-  - label: LinkedIn
-    url: https://www.linkedin.com/in/jo%C3%ABl-kuijper/
-    icon: mdi:linkedin
-    isWebmention: true
