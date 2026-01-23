@@ -1,7 +1,6 @@
 // keystatic.config.ts
 import { collection, config, fields, singleton } from "@keystatic/core";
 import { inline } from "@keystatic/core/content-components";
-import { parse } from "date-fns";
 
 export default config({
 	storage:
@@ -17,7 +16,7 @@ export default config({
 	locale: "en-US",
 	ui: {
 		brand: {
-			name: "Joël Kuijper",
+			name: "Joel Kuijper",
 		},
 	},
 	singletons: {
@@ -67,59 +66,6 @@ export default config({
 		}),
 	},
 	collections: {
-		page: collection({
-			label: "Pages",
-			slugField: "title",
-			path: "content/page/*",
-			entryLayout: "content",
-			format: { contentField: "content" },
-			columns: ["title"],
-			schema: {
-				title: fields.slug({ name: { label: "Title" } }),
-				ogImage: fields.image({
-					label: "OG Image",
-					directory: "./public/og-image",
-					publicPath: "/public/og-image",
-				}),
-				publishDate: fields.date({
-					label: "Publish Date",
-					defaultValue: { kind: "today" },
-					description: "The date the page was (or will be) published",
-				}),
-				updatedDate: fields.date({
-					label: "Updated Date",
-					defaultValue: { kind: "today" },
-					description: "The date the page was last updated",
-				}),
-				content: fields.mdx({
-					label: "Content",
-					extension: "mdx",
-					description: "The content of the page",
-					components: {
-						Timestamp: inline({
-							label: "Timestamp",
-							ContentView: ({ value: { date } }) => {
-								if (!date) return null;
-
-								const d = parse(date, "yyyy-MM-dd", new Date());
-
-								return (
-									<time className="text-sm text-gray-500" dateTime={d.toISOString()}>
-										{d.toLocaleDateString()}
-									</time>
-								);
-							},
-							schema: {
-								date: fields.date({
-									label: "Timestamp",
-									defaultValue: { kind: "today" },
-								}),
-							},
-						}),
-					},
-				}),
-			},
-		}),
 		posts: collection({
 			previewUrl: "/posts/{slug}",
 			label: "Posts",
@@ -156,36 +102,106 @@ export default config({
 					label: "Tags",
 					itemLabel: (props) => props.value,
 				}),
-				coverImage: fields.image({
-					label: "Cover Image",
-					directory: "./public/images",
-					publicPath: "/public/images",
-				}),
+				coverImage: fields.object(
+					{
+						src: fields.image({
+							label: "Image",
+							directory: "./public/images",
+							publicPath: "/images",
+						}),
+						alt: fields.text({ label: "Alt Text" }),
+					},
+					{ label: "Cover Image" },
+				),
 				ogImage: fields.image({
 					label: "OG Image",
 					directory: "./public/og-image",
-					publicPath: "/public/og-image",
-				}),
-				content: fields.mdx({
-					label: "Content",
-					options: {
-						image: {
-							directory: "./public/images",
-							publicPath: "/public/images",
-						},
-					},
-					extension: "mdx",
-					description: "The content of the post",
+					publicPath: "/og-image",
 				}),
 				publishDate: fields.date({
 					label: "Publish Date",
 					defaultValue: { kind: "today" },
 					description: "The date the post was (or will be) published",
+					validation: { isRequired: true },
 				}),
 				updatedDate: fields.date({
 					label: "Updated Date",
 					defaultValue: { kind: "today" },
 					description: "The date the post was last updated",
+				}),
+				content: fields.markdoc({
+					label: "Content",
+					options: {
+						image: {
+							directory: "./public/images",
+							publicPath: "/images",
+						},
+					},
+				}),
+			},
+		}),
+		page: collection({
+			label: "Pages",
+			slugField: "title",
+			path: "content/page/*",
+			entryLayout: "content",
+			format: { contentField: "content" },
+			columns: ["title"],
+			schema: {
+				title: fields.slug({ name: { label: "Title" } }),
+				ogImage: fields.image({
+					label: "OG Image",
+					directory: "./public/og-image",
+					publicPath: "/og-image",
+				}),
+				publishDate: fields.date({
+					label: "Publish Date",
+					defaultValue: { kind: "today" },
+					description: "The date the page was (or will be) published",
+					validation: { isRequired: true },
+				}),
+				updatedDate: fields.date({
+					label: "Updated Date",
+					defaultValue: { kind: "today" },
+					description: "The date the page was last updated",
+				}),
+				content: fields.markdoc({
+					label: "Content",
+					components: {
+						Timestamp: inline({
+							label: "Timestamp",
+							schema: {
+								date: fields.date({
+									label: "Date",
+									defaultValue: { kind: "today" },
+								}),
+							},
+						}),
+					},
+				}),
+			},
+		}),
+		notes: collection({
+			label: "Notes",
+			slugField: "title",
+			path: "content/note/*",
+			entryLayout: "content",
+			format: { contentField: "content" },
+			columns: ["title", "publishDate"],
+			schema: {
+				title: fields.slug({ name: { label: "Title" } }),
+				description: fields.text({
+					label: "Description",
+					multiline: true,
+					validation: { isRequired: false },
+				}),
+				publishDate: fields.datetime({
+					label: "Publish Date",
+					defaultValue: { kind: "now" },
+					validation: { isRequired: true },
+				}),
+				content: fields.markdoc({
+					label: "Content",
 				}),
 			},
 		}),

@@ -62,7 +62,7 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 export async function GET(context: APIContext) {
 	const { pubDate, title } = context.props as Props;
 
-	const postDate = getFormattedDate(pubDate, {
+	const postDate = getFormattedDate(new Date(pubDate), {
 		month: "long",
 		weekday: "long",
 	});
@@ -80,7 +80,7 @@ export async function GET(context: APIContext) {
 export async function getStaticPaths() {
 	const posts = await getAllPosts();
 	return posts
-		.filter(({ data }) => !data.ogImage)
+		.filter((post) => !post.data.ogImage)
 		.map((post) => ({
 			params: { slug: post.id },
 			props: {

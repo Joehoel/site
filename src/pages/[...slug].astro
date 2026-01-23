@@ -1,7 +1,7 @@
 ---
 import { render } from "astro:content";
 import Timestamp from "@/components/timestamp.astro";
-import { getAllPages } from "@/data/post";
+import { getAllPages, type Page } from "@/data/post";
 import PageLayout from "@/layouts/base.astro";
 import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
 
@@ -18,7 +18,6 @@ export const getStaticPaths = (async () => {
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const { page } = Astro.props;
-
 const { Content } = await render(page);
 ---
 

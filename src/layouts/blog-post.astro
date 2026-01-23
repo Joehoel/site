@@ -1,5 +1,6 @@
 ---
-import { type CollectionEntry, render } from "astro:content";
+import type { MarkdownHeading } from "astro";
+import type { Post } from "@/data/post";
 
 import Masthead from "@/components/blog/masthead.astro";
 import TOC from "@/components/blog/toc.astro";
@@ -8,14 +9,14 @@ import WebMentions from "@/components/blog/webmentions/index.astro";
 import BaseLayout from "@/layouts/base.astro";
 
 interface Props {
-	post: CollectionEntry<"post">;
+	post: Post;
+	headings: MarkdownHeading[];
 }
 
-const { post } = Astro.props;
+const { post, headings } = Astro.props;
 const { ogImage, title, description, updatedDate, publishDate } = post.data;
 const socialImage = ogImage ?? `/og-image/${post.id}.png`;
 const articleDate = updatedDate?.toISOString() ?? publishDate.toISOString();
-const { headings } = await render(post);
 ---
 
 <BaseLayout

@@ -1,4 +1,3 @@
-import type { CollectionEntry } from "astro:content";
 import { siteConfig } from "@/site.config";
 
 export function getFormattedDate(
@@ -15,9 +14,7 @@ export function getFormattedDate(
 	}).format(date);
 }
 
-export function collectionDateSort(
-	a: CollectionEntry<"post" | "note">,
-	b: CollectionEntry<"post" | "note">,
-) {
+/** Sort collection entries by publishDate (newest first) */
+export function collectionDateSort<T extends { data: { publishDate: Date } }>(a: T, b: T) {
 	return b.data.publishDate.getTime() - a.data.publishDate.getTime();
 }
