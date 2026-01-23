@@ -8,7 +8,12 @@
 		"generate": "nuxt generate",
 		"postgenerate": "pagefind --site .vercel/output/static",
 		"preview": "nuxt preview",
-		"postinstall": "nuxt prepare"
+		"postinstall": "nuxt prepare",
+		"lint": "oxlint .",
+		"lint:fix": "oxlint --fix .",
+		"format": "oxfmt .",
+		"format:check": "oxfmt --check .",
+		"fix": "bun run lint:fix && bun run format"
 	},
 	"dependencies": {
 		"@fontsource-variable/albert-sans": "^5.2.8",
@@ -32,6 +37,8 @@
 	},
 	"devDependencies": {
 		"@tailwindcss/typography": "^0.5.19",
+		"oxfmt": "^0.11.3",
+		"oxlint": "^0.19.0",
 		"pagefind": "^1.4.0"
 	}
 }

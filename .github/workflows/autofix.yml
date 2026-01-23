@@ -1,19 +1,16 @@
-name: ci
+name: autofix
 
 on:
-  push:
-    branches: [master]
   pull_request:
+  push:
     branches: [master]
 
 permissions:
   contents: read
 
 jobs:
-  build:
-    name: Build
+  autofix:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -21,4 +18,6 @@ jobs:
 
       - run: bun install
 
-      - run: bun run build
+      - run: bun run fix
+
+      - uses: autofix-ci/action@v1
