@@ -5,9 +5,7 @@ publishDate: 2025-01-30T23:17:00Z
 ---
 
 ```ts
-export function objectEntries<T extends object>(
-	obj: T,
-): [keyof T, T[keyof T]][] {
-	return Object.entries(obj) as [keyof T, T[keyof T]][];
+export function objectEntries<T extends object>(obj: T): [keyof T, T[keyof T]][] {
+  return Object.entries(obj) as [keyof T, T[keyof T]][];
 }
 ```

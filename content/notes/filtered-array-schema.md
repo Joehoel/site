@@ -19,9 +19,9 @@ publishDate: 2025-04-08T08:38:00Z
  * numberSchema.parse(['1', 2, '3', 4]); // Returns [2, 4]
  */
 function makeFilteredArraySchema<T extends ZodSchema>(schema: T) {
-	return z.preprocess((val) => {
-		const array = Array.isArray(val) ? val : [val];
-		return array.filter((item: unknown) => schema.safeParse(item).success);
-	}, z.array(schema));
+  return z.preprocess((val) => {
+    const array = Array.isArray(val) ? val : [val];
+    return array.filter((item: unknown) => schema.safeParse(item).success);
+  }, z.array(schema));
 }
 ```

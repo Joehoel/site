@@ -15,36 +15,34 @@ import { useReactQueryDevTools } from "@dev-plugins/react-query";
 import NetInfo from "@react-native-community/netinfo";
 
 const queryClient = new QueryClient({
-	defaultOptions: {
-		queries: {
-			staleTime: Number.POSITIVE_INFINITY,
-			gcTime: Number.POSITIVE_INFINITY,
-		},
-	},
+  defaultOptions: {
+    queries: {
+      staleTime: Number.POSITIVE_INFINITY,
+      gcTime: Number.POSITIVE_INFINITY,
+    },
+  },
 });
 
 export function QueryProvider({ children }: PropsWithChildren) {
-	useReactQueryDevTools(queryClient);
+  useReactQueryDevTools(queryClient);
 
-	useEffect(() => {
-		return NetInfo.addEventListener((state) => {
-			const status = !!state.isConnected;
-			onlineManager.setOnline(status);
-		});
-	}, []);
+  useEffect(() => {
+    return NetInfo.addEventListener((state) => {
+      const status = !!state.isConnected;
+      onlineManager.setOnline(status);
+    });
+  }, []);
 
-	return (
-		<PersistQueryClientProvider
-			client={queryClient}
-			onSuccess={() =>
-				queryClient
-					.resumePausedMutations()
-					.then(() => queryClient.invalidateQueries())
-			}
-			persistOptions={{ persister, maxAge: Number.POSITIVE_INFINITY }}
-		>
-			{children}
-		</PersistQueryClientProvider>
-	);
+  return (
+    <PersistQueryClientProvider
+      client={queryClient}
+      onSuccess={() =>
+        queryClient.resumePausedMutations().then(() => queryClient.invalidateQueries())
+      }
+      persistOptions={{ persister, maxAge: Number.POSITIVE_INFINITY }}
+    >
+      {children}
+    </PersistQueryClientProvider>
+  );
 }
 ```
