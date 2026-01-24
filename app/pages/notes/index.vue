@@ -1,6 +1,9 @@
 <script setup lang="ts">
 const { data: notes } = await useAsyncData("all-notes", () =>
-  queryCollection("notes").order("publishDate", "DESC").all(),
+  queryCollection("notes")
+    .where("draft", "=", false)
+    .order("publishDate", "DESC")
+    .all(),
 );
 
 useSeoMeta({

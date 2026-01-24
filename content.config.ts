@@ -41,6 +41,7 @@ export default defineContentConfig({
       source: "notes/**/*.md",
       schema: z.object({
         title: z.string(),
+        draft: z.boolean().default(true),
         description: z.string().optional(),
         publishDate: z.coerce.date(),
       }),

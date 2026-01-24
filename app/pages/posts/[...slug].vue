@@ -1,12 +1,13 @@
 <script setup lang="ts">
 const route = useRoute();
+const canSeeDrafts = useCanSeeDrafts();
 
 const { data: post } = await useAsyncData(route.path, () =>
   queryCollection("posts").path(route.path).first(),
 );
 
-// 404 if post not found or is a draft (in production)
-if (!post.value || (post.value.draft && !import.meta.dev)) {
+// 404 if post not found or is a draft (unless in dev mode or logged in)
+if (!post.value || (post.value.draft && !canSeeDrafts.value)) {
   throw createError({ statusCode: 404, message: "Post not found" });
 }
 

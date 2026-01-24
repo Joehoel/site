@@ -1,5 +1,6 @@
 ---
 title: Typesafe Object.entries()
+draft: false
 description: Simple utility function to have typesafe values for Object.entries()
 publishDate: 2025-01-30T23:17:00Z
 ---

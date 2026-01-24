@@ -1,5 +1,6 @@
 ---
 title: Zod filtered array schema
+draft: false
 publishDate: 2025-04-08T08:38:00Z
 ---
 

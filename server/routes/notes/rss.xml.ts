@@ -20,7 +20,10 @@ export default defineEventHandler(async (event) => {
     },
   });
 
-  const notes = await queryCollection(event, "notes").order("publishDate", "DESC").all();
+  const notes = await queryCollection(event, "notes")
+    .where("draft", "=", false)
+    .order("publishDate", "DESC")
+    .all();
 
   for (const note of notes) {
     feed.addItem({

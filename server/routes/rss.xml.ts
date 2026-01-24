@@ -20,7 +20,10 @@ export default defineEventHandler(async (event) => {
     },
   });
 
-  const posts = await queryCollection(event, "posts").order("publishDate", "DESC").all();
+  const posts = await queryCollection(event, "posts")
+    .where("draft", "=", false)
+    .order("publishDate", "DESC")
+    .all();
 
   for (const post of posts) {
     feed.addItem({

@@ -1,5 +1,6 @@
 ---
 title: TanStack Query setup for offline caching
+draft: false
 description: Code snippet to easily setup offline caching for TanStack Query in a React Native app
 publishDate: 2025-01-28T18:07:00Z
 ---
