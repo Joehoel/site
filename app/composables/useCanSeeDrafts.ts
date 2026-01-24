@@ -5,11 +5,9 @@
  * - User is logged in via Nuxt Studio
  */
 export function useCanSeeDrafts() {
-	const sessionCookie = useCookie("studio-session-check");
+  const sessionCookie = useCookie("studio-session-check");
 
-	const canSeeDrafts = computed(
-		() => import.meta.dev || String(sessionCookie.value) === "true",
-	);
+  const canSeeDrafts = computed(() => import.meta.dev || String(sessionCookie.value) === "true");
 
-	return canSeeDrafts;
+  return canSeeDrafts;
 }
