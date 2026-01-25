@@ -79,7 +79,7 @@ export default defineNuxtConfig({
   },
 
   image: {
-    provider: "ipx",
+    provider: "vercel",
   },
 
   app: {
