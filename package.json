@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@fontsource-variable/albert-sans": "^5.2.8",
-    "@nuxt/content": "3.11.0",
+    "@nuxt/content": "https://pkg.pr.new/@nuxt/content@3698",
     "@nuxt/image": "2.0.0",
     "@nuxt/ui": "^4.4.0",
     "@nuxtjs/color-mode": "4.0.0",
