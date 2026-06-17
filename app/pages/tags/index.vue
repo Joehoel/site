@@ -3,7 +3,7 @@ const { data: posts } = await useAsyncData("all-posts-for-tags", () =>
   queryCollection("posts").where("draft", "=", false).all(),
 );
 
-// Get unique tags with counts
+// Unique tags with post counts, sorted alphabetically.
 const tagsWithCount = computed(() => {
   const tagMap = new Map<string, number>();
   posts.value?.forEach((post) => {
@@ -21,17 +21,43 @@ useSeoMeta({
 </script>
 
 <template>
-  <h1 class="title mb-6">Tags</h1>
-  <ul class="space-y-4">
-    <li v-for="[tag, count] in tagsWithCount" :key="tag" class="flex items-center gap-x-2">
-      <NuxtLink
-        class="link inline-block"
-        :to="`/tags/${tag}/`"
-        :title="`View posts with the tag: ${tag}`"
+  <div>
+    <!-- Hero header -->
+    <header class="mb-16 grid grid-cols-1 gap-8 md:grid-cols-12">
+      <div class="md:col-span-8">
+        <Eyebrow class="mb-4" label="TOPIC_INDEX" />
+        <h1
+          class="font-headline text-5xl font-bold leading-[1.05] tracking-[-0.04em] text-highlighted md:text-6xl"
+        >
+          Every topic I've written about.
+        </h1>
+      </div>
+      <div class="flex items-start md:col-span-4 md:items-end md:justify-end">
+        <p class="max-w-xs font-body text-sm leading-relaxed text-muted md:text-right">
+          Browse the archive by subject. Select a tag to filter the technical log down to a single
+          thread.
+        </p>
+      </div>
+    </header>
+
+    <!-- Tag cloud -->
+    <section
+      v-if="tagsWithCount.length"
+      aria-label="All tags"
+      class="flex flex-wrap items-center gap-3 bg-surface-container-lowest p-6"
+    >
+      <span
+        v-for="[tag, count] in tagsWithCount"
+        :key="tag"
+        class="inline-flex items-center gap-x-1.5"
       >
-        #{{ tag }}
-      </NuxtLink>
-      <span class="inline-block"> - {{ count }} Post{{ count > 1 ? "s" : "" }} </span>
-    </li>
-  </ul>
+        <Tag :label="tag" :to="`/tags/${tag}/`" :title="`View posts with the tag: ${tag}`" />
+        <span class="font-label text-[0.625rem] tabular-nums tracking-[0.1em] text-outline">
+          {{ String(count).padStart(2, "0") }}
+        </span>
+      </span>
+    </section>
+
+    <p v-else class="py-16 text-center font-body text-sm text-muted">No tags yet.</p>
+  </div>
 </template>

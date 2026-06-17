@@ -14,6 +14,8 @@ if (posts.value.length === 0) {
   throw createError({ statusCode: 404, message: `No posts found with tag: ${tag.value}` });
 }
 
+const total = computed(() => posts.value.length);
+
 useSeoMeta({
   title: `Tag: ${tag.value}`,
   description: `View all posts with the tag - ${tag.value}`,
@@ -21,16 +23,42 @@ useSeoMeta({
 </script>
 
 <template>
-  <h1 class="title mb-6 flex items-center">
-    <NuxtLink class="text-accent sm:hover:underline" to="/tags/">Tags</NuxtLink>
-    <span class="me-3 ms-2">&rarr;</span>
-    <span class="text-xl">#{{ tag }}</span>
-  </h1>
-  <section aria-label="Blog post list">
-    <ul class="space-y-4">
-      <li v-for="post in posts" :key="post.path" class="grid gap-2 sm:grid-cols-[auto_1fr]">
-        <BlogPostPreview :post="post" as="h2" />
-      </li>
-    </ul>
-  </section>
+  <div>
+    <!-- Hero header -->
+    <header class="mb-16 grid grid-cols-1 gap-8 md:grid-cols-12">
+      <div class="md:col-span-8">
+        <NuxtLink
+          to="/tags/"
+          class="mb-4 inline-flex items-center gap-x-2 font-label text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-outline transition-colors hover:text-highlighted"
+        >
+          <UIcon aria-hidden="true" name="i-lucide-arrow-left" class="size-3.5" />
+          ALL_TOPICS
+        </NuxtLink>
+        <h1
+          class="font-headline text-5xl font-bold leading-[1.05] tracking-[-0.04em] text-highlighted md:text-6xl"
+        >
+          #{{ tag }}
+        </h1>
+      </div>
+      <div class="flex items-start md:col-span-4 md:items-end md:justify-end">
+        <p class="max-w-xs font-body text-sm leading-relaxed text-muted md:text-right">
+          {{ total }} entr{{ total === 1 ? "y" : "ies" }} tagged
+          <span class="text-highlighted">{{ tag }}</span
+          >, newest first.
+        </p>
+      </div>
+    </header>
+
+    <!-- Article list -->
+    <section aria-label="Blog post list">
+      <div class="flex flex-col divide-y divide-outline-variant">
+        <BlogPostListItem
+          v-for="(post, i) in posts"
+          :key="post.path"
+          :post="post"
+          :index="total - i"
+        />
+      </div>
+    </section>
+  </div>
 </template>
