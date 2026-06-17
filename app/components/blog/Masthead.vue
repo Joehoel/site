@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const appConfig = useAppConfig();
+
 const props = defineProps<{
   post: {
     path?: string;
@@ -15,76 +17,74 @@ const props = defineProps<{
 
 const slug = computed(() => props.post.slug ?? props.post.path?.split("/").pop());
 
-const dateTimeOptions: Intl.DateTimeFormatOptions = {
-  month: "long",
-};
+const isoDate = computed(() => new Date(props.post.publishDate).toISOString());
+
+const displayDate = computed(() =>
+  new Date(props.post.publishDate)
+    .toLocaleDateString(appConfig.date.locale, appConfig.date.options)
+    .toUpperCase(),
+);
+
+const updatedIso = computed(() =>
+  props.post.updatedDate ? new Date(props.post.updatedDate).toISOString() : undefined,
+);
+
+const updatedDisplay = computed(() =>
+  props.post.updatedDate
+    ? new Date(props.post.updatedDate)
+        .toLocaleDateString(appConfig.date.locale, appConfig.date.options)
+        .toUpperCase()
+    : undefined,
+);
 </script>
 
 <template>
-  <div v-if="post.coverImage?.src" class="mb-6 aspect-[16/9]">
-    <NuxtImg
-      class="object-cover"
-      fetchpriority="high"
-      loading="eager"
-      :src="post.coverImage.src"
-      :alt="post.coverImage.alt ?? ''"
-      width="1200"
-      height="675"
-    />
-  </div>
-  <span v-if="post.draft" class="text-base text-red-500">(Draft)</span>
-  <h1 class="title" :style="slug ? { viewTransitionName: `post-${slug}` } : {}">
-    {{ post.title }}
-  </h1>
-  <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
-    <p class="font-semibold">
-      <time
-        :datetime="new Date(post.publishDate).toISOString()"
-        :title="new Date(post.publishDate).toISOString()"
-      >
-        {{ new Date(post.publishDate).toLocaleDateString("nl-NL", dateTimeOptions) }}
-      </time>
-    </p>
-    <span v-if="post.updatedDate" class="rounded-lg bg-quote/5 px-2 py-1 text-quote">
-      Updated:
-      <time
-        :datetime="new Date(post.updatedDate).toISOString()"
-        :title="new Date(post.updatedDate).toISOString()"
-        class="ms-1"
-      >
-        {{ new Date(post.updatedDate).toLocaleDateString("nl-NL", dateTimeOptions) }}
-      </time>
-    </span>
-  </div>
-  <div v-if="post.tags?.length" class="mt-2">
-    <svg
-      aria-hidden="true"
-      class="inline-block h-6 w-6"
-      fill="none"
-      focusable="false"
-      stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="1.5"
-      viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg"
+  <header class="flex flex-col gap-y-8">
+    <!-- Cover image: grayscale, tonal fade into the page (no border). -->
+    <div
+      v-if="post.coverImage?.src"
+      class="relative aspect-[21/9] overflow-hidden bg-surface-container-low"
     >
-      <path d="M0 0h24v24H0z" fill="none" stroke="none" />
-      <path
-        d="M7.859 6h-2.834a2.025 2.025 0 0 0 -2.025 2.025v2.834c0 .537 .213 1.052 .593 1.432l6.116 6.116a2.025 2.025 0 0 0 2.864 0l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-6.117 -6.116a2.025 2.025 0 0 0 -1.431 -.593z"
+      <NuxtImg
+        class="size-full object-cover opacity-60 grayscale"
+        fetchpriority="high"
+        loading="eager"
+        :src="post.coverImage.src"
+        :alt="post.coverImage.alt ?? ''"
+        width="1200"
+        height="515"
       />
-      <path d="M17.573 18.407l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-7.117 -7.116" />
-      <path d="M6 9h-.01" />
-    </svg>
-    <template v-for="(tag, i) in post.tags" :key="tag">
-      <span class="contents">
-        <a
-          :aria-label="`View more blogs with the tag ${tag}`"
-          class="link inline-block before:content-['#']"
-          :href="`/tags/${tag}/`"
-          >{{ tag }}</a
-        ><template v-if="i < post.tags.length - 1">, </template>
-      </span>
-    </template>
-  </div>
+      <div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent" />
+    </div>
+
+    <!-- Eyebrow + meta -->
+    <div class="flex flex-col gap-y-3">
+      <Eyebrow :label="post.draft ? 'Technical Post // Draft' : 'Technical Post'" />
+      <MetaRow :items="[displayDate]">
+        <template v-if="updatedDisplay">
+          <span aria-hidden="true" class="h-px w-6 bg-outline-variant" />
+          <span
+            class="font-label text-[0.6875rem] uppercase tracking-[0.1em] text-on-surface-variant"
+          >
+            Bijgewerkt
+            <time :datetime="updatedIso" :title="updatedIso">{{ updatedDisplay }}</time>
+          </span>
+        </template>
+        <time :datetime="isoDate" class="sr-only">{{ isoDate }}</time>
+      </MetaRow>
+    </div>
+
+    <!-- Title -->
+    <h1
+      class="max-w-4xl font-headline text-4xl font-bold leading-[1.1] tracking-[-0.04em] text-highlighted md:text-5xl"
+      :style="slug ? { viewTransitionName: `post-${slug}` } : {}"
+    >
+      {{ post.title }}
+    </h1>
+
+    <!-- Tags -->
+    <div v-if="post.tags?.length" class="flex flex-wrap gap-2">
+      <Tag v-for="tag in post.tags" :key="tag" :label="tag" :to="`/tags/${tag}/`" />
+    </div>
+  </header>
 </template>

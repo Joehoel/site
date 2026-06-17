@@ -157,11 +157,13 @@ pre {
   font-family:
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
     monospace;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   line-height: 1.7142857rem;
   border-radius: 0;
-  padding: 1rem;
   overflow-x: auto;
+  /* The code panel (content/ProsePre.vue) owns horizontal padding + the inset
+     surface; the bare <pre> stays transparent so the panel background shows. */
+  background-color: transparent !important;
 }
 
 pre code {
@@ -180,4 +182,151 @@ html.dark .shiki {
   --shiki-default-font-style: var(--shiki-dark-font-style);
   --shiki-default-font-weight: var(--shiki-dark-font-weight);
   --shiki-default-text-decoration: var(--shiki-dark-text-decoration);
+}
+
+/* --------------------------------------------------------------------------
+   Prose — Atelier editorial style
+   Manrope body, Space Grotesk headings, the role-based type-scale from
+   component-map.md. Monochrome tokens only; hairlines on outline-variant.
+   -------------------------------------------------------------------------- */
+.prose-atelier {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--color-on-surface-variant);
+  max-width: none;
+}
+
+.prose-atelier :where(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--font-headline);
+  color: var(--ui-text-highlighted);
+  scroll-margin-top: 7rem;
+}
+
+/* Heading (section H2). */
+.prose-atelier :where(h2) {
+  font-size: 1.5rem;
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.0125em;
+  margin-top: 3rem;
+  margin-bottom: 1.25rem;
+}
+
+/* Subheading (H3). */
+.prose-atelier :where(h3) {
+  font-size: 1.25rem;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.0125em;
+  margin-top: 2.25rem;
+  margin-bottom: 1rem;
+}
+
+.prose-atelier :where(h4) {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose-atelier :where(p) {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.prose-atelier :where(strong) {
+  color: var(--ui-text-highlighted);
+  font-weight: 600;
+}
+
+/* Links: underline-on-hover (tertiary button logic from the brief). */
+.prose-atelier :where(a) {
+  color: var(--ui-text-highlighted);
+  text-decoration: underline;
+  text-decoration-color: var(--color-outline-variant);
+  text-underline-offset: 2px;
+  transition: text-decoration-color 0.2s;
+}
+
+.prose-atelier :where(a):hover {
+  text-decoration-color: var(--ui-text-highlighted);
+}
+
+/* Inline code. */
+.prose-atelier :where(:not(pre) > code) {
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.875em;
+  color: var(--ui-text-highlighted);
+  background-color: var(--color-surface-container-high);
+  padding: 0.15em 0.4em;
+}
+
+.prose-atelier :where(:not(pre) > code)::before,
+.prose-atelier :where(:not(pre) > code)::after {
+  content: none;
+}
+
+.prose-atelier :where(ul, ol) {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.prose-atelier :where(li) {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose-atelier :where(ul) > li::marker {
+  color: var(--color-outline);
+}
+
+.prose-atelier :where(ol) > li::marker {
+  color: var(--color-outline);
+  font-family: var(--font-label);
+}
+
+/* Blockquote: left hairline accent, no rounded box. */
+.prose-atelier :where(blockquote) {
+  font-family: var(--font-headline);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ui-text-highlighted);
+  border-left: 2px solid var(--ui-text-highlighted);
+  padding-left: 1.5rem;
+  margin: 2rem 0;
+}
+
+.prose-atelier :where(hr) {
+  border: 0;
+  border-top: 1px solid var(--color-outline-variant);
+  margin: 3rem 0;
+}
+
+.prose-atelier :where(img) {
+  margin: 2rem 0;
+}
+
+.prose-atelier :where(table) {
+  font-size: 0.875rem;
+  width: 100%;
+}
+
+.prose-atelier :where(th) {
+  font-family: var(--font-label);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.6875rem;
+  color: var(--color-outline);
+  text-align: left;
+  border-bottom: 1px solid var(--color-outline-variant);
+  padding: 0.5rem 0.75rem;
+}
+
+.prose-atelier :where(td) {
+  border-bottom: 1px solid var(--color-outline-variant);
+  padding: 0.5rem 0.75rem;
 }
