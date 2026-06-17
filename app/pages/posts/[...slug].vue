@@ -28,7 +28,7 @@ definePageMeta({
     <div id="blog-hero">
       <BlogMasthead :post="post" />
     </div>
-    <div class="prose prose-atelier mt-16 max-w-none">
+    <div class="prose prose-atelier mt-16 max-w-4xl">
       <ContentRenderer :value="post" />
     </div>
   </article>

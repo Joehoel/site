@@ -67,7 +67,7 @@ const HeadingTag = computed(() => props.headingLevel);
     </component>
 
     <!-- Body: full content inline; code rendered via the compact CodeBlock. -->
-    <div class="prose prose-atelier mt-2 max-w-none [&>:first-child]:mt-0 [&>:last-child]:mb-0">
+    <div class="prose prose-atelier mt-2 max-w-4xl [&>:first-child]:mt-0 [&>:last-child]:mb-0">
       <ContentRenderer :value="note" />
     </div>
   </article>

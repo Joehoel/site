@@ -11,7 +11,7 @@ const footerLinks = [
 <template>
   <footer class="mt-24 w-full border-t border-outline-variant">
     <div
-      class="mx-auto flex max-w-3xl flex-col gap-y-6 px-4 py-12 sm:flex-row sm:items-center sm:justify-between sm:px-8"
+      class="mx-auto flex max-w-7xl flex-col gap-y-6 px-6 py-12 sm:flex-row sm:items-center sm:justify-between sm:px-8"
     >
       <p class="font-label text-[0.625rem] uppercase tracking-[0.2em] text-outline">
         &copy; {{ year }} {{ appConfig.site.author }}. Built for precision.

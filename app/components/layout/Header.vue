@@ -29,7 +29,7 @@ watch(
     id="main-header"
     class="fixed inset-x-0 top-0 z-50 border-b border-outline-variant bg-surface/70 backdrop-blur-xl"
   >
-    <div class="mx-auto flex h-16 max-w-3xl items-center justify-between px-4 sm:px-8">
+    <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 sm:px-8">
       <!-- Wordmark -->
       <NuxtLink
         to="/"
@@ -100,7 +100,7 @@ watch(
       aria-label="Mobile menu"
       class="border-t border-outline-variant bg-surface/95 backdrop-blur-xl sm:hidden"
     >
-      <div class="mx-auto flex max-w-3xl flex-col px-4 py-2 sm:px-8">
+      <div class="mx-auto flex max-w-7xl flex-col px-6 py-2 sm:px-8">
         <NuxtLink
           v-for="link in appConfig.navigation"
           :key="link.url"
