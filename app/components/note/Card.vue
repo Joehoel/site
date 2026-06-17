@@ -26,7 +26,9 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
 const isoDate = computed(() => new Date(props.note.publishDate).toISOString());
 
 const displayDate = computed(() =>
-  new Date(props.note.publishDate).toLocaleDateString(appConfig.date.locale, dateTimeOptions).toUpperCase(),
+  new Date(props.note.publishDate)
+    .toLocaleDateString(appConfig.date.locale, dateTimeOptions)
+    .toUpperCase(),
 );
 
 const eyebrowLabel = computed(() => (props.note.draft ? "NOTE // DRAFT" : "NOTE"));
