@@ -39,8 +39,8 @@ const updatedDisplay = computed(() =>
 </script>
 
 <template>
-  <header class="flex flex-col gap-y-8">
-    <!-- Cover image: grayscale, tonal fade into the page (no border). -->
+  <header class="flex flex-col gap-y-12">
+    <!-- Cover image: full-width, grayscale, tonal fade into the page (no border). -->
     <div
       v-if="post.coverImage?.src"
       class="relative aspect-[21/9] overflow-hidden bg-surface-container-low"
@@ -57,34 +57,37 @@ const updatedDisplay = computed(() =>
       <div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent" />
     </div>
 
-    <!-- Eyebrow + meta -->
-    <div class="flex flex-col gap-y-3">
-      <Eyebrow :label="post.draft ? 'Technical Post // Draft' : 'Technical Post'" />
-      <MetaRow :items="[displayDate]">
-        <template v-if="updatedDisplay">
-          <span aria-hidden="true" class="h-px w-6 bg-outline-variant" />
-          <span
-            class="font-label text-[0.6875rem] uppercase tracking-[0.1em] text-on-surface-variant"
-          >
-            Bijgewerkt
-            <time :datetime="updatedIso" :title="updatedIso">{{ updatedDisplay }}</time>
-          </span>
-        </template>
-        <time :datetime="isoDate" class="sr-only">{{ isoDate }}</time>
-      </MetaRow>
-    </div>
+    <!-- Editorial header: meta in the left rail, title in the main column. -->
+    <div class="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
+      <div class="flex flex-col gap-y-3 lg:col-span-3">
+        <Eyebrow :label="post.draft ? 'Technical Post // Draft' : 'Technical Post'" />
+        <MetaRow :items="[displayDate]">
+          <template v-if="updatedDisplay">
+            <span aria-hidden="true" class="h-px w-6 bg-outline-variant" />
+            <span
+              class="font-label text-[0.6875rem] uppercase tracking-[0.1em] text-on-surface-variant"
+            >
+              Bijgewerkt
+              <time :datetime="updatedIso" :title="updatedIso">{{ updatedDisplay }}</time>
+            </span>
+          </template>
+          <time :datetime="isoDate" class="sr-only">{{ isoDate }}</time>
+        </MetaRow>
+      </div>
 
-    <!-- Title -->
-    <h1
-      class="max-w-4xl font-headline text-4xl font-bold leading-[1.1] tracking-[-0.04em] text-highlighted md:text-5xl"
-      :style="slug ? { viewTransitionName: `post-${slug}` } : {}"
-    >
-      {{ post.title }}
-    </h1>
+      <div class="lg:col-span-9">
+        <h1
+          class="max-w-4xl font-headline text-4xl font-bold leading-[1.1] tracking-[-0.04em] text-highlighted md:text-5xl"
+          :style="slug ? { viewTransitionName: `post-${slug}` } : {}"
+        >
+          {{ post.title }}
+        </h1>
 
-    <!-- Tags -->
-    <div v-if="post.tags?.length" class="flex flex-wrap gap-2">
-      <Tag v-for="tag in post.tags" :key="tag" :label="tag" :to="`/tags/${tag}/`" />
+        <!-- Tags -->
+        <div v-if="post.tags?.length" class="mt-6 flex flex-wrap gap-2">
+          <Tag v-for="tag in post.tags" :key="tag" :label="tag" :to="`/tags/${tag}/`" />
+        </div>
+      </div>
     </div>
   </header>
 </template>
