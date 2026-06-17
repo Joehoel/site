@@ -20,5 +20,18 @@ useSeoMeta({
 </script>
 
 <template>
-  <NoteCard v-if="note" :note="note" heading-level="h1" />
+  <article v-if="note" class="break-words">
+    <NuxtLink
+      to="/notes"
+      class="group mb-12 inline-flex items-center gap-2 font-label text-[0.6875rem] uppercase tracking-[0.1em] text-outline transition-colors hover:text-highlighted"
+    >
+      <UIcon
+        name="i-lucide-arrow-left"
+        class="size-3.5 transition-transform group-hover:-translate-x-0.5"
+      />
+      All notes
+    </NuxtLink>
+
+    <NoteCard :note="note" heading-level="h1" />
+  </article>
 </template>
