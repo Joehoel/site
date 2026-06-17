@@ -87,19 +87,31 @@ useSeoMeta({
 
     <!-- Selected Works -->
     <section v-if="projects?.length" aria-labelledby="selected-works">
-      <div class="mb-8 flex items-baseline justify-between border-b border-outline-variant pb-4">
-        <SectionHeader id="selected-works" eyebrow="PROJECTS" title="Selected Works" />
-        <span class="font-label text-[0.6875rem] uppercase tracking-[0.1em] text-outline">
-          {{ String(projects.length).padStart(2, "0") }} ENTRIES
-        </span>
-      </div>
-      <div class="flex flex-col divide-y divide-outline-variant">
-        <ProjectListItem
-          v-for="(project, i) in projects"
-          :key="project.path"
-          :project="project"
-          :index="i + 1"
-        />
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
+        <!-- Left rail: section heading -->
+        <div class="lg:col-span-4">
+          <div class="lg:sticky lg:top-28">
+            <Eyebrow class="mb-4" label="PROJECTS" />
+            <h2
+              id="selected-works"
+              class="mb-6 font-headline text-3xl font-bold tracking-tight text-highlighted md:text-4xl"
+            >
+              Selected Works
+            </h2>
+            <p class="font-label text-[0.6875rem] uppercase tracking-[0.1em] text-outline">
+              {{ String(projects.length).padStart(2, "0") }} ENTRIES
+            </p>
+          </div>
+        </div>
+        <!-- Project list -->
+        <div class="flex flex-col divide-y divide-outline-variant lg:col-span-8">
+          <ProjectListItem
+            v-for="(project, i) in projects"
+            :key="project.path"
+            :project="project"
+            :index="i + 1"
+          />
+        </div>
       </div>
     </section>
 
@@ -142,24 +154,39 @@ useSeoMeta({
 
     <!-- Notes -->
     <section v-if="notes?.length" aria-labelledby="notes">
-      <div class="mb-8 flex items-baseline justify-between border-b border-outline-variant pb-4">
-        <SectionHeader id="notes" eyebrow="STREAM" title="Notes" />
-        <NuxtLink
-          class="group inline-flex items-center gap-x-2 font-label text-[0.6875rem] uppercase tracking-[0.2em] text-highlighted"
-          to="/notes"
-        >
-          VIEW_ALL_NOTES
-          <UIcon
-            name="i-lucide-arrow-right"
-            class="size-3.5 transition-transform group-hover:translate-x-1"
-          />
-        </NuxtLink>
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
+        <!-- Left rail: section heading -->
+        <div class="lg:col-span-4">
+          <div class="lg:sticky lg:top-28">
+            <Eyebrow class="mb-4" label="STREAM" />
+            <h2
+              id="notes"
+              class="mb-6 font-headline text-3xl font-bold tracking-tight text-highlighted md:text-4xl"
+            >
+              Notes
+            </h2>
+            <p class="mb-8 max-w-xs font-body text-sm leading-relaxed text-muted">
+              Short, code-first jottings — patterns, configs and things worth remembering.
+            </p>
+            <NuxtLink
+              class="group inline-flex items-center gap-x-2 font-label text-[0.6875rem] uppercase tracking-[0.2em] text-highlighted"
+              to="/notes"
+            >
+              VIEW_ALL_NOTES
+              <UIcon
+                name="i-lucide-arrow-right"
+                class="size-3.5 transition-transform group-hover:translate-x-1"
+              />
+            </NuxtLink>
+          </div>
+        </div>
+        <!-- Note list -->
+        <ul class="flex flex-col divide-y divide-outline-variant lg:col-span-8" role="list">
+          <li v-for="note in notes" :key="note.path" class="py-10 first:pt-0">
+            <NoteCard :note="note" is-preview heading-level="h3" />
+          </li>
+        </ul>
       </div>
-      <ul class="flex flex-col divide-y divide-outline-variant" role="list">
-        <li v-for="note in notes" :key="note.path" class="py-10 first:pt-0">
-          <NoteCard :note="note" is-preview heading-level="h3" />
-        </li>
-      </ul>
     </section>
   </div>
 </template>
