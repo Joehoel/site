@@ -4,6 +4,8 @@ defineProps<{
   label: string;
   /** Optional link target. When set the badge wraps a NuxtLink. */
   to?: string;
+  /** Accessible title / tooltip for the badge. */
+  title?: string;
 }>();
 </script>
 
@@ -11,6 +13,7 @@ defineProps<{
   <UBadge
     :label="label"
     :to="to"
+    :title="title"
     color="neutral"
     variant="outline"
     size="sm"

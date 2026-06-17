@@ -10,9 +10,9 @@ export default defineAppConfig({
   },
 
   site: {
-    title: "Joel",
-    author: "Joel Kuijper",
-    description: "Personal website of Joel Kuijper",
+    title: "Joël",
+    author: "Joël Kuijper",
+    description: "Personal website of Joël Kuijper",
     lang: "nl-NL",
     ogLocale: "nl_NL",
   },

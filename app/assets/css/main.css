@@ -161,9 +161,11 @@ pre {
   line-height: 1.7142857rem;
   border-radius: 0;
   overflow-x: auto;
-  /* The code panel (content/ProsePre.vue) owns horizontal padding + the inset
-     surface; the bare <pre> stays transparent so the panel background shows. */
-  background-color: transparent !important;
+}
+
+/* The code panel (ProsePre.vue) owns the surface; keep pre transparent within prose. */
+.prose-atelier pre {
+  background-color: transparent;
 }
 
 pre code {

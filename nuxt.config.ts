@@ -1,6 +1,19 @@
 import type { BundledLanguage } from "shiki";
 
-const highlightLangs: BundledLanguage[] = ["python", "tsx", "toml", "dotenv", "ini"];
+const highlightLangs: BundledLanguage[] = [
+  "python",
+  "tsx",
+  "typescript",
+  "javascript",
+  "toml",
+  "dotenv",
+  "ini",
+  "bash",
+  "json",
+  "yaml",
+  "vue",
+  "css",
+];
 
 const highlightOptions = {
   theme: {

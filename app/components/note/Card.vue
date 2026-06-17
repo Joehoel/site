@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { NoteCollectionItem } from "@nuxt/content";
 
+const appConfig = useAppConfig();
+
 const props = withDefaults(
   defineProps<{
     note: NoteCollectionItem;
@@ -16,9 +18,7 @@ const props = withDefaults(
 
 // Notes carry a full timestamp — surface date + time in the technical-terminal style.
 const dateTimeOptions: Intl.DateTimeFormatOptions = {
-  year: "numeric",
-  month: "short",
-  day: "numeric",
+  ...appConfig.date.options,
   hour: "2-digit",
   minute: "2-digit",
 };
@@ -26,7 +26,7 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
 const isoDate = computed(() => new Date(props.note.publishDate).toISOString());
 
 const displayDate = computed(() =>
-  new Date(props.note.publishDate).toLocaleDateString("nl-NL", dateTimeOptions).toUpperCase(),
+  new Date(props.note.publishDate).toLocaleDateString(appConfig.date.locale, dateTimeOptions).toUpperCase(),
 );
 
 const eyebrowLabel = computed(() => (props.note.draft ? "NOTE // DRAFT" : "NOTE"));
