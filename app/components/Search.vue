@@ -1,12 +1,13 @@
 <script setup lang="ts">
-// Simple search button that triggers the global ContentSearch modal
+// Search trigger for the header — opens the global UContentSearch modal
+// (Pagefind, ⌘K). Collapsed to an icon button to match the Atelier chrome.
 </script>
 
 <template>
-  <div class="ms-auto">
-    <UContentSearchButton
-      class="flex h-9 w-9 items-center justify-center rounded-md hover:text-accent"
-      :collapsed="true"
-    />
-  </div>
+  <UContentSearchButton
+    :collapsed="true"
+    color="neutral"
+    variant="ghost"
+    class="h-9 w-9 text-outline transition-colors hover:text-highlighted"
+  />
 </template>
