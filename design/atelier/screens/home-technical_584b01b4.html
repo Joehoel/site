@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-surface": "#e5e2e1",
+                    "on-secondary": "#1a1c1c",
+                    "error": "#ffb4ab",
+                    "on-primary-fixed": "#ffffff",
+                    "error-container": "#93000a",
+                    "on-primary": "#1a1c1c",
+                    "surface-container-highest": "#353534",
+                    "surface-container": "#201f1f",
+                    "secondary-fixed-dim": "#ababab",
+                    "tertiary-container": "#919191",
+                    "primary-fixed": "#5d5f5f",
+                    "surface-variant": "#353534",
+                    "secondary-fixed": "#c7c6c6",
+                    "surface-bright": "#3a3939",
+                    "on-tertiary-container": "#000000",
+                    "surface-dim": "#131313",
+                    "on-tertiary-fixed-variant": "#e2e2e2",
+                    "tertiary-fixed-dim": "#474747",
+                    "on-background": "#e5e2e1",
+                    "surface": "#131313",
+                    "on-primary-fixed-variant": "#e2e2e2",
+                    "on-surface": "#e5e2e1",
+                    "inverse-on-surface": "#313030",
+                    "on-tertiary": "#1b1b1b",
+                    "outline-variant": "#474747",
+                    "tertiary-fixed": "#5e5e5e",
+                    "on-primary-container": "#000000",
+                    "primary": "#ffffff",
+                    "surface-tint": "#c6c6c7",
+                    "tertiary": "#e2e2e2",
+                    "on-error": "#690005",
+                    "on-error-container": "#ffdad6",
+                    "surface-container-low": "#1c1b1b",
+                    "inverse-primary": "#5d5f5f",
+                    "on-secondary-container": "#e3e2e2",
+                    "secondary": "#c7c6c6",
+                    "primary-fixed-dim": "#454747",
+                    "on-secondary-fixed-variant": "#3a3c3c",
+                    "on-secondary-fixed": "#1a1c1c",
+                    "background": "#131313",
+                    "on-tertiary-fixed": "#ffffff",
+                    "secondary-container": "#464747",
+                    "primary-container": "#d4d4d4",
+                    "outline": "#919191",
+                    "surface-container-high": "#2a2a2a",
+                    "surface-container-lowest": "#0e0e0e",
+                    "on-surface-variant": "#c6c6c6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Space Grotesk"],
+                    "body": ["Manrope"],
+                    "label": ["Space Grotesk"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .text-sheen {
+            background: linear-gradient(45deg, #ffffff 0%, #c7c6c6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#131313]/70 backdrop-blur-xl">
+<div class="flex justify-between items-center px-8 py-6 max-w-7xl mx-auto">
+<a class="text-xl font-bold tracking-tighter text-white font-['Space_Grotesk'] uppercase" href="/">JK//DEV</a>
+<div class="hidden md:flex items-center space-x-8">
+<a class="font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] font-medium text-white border-b border-white pb-1 transition-opacity active:opacity-80" href="#">Work</a>
+<a class="font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] font-medium text-gray-400 hover:text-white transition-colors duration-200" href="#">Blog</a>
+<a class="font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] font-medium text-gray-400 hover:text-white transition-colors duration-200" href="#">/Uses</a>
+<a class="font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] font-medium text-gray-400 hover:text-white transition-colors duration-200" href="#">Contact</a>
+</div>
+<div class="md:hidden">
+<span class="material-symbols-outlined text-white">menu</span>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-24">
+<!-- Hero Section -->
+<section class="max-w-7xl mx-auto px-8 mb-32">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<div class="md:col-span-2">
+<span class="font-label text-[0.6875rem] uppercase tracking-[0.1em] text-outline vertical-lr rotate-180 mb-8 md:mb-0">INTRODUCTION_v2.0</span>
+</div>
+<div class="md:col-span-10">
+<h1 class="font-headline text-[3.5rem] leading-[1.1] font-bold tracking-[-0.04em] text-sheen mb-12 max-w-4xl">
+                        Solo Developer at Evangelische Omroep. Architecting digital products with technical precision and monastic restraint.
+                    </h1>
+<p class="font-body text-[1.375rem] leading-relaxed text-secondary max-w-2xl mb-12">
+                        I specialize in building robust systems and exploring the deep technical nuances of side projects that challenge the boundaries of web engineering.
+                    </p>
+<div class="flex flex-wrap gap-4">
+<div class="bg-surface-container-high px-3 py-1 font-label text-[0.6875rem] tracking-[0.1em] uppercase text-on-surface">TYPESCRIPT</div>
+<div class="bg-surface-container-high px-3 py-1 font-label text-[0.6875rem] tracking-[0.1em] uppercase text-on-surface">RUST</div>
+<div class="bg-surface-container-high px-3 py-1 font-label text-[0.6875rem] tracking-[0.1em] uppercase text-on-surface">SYSTEM_DESIGN</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Featured Projects / Latest Thoughts -->
+<section class="max-w-7xl mx-auto px-8">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-16">
+<div class="md:col-span-2">
+<span class="font-label text-[0.6875rem] uppercase tracking-[0.1em] text-outline">SELECTED_WORKS</span>
+</div>
+<div class="md:col-span-10 space-y-px">
+<!-- Project Row 1 -->
+<a class="group block bg-surface-container-low hover:bg-surface-container transition-colors p-8" href="#">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div class="space-y-2">
+<div class="font-label text-[0.6875rem] text-outline uppercase tracking-widest">// 001</div>
+<h3 class="font-headline text-2xl font-semibold text-white">Media Asset Pipeline</h3>
+</div>
+<div class="flex items-center gap-8">
+<span class="hidden md:block font-body text-sm text-outline-variant">TECHNICAL INFRASTRUCTURE</span>
+<span class="material-symbols-outlined text-white group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+</a>
+<!-- Project Row 2 -->
+<a class="group block bg-surface-container-low hover:bg-surface-container transition-colors p-8" href="#">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div class="space-y-2">
+<div class="font-label text-[0.6875rem] text-outline uppercase tracking-widest">// 002</div>
+<h3 class="font-headline text-2xl font-semibold text-white">Streaming Core Engine</h3>
+</div>
+<div class="flex items-center gap-8">
+<span class="hidden md:block font-body text-sm text-outline-variant">BACKEND SERVICES</span>
+<span class="material-symbols-outlined text-white group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+</a>
+<!-- Project Row 3 -->
+<a class="group block bg-surface-container-low hover:bg-surface-container transition-colors p-8" href="#">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div class="space-y-2">
+<div class="font-label text-[0.6875rem] text-outline uppercase tracking-widest">// 003</div>
+<h3 class="font-headline text-2xl font-semibold text-white">Atelier Mono Design System</h3>
+</div>
+<div class="flex items-center gap-8">
+<span class="hidden md:block font-body text-sm text-outline-variant">UI FRAMEWORK</span>
+<span class="material-symbols-outlined text-white group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+</a>
+</div>
+</div>
+<!-- Deep Dives / Blog -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 mt-32">
+<div class="md:col-span-2">
+<span class="font-label text-[0.6875rem] uppercase tracking-[0.1em] text-outline">TECHNICAL_LOGS</span>
+</div>
+<div class="md:col-span-10 grid grid-cols-1 md:grid-cols-2 gap-px bg-outline-variant/10">
+<div class="bg-surface p-12 hover:bg-surface-container-lowest transition-colors">
+<span class="font-label text-[0.6875rem] text-outline-variant">OCT 2024</span>
+<h4 class="font-headline text-xl font-bold text-white mt-4 mb-6">Optimizing WASM modules for real-time video processing in the browser</h4>
+<p class="font-body text-sm text-secondary mb-8 leading-relaxed">An exploration into the limitations of current thread-management in web-based assembly modules.</p>
+<a class="font-label text-[0.6875rem] uppercase tracking-widest text-primary border-b border-primary/20 hover:border-primary transition-all pb-1" href="#">Read Entry</a>
+</div>
+<div class="bg-surface p-12 hover:bg-surface-container-lowest transition-colors">
+<span class="font-label text-[0.6875rem] text-outline-variant">SEP 2024</span>
+<h4 class="font-headline text-xl font-bold text-white mt-4 mb-6">The Monastic Developer: Principles of high-density technical focus</h4>
+<p class="font-body text-sm text-secondary mb-8 leading-relaxed">Building a workflow that prioritizes deep work over shallow productivity metrics.</p>
+<a class="font-label text-[0.6875rem] uppercase tracking-widest text-primary border-b border-primary/20 hover:border-primary transition-all pb-1" href="#">Read Entry</a>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="max-w-7xl mx-auto px-8 mt-48">
+<div class="bg-surface-container-lowest p-16 relative overflow-hidden">
+<div class="relative z-10">
+<h2 class="font-headline text-4xl font-bold text-white mb-8">Initiate Collaboration</h2>
+<p class="font-body text-secondary max-w-lg mb-12">Looking for technical architectural consulting or high-precision product development? Let's connect.</p>
+<button class="bg-primary text-on-primary px-10 py-4 font-label text-[0.6875rem] uppercase tracking-widest font-bold hover:opacity-90 transition-opacity">
+                        SEND_MESSAGE
+                    </button>
+</div>
+<div class="absolute right-0 top-0 h-full w-1/2 opacity-5 pointer-events-none select-none">
+<div class="font-label text-[12rem] leading-none break-all whitespace-normal">CODE_REF_JK_2024</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 px-8 bg-[#131313] border-t border-white/10">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 max-w-7xl mx-auto">
+<div class="space-y-2">
+<div class="font-['Space_Grotesk'] font-bold text-white uppercase tracking-tighter">JK//DEV</div>
+<p class="font-['Manrope'] text-[0.875rem] text-gray-400">© 2024 Joël Kuijper — Solo Developer at Evangelische Omroep</p>
+</div>
+<div class="flex gap-8">
+<a class="font-['Manrope'] text-[0.875rem] text-gray-500 hover:text-white underline decoration-white/30 transition-all active:translate-y-[-1px]" href="#">GitHub</a>
+<a class="font-['Manrope'] text-[0.875rem] text-gray-500 hover:text-white underline decoration-white/30 transition-all active:translate-y-[-1px]" href="#">LinkedIn</a>
+<a class="font-['Manrope'] text-[0.875rem] text-gray-500 hover:text-white underline decoration-white/30 transition-all active:translate-y-[-1px]" href="#">Archive</a>
+</div>
+</div>
+</footer>
+</body></html>

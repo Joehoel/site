@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>JK//DEV — Technical Deep Dive</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #131313;
+            color: #e5e2e1;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tonal-layering-no-border {
+            border: none !important;
+        }
+        .flat-no-shadows {
+            box-shadow: none !important;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-surface": "#e5e2e1",
+                      "on-secondary": "#1a1c1c",
+                      "error": "#ffb4ab",
+                      "on-primary-fixed": "#ffffff",
+                      "error-container": "#93000a",
+                      "on-primary": "#1a1c1c",
+                      "surface-container-highest": "#353534",
+                      "surface-container": "#201f1f",
+                      "secondary-fixed-dim": "#ababab",
+                      "tertiary-container": "#919191",
+                      "primary-fixed": "#5d5f5f",
+                      "surface-variant": "#353534",
+                      "secondary-fixed": "#c7c6c6",
+                      "surface-bright": "#3a3939",
+                      "on-tertiary-container": "#000000",
+                      "surface-dim": "#131313",
+                      "on-tertiary-fixed-variant": "#e2e2e2",
+                      "tertiary-fixed-dim": "#474747",
+                      "on-background": "#e5e2e1",
+                      "surface": "#131313",
+                      "on-primary-fixed-variant": "#e2e2e2",
+                      "on-surface": "#e5e2e1",
+                      "inverse-on-surface": "#313030",
+                      "on-tertiary": "#1b1b1b",
+                      "outline-variant": "#474747",
+                      "tertiary-fixed": "#5e5e5e",
+                      "on-primary-container": "#000000",
+                      "primary": "#ffffff",
+                      "surface-tint": "#c6c6c7",
+                      "tertiary": "#e2e2e2",
+                      "on-error": "#690005",
+                      "on-error-container": "#ffdad6",
+                      "surface-container-low": "#1c1b1b",
+                      "inverse-primary": "#5d5f5f",
+                      "on-secondary-container": "#e3e2e2",
+                      "secondary": "#c7c6c6",
+                      "primary-fixed-dim": "#454747",
+                      "on-secondary-fixed-variant": "#3a3c3c",
+                      "on-secondary-fixed": "#1a1c1c",
+                      "background": "#131313",
+                      "on-tertiary-fixed": "#ffffff",
+                      "secondary-container": "#464747",
+                      "primary-container": "#d4d4d4",
+                      "outline": "#919191",
+                      "surface-container-high": "#2a2a2a",
+                      "surface-container-lowest": "#0e0e0e",
+                      "on-surface-variant": "#c6c6c6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0px",
+                      "lg": "0px",
+                      "xl": "0px",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Space Grotesk"],
+                      "body": ["Manrope"],
+                      "label": ["Space Grotesk"]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#131313]/70 backdrop-blur-xl tonal-layering-no-border flat-no-shadows">
+<div class="flex justify-between items-center px-8 py-6 max-w-7xl mx-auto">
+<div class="text-xl font-bold tracking-tighter text-white font-['Space_Grotesk']">JK//DEV</div>
+<div class="flex items-center gap-8">
+<a class="font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] font-medium text-gray-400 hover:text-white transition-colors duration-200" href="#">Work</a>
+<a class="font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] font-medium text-white border-b border-white pb-1" href="#">Blog</a>
+<a class="font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] font-medium text-gray-400 hover:text-white transition-colors duration-200" href="#">/Uses</a>
+<a class="font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] font-medium text-gray-400 hover:text-white transition-colors duration-200" href="#">Contact</a>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-24">
+<!-- Editorial Header -->
+<header class="max-w-7xl mx-auto px-8 mb-20 grid grid-cols-1 md:grid-cols-12 gap-8">
+<div class="md:col-span-3">
+<div class="font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] font-medium text-outline mb-2">Technical Post // 042</div>
+<div class="font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] font-medium text-primary">March 24, 2024</div>
+</div>
+<div class="md:col-span-9">
+<h1 class="font-['Space_Grotesk'] text-[3.5rem] leading-[1.1] font-bold tracking-[-0.04em] text-white mb-8 max-w-4xl">
+                    Engineered Persistence: Implementing a High-Performance KV Store in Rust
+                </h1>
+<div class="flex flex-wrap gap-2">
+<span class="bg-surface-container-high px-3 py-1 font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em]">Rust</span>
+<span class="bg-surface-container-high px-3 py-1 font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em]">Database Internals</span>
+<span class="bg-surface-container-high px-3 py-1 font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em]">Systems Engineering</span>
+</div>
+</div>
+</header>
+<!-- Article Hero Image -->
+<div class="w-full mb-20 px-8 max-w-7xl mx-auto">
+<div class="aspect-[21/9] bg-surface-container-low relative overflow-hidden">
+<img alt="Macro shot of a high-end server circuit board" class="w-full h-full object-cover grayscale opacity-60" data-alt="Macro photography of complex server circuit boards with glowing indicators and sharp metallic textures in a dark monochromatic environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClzLKJm6z-yEF3e4_Pe7aIDak4GqOESRBwkT5qsZtmGbaccaZ91R8zCrOR8UesvAnA-UqaKIManmWWNKEkE-IIlg_AUBvqXfbUeIuPK6gikwb676tTWmyczSEfyESGNVRfJ67XJHVUHKtiV4PQKfvJ4LR8JQEO_yY5F2PIe8w62KCBtY3bnIYomppO9KfWy3eHyYJOrPkSO-ZysXegVLr1Ewqcl_tIhyEnxy3Pt2DWQFGC4hZGUt7C13WUGz78U2xUpXjEzop7nGlo"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent"></div>
+</div>
+</div>
+<!-- Main Content -->
+<article class="max-w-7xl mx-auto px-8 grid grid-cols-1 md:grid-cols-12 gap-12">
+<!-- Metadata Column -->
+<aside class="hidden md:block md:col-span-3 sticky top-32 h-fit">
+<div class="space-y-12">
+<div>
+<div class="font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] font-medium text-outline mb-4">Reading Time</div>
+<div class="text-white font-medium">14 Minutes</div>
+</div>
+<div>
+<div class="font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] font-medium text-outline mb-4">Architecture</div>
+<div class="text-white font-medium">Log-Structured Merge Tree</div>
+</div>
+<div>
+<div class="font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] font-medium text-outline mb-4">Complexity</div>
+<div class="text-white font-medium">O(log N) Writes</div>
+</div>
+</div>
+</aside>
+<!-- Text Content Column -->
+<div class="md:col-span-9 max-w-3xl">
+<section class="mb-12">
+<h2 class="font-['Space_Grotesk'] text-[1.375rem] font-bold text-white mb-6 tracking-tight">I. The Motivation</h2>
+<p class="text-[0.875rem] leading-relaxed text-gray-300 mb-6">
+                        In modern system design, the abstraction of storage is often taken for granted. We interact with databases via ORMs or high-level APIs, rarely peering into the underlying mechanics of how bits are persisted to disk. For this side project, I wanted to strip away those abstractions and build a persistent Key-Value (KV) store from the ground up, optimized for write-heavy workloads.
+                    </p>
+<p class="text-[0.875rem] leading-relaxed text-gray-300 mb-6">
+                        The core challenge was balancing the <span class="text-white font-mono bg-surface-container-highest px-1 italic">Write-Ahead Log (WAL)</span> performance with efficient range queries. This led me down the rabbit hole of Log-Structured Merge (LSM) Trees.
+                    </p>
+</section>
+<!-- Code Block Component -->
+<section class="mb-12">
+<div class="bg-surface-container-lowest p-6 group">
+<div class="flex justify-between items-center mb-4">
+<span class="font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] text-outline">// engine/wal.rs</span>
+<span class="material-symbols-outlined text-outline text-sm cursor-pointer hover:text-white" data-icon="content_copy">content_copy</span>
+</div>
+<pre class="font-mono text-[0.8125rem] text-secondary leading-relaxed overflow-x-auto"><span class="text-primary-fixed">pub struct</span> <span class="text-primary">WalManager</span> {
+    path: PathBuf,
+    file: File,
+    buffer: Vec&lt;u8&gt;,
+    capacity: usize,
+}
+
+<span class="text-primary-fixed">impl</span> <span class="text-primary">WalManager</span> {
+    <span class="text-primary-fixed">pub fn</span> <span class="text-primary">append</span>(&amp;<span class="text-primary-fixed">mut self</span>, entry: &amp;LogEntry) -&gt; Result&lt;()&gt; {
+        <span class="text-outline-variant italic">// Serialize entry and push to atomic buffer</span>
+        <span class="text-primary-fixed">let</span> bytes = entry.encode()?;
+        <span class="text-primary-fixed">self</span>.buffer.extend_from_slice(&amp;bytes);
+        
+        <span class="text-primary-fixed">if self</span>.buffer.len() &gt;= <span class="text-primary-fixed">self</span>.capacity {
+            <span class="text-primary-fixed">self</span>.flush()?;
+        }
+        Ok(())
+    }
+}</pre>
+</div>
+</section>
+<section class="mb-12">
+<h2 class="font-['Space_Grotesk'] text-[1.375rem] font-bold text-white mb-6 tracking-tight">II. Memory-Mapped Efficiency</h2>
+<p class="text-[0.875rem] leading-relaxed text-gray-300 mb-6">
+                        Traditional <span class="text-white italic">read()</span> and <span class="text-white italic">write()</span> syscalls introduce significant overhead due to context switching and buffer copying. By utilizing memory-mapped files (mmap), we can map the file directly into the process's address space. This allows the OS to manage the page cache, resulting in zero-copy access for data retrieval.
+                    </p>
+<div class="bg-surface-container-low p-8 mb-8">
+<div class="font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] text-outline mb-4">Technical Specification</div>
+<ul class="space-y-4">
+<li class="flex items-start gap-4">
+<span class="text-primary font-bold text-lg leading-none mt-1">/</span>
+<div class="text-[0.875rem] text-gray-300"><strong class="text-white">Bloom Filters:</strong> Probabilistic data structure used to verify if a key exists in an SSTable before performing a disk seek.</div>
+</li>
+<li class="flex items-start gap-4">
+<span class="text-primary font-bold text-lg leading-none mt-1">/</span>
+<div class="text-[0.875rem] text-gray-300"><strong class="text-white">Compaction:</strong> Background threads merge smaller SSTables into larger ones, reclaiming space by discarding deleted or overwritten keys.</div>
+</li>
+</ul>
+</div>
+</section>
+<section class="mb-12">
+<h2 class="font-['Space_Grotesk'] text-[1.375rem] font-bold text-white mb-6 tracking-tight">III. The Concurrency Model</h2>
+<p class="text-[0.875rem] leading-relaxed text-gray-300 mb-6">
+                        Rust's ownership model proved invaluable here. By using <span class="text-white font-mono bg-surface-container-highest px-1 italic">Arc&lt;RwLock&lt;Memtable&gt;&gt;</span>, I ensured that multiple readers could access the current in-memory buffer while only a single writer held exclusive access for updates.
+                    </p>
+<!-- Asymmetric Design Element: Quote or Note -->
+<div class="relative pl-12 py-4 mb-12">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<p class="font-['Space_Grotesk'] italic text-[1.125rem] text-white">
+                            "The hardest part of systems engineering isn't writing the logic; it's managing the failure modes when the logic meets hardware reality."
+                        </p>
+</div>
+</section>
+<section class="mb-12">
+<h2 class="font-['Space_Grotesk'] text-[1.375rem] font-bold text-white mb-6 tracking-tight">IV. Results and Benchmarks</h2>
+<p class="text-[0.875rem] leading-relaxed text-gray-300 mb-8">
+                        The final implementation achieved consistent write latency of under 50μs for 1KB payloads on an NVMe drive. Below is the visualization of the ingestion throughput during sustained load tests.
+                    </p>
+<!-- Data Visualization Placeholder -->
+<div class="bg-surface-container-low p-8 mb-12">
+<div class="flex items-end gap-1 h-32 mb-4">
+<div class="bg-primary-fixed w-full h-[20%]"></div>
+<div class="bg-primary-fixed w-full h-[35%]"></div>
+<div class="bg-primary-fixed w-full h-[55%]"></div>
+<div class="bg-primary w-full h-[85%]"></div>
+<div class="bg-primary w-full h-[70%]"></div>
+<div class="bg-primary w-full h-[95%]"></div>
+<div class="bg-primary w-full h-[80%]"></div>
+<div class="bg-primary-fixed w-full h-[60%]"></div>
+<div class="bg-primary-fixed w-full h-[40%]"></div>
+</div>
+<div class="flex justify-between font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] text-outline">
+<span>0k Ops/s</span>
+<span>Sustained Throughput (Ingestion)</span>
+<span>500k Ops/s</span>
+</div>
+</div>
+</section>
+<footer class="pt-12 border-t border-outline-variant/20 flex justify-between items-center">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="thumb_up">thumb_up</span>
+<span class="text-[0.875rem] text-outline">256 Engineers found this useful</span>
+</div>
+<div class="flex gap-4">
+<button class="bg-primary text-on-primary px-4 py-2 font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] font-bold">Share Thread</button>
+<button class="bg-surface-container-highest text-white px-4 py-2 font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] font-bold">Download Spec</button>
+</div>
+</footer>
+</div>
+</article>
+</main>
+<!-- Footer -->
+<footer class="bg-[#131313] w-full py-12 px-8 border-t border-white/10">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 max-w-7xl mx-auto">
+<div class="font-['Space_Grotesk'] font-bold text-white text-lg">JK//DEV</div>
+<div class="font-['Manrope'] text-[0.875rem] text-gray-400">
+                © 2024 Joël Kuijper — Solo Developer at Evangelische Omroep
+            </div>
+<div class="flex gap-8">
+<a class="font-['Manrope'] text-[0.875rem] text-gray-500 hover:text-white underline decoration-white/30 transition-all" href="#">GitHub</a>
+<a class="font-['Manrope'] text-[0.875rem] text-gray-500 hover:text-white underline decoration-white/30 transition-all" href="#">LinkedIn</a>
+<a class="font-['Manrope'] text-[0.875rem] text-gray-500 hover:text-white underline decoration-white/30 transition-all" href="#">Archive</a>
+</div>
+</div>
+</footer>
+</body></html>

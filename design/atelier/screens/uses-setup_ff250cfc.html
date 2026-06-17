@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>JK//DEV — /Uses</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&amp;family=Manrope:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-surface": "#e5e2e1",
+                      "on-secondary": "#1a1c1c",
+                      "error": "#ffb4ab",
+                      "on-primary-fixed": "#ffffff",
+                      "error-container": "#93000a",
+                      "on-primary": "#1a1c1c",
+                      "surface-container-highest": "#353534",
+                      "surface-container": "#201f1f",
+                      "secondary-fixed-dim": "#ababab",
+                      "tertiary-container": "#919191",
+                      "primary-fixed": "#5d5f5f",
+                      "surface-variant": "#353534",
+                      "secondary-fixed": "#c7c6c6",
+                      "surface-bright": "#3a3939",
+                      "on-tertiary-container": "#000000",
+                      "surface-dim": "#131313",
+                      "on-tertiary-fixed-variant": "#e2e2e2",
+                      "tertiary-fixed-dim": "#474747",
+                      "on-background": "#e5e2e1",
+                      "surface": "#131313",
+                      "on-primary-fixed-variant": "#e2e2e2",
+                      "on-surface": "#e5e2e1",
+                      "inverse-on-surface": "#313030",
+                      "on-tertiary": "#1b1b1b",
+                      "outline-variant": "#474747",
+                      "tertiary-fixed": "#5e5e5e",
+                      "on-primary-container": "#000000",
+                      "primary": "#ffffff",
+                      "surface-tint": "#c6c6c7",
+                      "tertiary": "#e2e2e2",
+                      "on-error": "#690005",
+                      "on-error-container": "#ffdad6",
+                      "surface-container-low": "#1c1b1b",
+                      "inverse-primary": "#5d5f5f",
+                      "on-secondary-container": "#e3e2e2",
+                      "secondary": "#c7c6c6",
+                      "primary-fixed-dim": "#454747",
+                      "on-secondary-fixed-variant": "#3a3c3c",
+                      "on-secondary-fixed": "#1a1c1c",
+                      "background": "#131313",
+                      "on-tertiary-fixed": "#ffffff",
+                      "secondary-container": "#464747",
+                      "primary-container": "#d4d4d4",
+                      "outline": "#919191",
+                      "surface-container-high": "#2a2a2a",
+                      "surface-container-lowest": "#0e0e0e",
+                      "on-surface-variant": "#c6c6c6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0px",
+                      "lg": "0px",
+                      "xl": "0px",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Space Grotesk"],
+                      "body": ["Manrope"],
+                      "label": ["Space Grotesk"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #131313;
+            color: #e5e2e1;
+        }
+        .tonal-layering-no-border {
+            border: none !important;
+        }
+        .glass-nav {
+            background: rgba(19, 19, 19, 0.7);
+            backdrop-filter: blur(24px);
+        }
+    </style>
+</head>
+<body class="font-body selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#131313]/70 backdrop-blur-xl">
+<div class="flex justify-between items-center px-8 py-6 max-w-7xl mx-auto">
+<a class="text-xl font-bold tracking-tighter text-white font-['Space_Grotesk']" href="/">JK//DEV</a>
+<div class="hidden md:flex items-center space-x-8">
+<a class="font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] font-medium text-gray-400 hover:text-white transition-colors duration-200" href="#">Work</a>
+<a class="font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] font-medium text-gray-400 hover:text-white transition-colors duration-200" href="#">Blog</a>
+<a class="font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] font-medium text-white border-b border-white pb-1" href="#">/Uses</a>
+<a class="font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] font-medium text-gray-400 hover:text-white transition-colors duration-200" href="#">Contact</a>
+</div>
+<!-- Mobile Toggle Placeholder -->
+<button class="md:hidden text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+<main class="pt-32 pb-24 px-8 max-w-7xl mx-auto">
+<!-- Hero Section -->
+<header class="mb-24 grid grid-cols-1 md:grid-cols-12 gap-8">
+<div class="md:col-span-8">
+<span class="font-label text-[0.6875rem] uppercase tracking-[0.1em] text-outline mb-4 block">// SYSTEM_MANIFEST</span>
+<h1 class="font-headline text-5xl md:text-7xl font-bold tracking-[-0.04em] text-primary leading-tight">
+                    Technical configuration for focused production.
+                </h1>
+</div>
+<div class="md:col-span-4 flex flex-col justify-end">
+<p class="text-on-surface-variant font-body text-sm leading-relaxed max-w-xs">
+                    A curated list of hardware, software, and tools used daily to build systems at Evangelische Omroep and personal projects.
+                </p>
+</div>
+</header>
+<!-- Categories Container -->
+<div class="space-y-32">
+<!-- Hardware Section -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<aside class="md:col-span-3">
+<div class="sticky top-32">
+<span class="font-label text-[0.6875rem] uppercase tracking-[0.1em] text-outline block mb-1">SECTION_01</span>
+<h2 class="font-headline text-2xl font-bold text-primary">Hardware</h2>
+<p class="text-xs text-outline-variant mt-2 font-mono uppercase tracking-widest">Physical Stack</p>
+</div>
+</aside>
+<div class="md:col-span-9 space-y-px">
+<!-- Item -->
+<div class="bg-surface-container-low p-8 flex flex-col md:flex-row justify-between items-start md:items-center group hover:bg-surface-container transition-colors duration-300">
+<div class="flex flex-col">
+<span class="font-label text-[0.55rem] uppercase tracking-[0.2em] text-outline-variant mb-1">PRIMARY_MACHINE</span>
+<h3 class="font-headline text-lg text-primary">MacBook Pro M3 Max</h3>
+<p class="text-on-surface-variant text-sm mt-1">14-inch, 64GB RAM, 2TB SSD. Space Black.</p>
+</div>
+<div class="mt-4 md:mt-0 px-3 py-1 bg-surface-container-highest text-[0.65rem] font-label uppercase tracking-widest text-secondary">In Use</div>
+</div>
+<!-- Item -->
+<div class="bg-surface-container-low p-8 flex flex-col md:flex-row justify-between items-start md:items-center group hover:bg-surface-container transition-colors duration-300">
+<div class="flex flex-col">
+<span class="font-label text-[0.55rem] uppercase tracking-[0.2em] text-outline-variant mb-1">DISPLAY_ARRAY</span>
+<h3 class="font-headline text-lg text-primary">Dell UltraSharp 32" 4K</h3>
+<p class="text-on-surface-variant text-sm mt-1">U3223QE with IPS Black technology for deep contrasts.</p>
+</div>
+</div>
+<!-- Item -->
+<div class="bg-surface-container-low p-8 flex flex-col md:flex-row justify-between items-start md:items-center group hover:bg-surface-container transition-colors duration-300">
+<div class="flex flex-col">
+<span class="font-label text-[0.55rem] uppercase tracking-[0.2em] text-outline-variant mb-1">INPUT_DEVICE</span>
+<h3 class="font-headline text-lg text-primary">Keychron Q1 Pro</h3>
+<p class="text-on-surface-variant text-sm mt-1">Gateron Baby Kangaroo switches, custom PBT keycaps.</p>
+</div>
+</div>
+<!-- Item -->
+<div class="bg-surface-container-low p-8 flex flex-col md:flex-row justify-between items-start md:items-center group hover:bg-surface-container transition-colors duration-300">
+<div class="flex flex-col">
+<span class="font-label text-[0.55rem] uppercase tracking-[0.2em] text-outline-variant mb-1">AUDIO_ENGINE</span>
+<h3 class="font-headline text-lg text-primary">Sennheiser HD 600</h3>
+<p class="text-on-surface-variant text-sm mt-1">Open-back reference monitors for long focus sessions.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Software Section -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<aside class="md:col-span-3">
+<div class="sticky top-32">
+<span class="font-label text-[0.6875rem] uppercase tracking-[0.1em] text-outline block mb-1">SECTION_02</span>
+<h2 class="font-headline text-2xl font-bold text-primary">Software</h2>
+<p class="text-xs text-outline-variant mt-2 font-mono uppercase tracking-widest">Logic Stack</p>
+</div>
+</aside>
+<div class="md:col-span-9">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-px">
+<!-- Card -->
+<div class="bg-surface-container-low p-8 hover:bg-surface-container transition-colors group">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary text-xl">code</span>
+<span class="font-label text-[0.6rem] uppercase tracking-widest text-outline">Development</span>
+</div>
+<h3 class="font-headline text-xl text-primary mb-4">VS Code</h3>
+<ul class="space-y-3">
+<li class="text-sm text-on-surface-variant flex items-start gap-2">
+<span class="text-primary font-mono mt-0.5">/</span> Tokyo Night Storm theme
+                                </li>
+<li class="text-sm text-on-surface-variant flex items-start gap-2">
+<span class="text-primary font-mono mt-0.5">/</span> JetBrains Mono with Ligatures
+                                </li>
+<li class="text-sm text-on-surface-variant flex items-start gap-2">
+<span class="text-primary font-mono mt-0.5">/</span> GitHub Copilot enabled
+                                </li>
+</ul>
+</div>
+<!-- Card -->
+<div class="bg-surface-container-low p-8 hover:bg-surface-container transition-colors group">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary text-xl">terminal</span>
+<span class="font-label text-[0.6rem] uppercase tracking-widest text-outline">Terminal</span>
+</div>
+<h3 class="font-headline text-xl text-primary mb-4">Ghostty</h3>
+<ul class="space-y-3">
+<li class="text-sm text-on-surface-variant flex items-start gap-2">
+<span class="text-primary font-mono mt-0.5">/</span> Zsh with Oh My Zsh
+                                </li>
+<li class="text-sm text-on-surface-variant flex items-start gap-2">
+<span class="text-primary font-mono mt-0.5">/</span> Starship prompt configuration
+                                </li>
+<li class="text-sm text-on-surface-variant flex items-start gap-2">
+<span class="text-primary font-mono mt-0.5">/</span> Neovim for quick edits
+                                </li>
+</ul>
+</div>
+<!-- Card -->
+<div class="bg-surface-container-low p-8 hover:bg-surface-container transition-colors group">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary text-xl">database</span>
+<span class="font-label text-[0.6rem] uppercase tracking-widest text-outline">Infrastructure</span>
+</div>
+<h3 class="font-headline text-xl text-primary mb-4">GitHub Ecosystem</h3>
+<ul class="space-y-3">
+<li class="text-sm text-on-surface-variant flex items-start gap-2">
+<span class="text-primary font-mono mt-0.5">/</span> GitHub Actions for CI/CD
+                                </li>
+<li class="text-sm text-on-surface-variant flex items-start gap-2">
+<span class="text-primary font-mono mt-0.5">/</span> Doppler for secret management
+                                </li>
+<li class="text-sm text-on-surface-variant flex items-start gap-2">
+<span class="text-primary font-mono mt-0.5">/</span> Docker Desktop for local dev
+                                </li>
+</ul>
+</div>
+<!-- Card -->
+<div class="bg-surface-container-low p-8 hover:bg-surface-container transition-colors group">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary text-xl">design_services</span>
+<span class="font-label text-[0.6rem] uppercase tracking-widest text-outline">Creative</span>
+</div>
+<h3 class="font-headline text-xl text-primary mb-4">Figma &amp; Linear</h3>
+<ul class="space-y-3">
+<li class="text-sm text-on-surface-variant flex items-start gap-2">
+<span class="text-primary font-mono mt-0.5">/</span> Design-to-code workflow
+                                </li>
+<li class="text-sm text-on-surface-variant flex items-start gap-2">
+<span class="text-primary font-mono mt-0.5">/</span> Linear for issue tracking
+                                </li>
+<li class="text-sm text-on-surface-variant flex items-start gap-2">
+<span class="text-primary font-mono mt-0.5">/</span> Raycast for everything else
+                                </li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- Workspace Section -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<aside class="md:col-span-3">
+<div class="sticky top-32">
+<span class="font-label text-[0.6875rem] uppercase tracking-[0.1em] text-outline block mb-1">SECTION_03</span>
+<h2 class="font-headline text-2xl font-bold text-primary">Workspace</h2>
+<p class="text-xs text-outline-variant mt-2 font-mono uppercase tracking-widest">Environment</p>
+</div>
+</aside>
+<div class="md:col-span-9 space-y-12">
+<div class="relative w-full aspect-video overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover grayscale opacity-60" data-alt="Minimalist dark home office setup with a single monitor, mechanical keyboard, and soft ambient desk lighting in a high-end architectural style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDA6UWeZPYYI9xkWADYlADBm0qoigmO-a1LSgY_o_bCZZFpLdEePh14GC3HhAAMbjCQBtnrapCBO8xbPrB6oDOcq4Od952lMgoVMxOngbMsCJ05owDl8NOR5r6l4LqwFxvOB5zYGUJ_7EiBH5h8-PE5KRVYAJJW_efjgGYNI460RvsCCQS1BUDgbKkVVoRaBut-SiPea6FUMdaCbFoxtk3MCtyC5QMUUHZiVl0noq3fY6hkz4_RrYSNPAs2ON-QDKISqFHUdfqR-V8r"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+<div>
+<span class="font-label text-[0.6rem] uppercase tracking-widest text-outline block mb-4">ERGONOMICS</span>
+<h4 class="font-headline text-lg text-primary mb-2">Herman Miller Embody</h4>
+<p class="text-on-surface-variant text-sm leading-relaxed">
+                                The essential component for sustained focus. Paired with a Fully Jarvis standing desk to maintain posture during deep work cycles.
+                            </p>
+</div>
+<div>
+<span class="font-label text-[0.6rem] uppercase tracking-widest text-outline block mb-4">ATMOSPHERE</span>
+<h4 class="font-headline text-lg text-primary mb-2">BenQ ScreenBar Halo</h4>
+<p class="text-on-surface-variant text-sm leading-relaxed">
+                                Precise illumination that eliminates screen glare. Essential for maintaining the high-contrast monochromatic environment I prefer.
+                            </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer-style CTA -->
+<section class="mt-48 pt-12 border-t border-white/5">
+<div class="flex flex-col items-center text-center max-w-2xl mx-auto">
+<h3 class="font-headline text-3xl font-bold text-primary mb-6 italic">Looking for the source code?</h3>
+<p class="text-on-surface-variant font-body mb-8">
+                        Most of my personal tooling and dotfiles are open-sourced on GitHub. Feel free to explore the configurations.
+                    </p>
+<a class="px-8 py-4 bg-primary text-on-primary font-label text-sm uppercase tracking-widest hover:opacity-90 transition-opacity" href="#">
+                        View Dotfiles
+                    </a>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-[#131313] w-full py-12 px-8 border-t border-white/10 mt-32">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 max-w-7xl mx-auto">
+<div class="flex flex-col gap-2">
+<span class="font-['Space_Grotesk'] font-bold text-white uppercase tracking-tighter">JK//DEV</span>
+<p class="font-['Manrope'] text-[0.875rem] text-gray-400">© 2024 Joël Kuijper — Solo Developer at Evangelische Omroep</p>
+</div>
+<div class="flex gap-8">
+<a class="font-['Manrope'] text-[0.875rem] text-gray-500 hover:text-white underline decoration-white/30 transition-all" href="#">GitHub</a>
+<a class="font-['Manrope'] text-[0.875rem] text-gray-500 hover:text-white underline decoration-white/30 transition-all" href="#">LinkedIn</a>
+<a class="font-['Manrope'] text-[0.875rem] text-gray-500 hover:text-white underline decoration-white/30 transition-all" href="#">Archive</a>
+</div>
+</div>
+</footer>
+</body></html>

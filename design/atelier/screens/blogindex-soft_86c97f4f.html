@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Open+Sans:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "background": "#1a1a1a", // Deep charcoal
+              "surface": "#242424",    // Warm gray
+              "on-surface": "#f5f3ef", // Off-white
+              "on-surface-variant": "#a3a3a3", // Muted gray
+              "primary": "#f5f3ef",
+              "outline": "#404040",
+            },
+            fontFamily: {
+              "serif": ["Lora", "serif"],
+              "sans": ["Open Sans", "sans-serif"],
+            }
+          },
+        },
+      }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            background-color: #1a1a1a;
+            color: #f5f3ef;
+            font-family: 'Open Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .editorial-title {
+            font-family: 'Lora', serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<nav class="fixed top-0 w-full z-50 bg-background/90 backdrop-blur-md border-b border-white/5">
+<div class="flex justify-between items-center px-8 py-8 max-w-4xl mx-auto">
+<a class="text-lg font-serif italic tracking-tight text-white" href="/">JK//DEV</a>
+<div class="hidden md:flex gap-10 items-center">
+<a class="text-[0.75rem] uppercase tracking-[0.15em] font-medium text-on-surface-variant hover:text-white transition-colors" href="#">Work</a>
+<a class="text-[0.75rem] uppercase tracking-[0.15em] font-medium text-white border-b border-white/30 pb-1" href="#">Blog</a>
+<a class="text-[0.75rem] uppercase tracking-[0.15em] font-medium text-on-surface-variant hover:text-white transition-colors" href="#">/Uses</a>
+<a class="text-[0.75rem] uppercase tracking-[0.15em] font-medium text-on-surface-variant hover:text-white transition-colors" href="#">Contact</a>
+</div>
+<button class="md:hidden text-white">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</div>
+</nav>
+<main class="pt-48 pb-32 px-8 max-w-3xl mx-auto">
+<header class="mb-32">
+<span class="text-[0.7rem] uppercase tracking-[0.2em] text-on-surface-variant block mb-6 font-semibold opacity-60">// TECHNICAL_LOG</span>
+<h1 class="editorial-title text-4xl md:text-5xl lg:text-6xl leading-[1.15] text-white mb-10">
+            Articles, side projects <br/>&amp; engineering notes.
+        </h1>
+<p class="text-base md:text-lg text-on-surface-variant max-w-xl leading-relaxed font-light italic">
+            Documentation of my journey through distributed systems, frontend architecture, and developer tooling. Updated sporadically.
+        </p>
+</header>
+<section class="mb-32 border-y border-white/10 py-8 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-4 w-full md:w-auto">
+<span class="material-symbols-outlined text-on-surface-variant/50" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-[0.75rem] uppercase tracking-[0.1em] text-on-surface w-full md:w-48 placeholder:text-on-surface-variant/40" placeholder="QUERY_BY_TOPIC..." type="text"/>
+</div>
+<div class="flex flex-wrap gap-6 items-center">
+<span class="text-[0.7rem] uppercase tracking-[0.2em] text-white font-bold cursor-pointer">ALL</span>
+<span class="text-[0.7rem] uppercase tracking-[0.2em] text-on-surface-variant hover:text-white transition-colors cursor-pointer">ARCHITECTURE</span>
+<span class="text-[0.7rem] uppercase tracking-[0.2em] text-on-surface-variant hover:text-white transition-colors cursor-pointer">RUST</span>
+<span class="text-[0.7rem] uppercase tracking-[0.2em] text-on-surface-variant hover:text-white transition-colors cursor-pointer">UI/UX</span>
+</div>
+</section>
+<div class="space-y-32">
+<article class="group relative">
+<header class="mb-6 flex items-center gap-4">
+<time class="text-[0.7rem] uppercase tracking-[0.2em] text-on-surface-variant font-medium">MAY 24, 2024</time>
+<span class="h-px w-8 bg-white/10"></span>
+<span class="text-[0.7rem] uppercase tracking-[0.2em] text-on-surface-variant/40">#024</span>
+</header>
+<div class="space-y-6">
+<a class="block group-hover:opacity-80 transition-opacity" href="#">
+<h2 class="editorial-title text-3xl md:text-4xl text-white leading-tight">Architecting a headless CMS with Rust and Axum</h2>
+</a>
+<p class="text-on-surface-variant text-base md:text-lg leading-relaxed max-w-2xl font-light">
+                    An exploration into memory safety and high-performance routing for content delivery networks. Leveraging async-trait for provider abstraction.
+                </p>
+<div class="flex items-center gap-4 pt-4">
+<div class="flex gap-3">
+<span class="text-[0.65rem] uppercase tracking-[0.15em] text-on-surface-variant border border-white/10 px-3 py-1 rounded-full">RUST</span>
+<span class="text-[0.65rem] uppercase tracking-[0.15em] text-on-surface-variant border border-white/10 px-3 py-1 rounded-full">SYSTEM_DESIGN</span>
+</div>
+</div>
+</div>
+</article>
+<article class="group relative">
+<header class="mb-6 flex items-center gap-4">
+<time class="text-[0.7rem] uppercase tracking-[0.2em] text-on-surface-variant font-medium">APR 12, 2024</time>
+<span class="h-px w-8 bg-white/10"></span>
+<span class="text-[0.7rem] uppercase tracking-[0.2em] text-on-surface-variant/40">#023</span>
+</header>
+<div class="space-y-6">
+<a class="block group-hover:opacity-80 transition-opacity" href="#">
+<h2 class="editorial-title text-3xl md:text-4xl text-white leading-tight">The subtle art of state synchronization in React</h2>
+</a>
+<p class="text-on-surface-variant text-base md:text-lg leading-relaxed max-w-2xl font-light">
+                    Diving deep into useSyncExternalStore and why the future of state management might be simpler than you think.
+                </p>
+<div class="flex items-center gap-4 pt-4">
+<div class="flex gap-3">
+<span class="text-[0.65rem] uppercase tracking-[0.15em] text-on-surface-variant border border-white/10 px-3 py-1 rounded-full">REACT</span>
+<span class="text-[0.65rem] uppercase tracking-[0.15em] text-on-surface-variant border border-white/10 px-3 py-1 rounded-full">FRONTEND</span>
+</div>
+</div>
+</div>
+</article>
+<article class="group relative">
+<header class="mb-6 flex items-center gap-4">
+<time class="text-[0.7rem] uppercase tracking-[0.2em] text-on-surface-variant font-medium">MAR 08, 2024</time>
+<span class="h-px w-8 bg-white/10"></span>
+<span class="text-[0.7rem] uppercase tracking-[0.2em] text-on-surface-variant/40">#022</span>
+</header>
+<div class="space-y-6">
+<a class="block group-hover:opacity-80 transition-opacity" href="#">
+<h2 class="editorial-title text-3xl md:text-4xl text-white leading-tight">Rebuilding my workspace: A minimal approach</h2>
+</a>
+<p class="text-on-surface-variant text-base md:text-lg leading-relaxed max-w-2xl font-light">
+                    From NeoVim configurations to physical desk setups. How intentional friction improves deep work and focus.
+                </p>
+<div class="flex items-center gap-4 pt-4">
+<div class="flex gap-3">
+<span class="text-[0.65rem] uppercase tracking-[0.15em] text-on-surface-variant border border-white/10 px-3 py-1 rounded-full">NEOVIM</span>
+<span class="text-[0.65rem] uppercase tracking-[0.15em] text-on-surface-variant border border-white/10 px-3 py-1 rounded-full">WORKFLOW</span>
+</div>
+</div>
+</div>
+</article>
+<article class="group relative">
+<header class="mb-6 flex items-center gap-4">
+<time class="text-[0.7rem] uppercase tracking-[0.2em] text-on-surface-variant font-medium">JAN 19, 2024</time>
+<span class="h-px w-8 bg-white/10"></span>
+<span class="text-[0.7rem] uppercase tracking-[0.2em] text-on-surface-variant/40">#021</span>
+</header>
+<div class="space-y-6">
+<a class="block group-hover:opacity-80 transition-opacity" href="#">
+<h2 class="editorial-title text-3xl md:text-4xl text-white leading-tight">Type-Safe design systems with Tailwind CSS</h2>
+</a>
+<p class="text-on-surface-variant text-base md:text-lg leading-relaxed max-w-2xl font-light">
+                    Using TypeScript to enforce design tokens and ensure visual consistency across large-scale monorepos.
+                </p>
+<div class="flex items-center gap-4 pt-4">
+<div class="flex gap-3">
+<span class="text-[0.65rem] uppercase tracking-[0.15em] text-on-surface-variant border border-white/10 px-3 py-1 rounded-full">TYPESCRIPT</span>
+<span class="text-[0.65rem] uppercase tracking-[0.15em] text-on-surface-variant border border-white/10 px-3 py-1 rounded-full">UI_ENG</span>
+</div>
+</div>
+</div>
+</article>
+</div>
+<div class="mt-48 flex justify-center">
+<button class="text-[0.75rem] uppercase tracking-[0.3em] px-16 py-5 border border-white/20 text-on-surface hover:bg-white hover:text-background transition-all font-medium">
+            LOAD_ARCHIVE_DATA
+        </button>
+</div>
+</main>
+<footer class="w-full py-24 px-8 border-t border-white/5 bg-background">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-12 max-w-4xl mx-auto">
+<div class="flex flex-col gap-4">
+<span class="font-serif italic text-xl text-white">JK//DEV</span>
+<p class="text-[0.75rem] text-on-surface-variant tracking-wide">© 2024 Joël Kuijper — Solo Developer at Evangelische Omroep</p>
+</div>
+<div class="flex gap-10">
+<a class="text-[0.75rem] uppercase tracking-[0.15em] text-on-surface-variant hover:text-white transition-all underline underline-offset-8 decoration-white/10" href="#">GitHub</a>
+<a class="text-[0.75rem] uppercase tracking-[0.15em] text-on-surface-variant hover:text-white transition-all underline underline-offset-8 decoration-white/10" href="#">LinkedIn</a>
+<a class="text-[0.75rem] uppercase tracking-[0.15em] text-on-surface-variant hover:text-white transition-all underline underline-offset-8 decoration-white/10" href="#">Archive</a>
+</div>
+</div>
+</footer>
+
+</body></html>

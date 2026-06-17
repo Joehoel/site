@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=VT323&amp;family=IBM+Plex+Mono:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "hacker-green": "#00ff41",
+                    "hacker-green-dim": "#008f11",
+                    "hacker-black": "#0a0a0a",
+                    "hacker-charcoal": "#1a1a1a",
+                    "primary": "#00ff41",
+                    "on-surface": "#00ff41",
+                    "surface": "#0a0a0a",
+                    "background": "#050505"
+            },
+            "fontFamily": {
+                    "headline": ["VT323", "monospace"],
+                    "body": ["IBM Plex Mono", "monospace"],
+                    "label": ["VT323", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-background text-hacker-green font-body;
+                background-image: radial-gradient(circle, #1a1a1a 1px, transparent 1px);
+                background-size: 40px 40px;
+            }
+            ::-webkit-scrollbar {
+                width: 8px;
+            }
+            ::-webkit-scrollbar-track {
+                background: #0a0a0a;
+            }
+            ::-webkit-scrollbar-thumb {
+                background: #008f11;
+            }
+        }
+        .crt-overlay {
+            pointer-events: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 3px, 3px 100%;
+            z-index: 100;
+        }
+        .scanline {
+            width: 100%;
+            height: 100px;
+            z-index: 101;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 255, 65, 0.05) 50%, rgba(0, 0, 0, 0) 100%);
+            opacity: 0.1;
+            position: fixed;
+            bottom: 100%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-primary selection:bg-hacker-green selection:text-black">
+<div class="crt-overlay"></div>
+<nav class="fixed top-0 w-full z-50 bg-hacker-black/90 border-b border-hacker-green/20 backdrop-blur-sm">
+<div class="flex justify-between items-center px-8 py-4 max-w-5xl mx-auto">
+<a class="text-2xl font-headline tracking-widest text-hacker-green" href="/">[JK//DEV]</a>
+<div class="hidden md:flex gap-8 items-center font-headline text-lg">
+<a class="text-hacker-green-dim hover:text-hacker-green transition-colors" href="#">./work</a>
+<a class="text-hacker-green border-b-2 border-hacker-green" href="#">./blog</a>
+<a class="text-hacker-green-dim hover:text-hacker-green transition-colors" href="#">./uses</a>
+<a class="text-hacker-green-dim hover:text-hacker-green transition-colors" href="#">./contact</a>
+</div>
+<button class="md:hidden text-hacker-green">
+<span class="material-symbols-outlined">terminal</span>
+</button>
+</div>
+</nav>
+<main class="pt-32 pb-24 px-8 max-w-5xl mx-auto">
+<header class="mb-20">
+<div class="border-l-4 border-hacker-green pl-6 py-2 mb-12">
+<span class="font-headline text-xl text-hacker-green-dim block mb-2">SESSION_ID: TECHNICAL_LOG_001</span>
+<h1 class="font-headline text-5xl md:text-6xl leading-none text-hacker-green uppercase">
+                Articles, side projects <br/>&amp; engineering notes.
+            </h1>
+<p class="font-body text-sm mt-6 text-hacker-green-dim max-w-2xl leading-relaxed">
+                &gt; Documentation of my journey through distributed systems, frontend architecture, and developer tooling. Updated sporadically.
+            </p>
+</div>
+</header>
+<section class="mb-12 border border-hacker-green/30 bg-hacker-charcoal/50 p-4 font-headline">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div class="flex items-center gap-4 w-full md:w-auto">
+<span class="text-hacker-green">root@jk:~$</span>
+<input class="bg-transparent border-none focus:ring-0 text-xl text-hacker-green w-full md:w-64 placeholder:text-hacker-green-dim/30" placeholder="grep topic..." type="text"/>
+</div>
+<div class="flex flex-wrap gap-3 text-sm">
+<span class="bg-hacker-green text-black px-3 py-0.5">ALL</span>
+<span class="border border-hacker-green/40 px-3 py-0.5 hover:bg-hacker-green hover:text-black transition-colors cursor-pointer">ARCHITECTURE</span>
+<span class="border border-hacker-green/40 px-3 py-0.5 hover:bg-hacker-green hover:text-black transition-colors cursor-pointer">RUST</span>
+<span class="border border-hacker-green/40 px-3 py-0.5 hover:bg-hacker-green hover:text-black transition-colors cursor-pointer">UI/UX</span>
+</div>
+</div>
+</section>
+<div class="flex flex-col border-t border-hacker-green/20">
+<article class="group relative flex flex-col md:flex-row py-8 border-b border-hacker-green/10 hover:bg-hacker-green/5 transition-colors">
+<div class="md:w-48 shrink-0 mb-2 md:mb-0 font-headline text-lg">
+<span class="text-hacker-green-dim block">[2024-05-24]</span>
+<span class="text-hacker-green-dim/40 block mt-0.5">PID: 024</span>
+</div>
+<div class="flex-grow">
+<div class="flex flex-col gap-2">
+<h2 class="font-headline text-3xl text-hacker-green group-hover:underline decoration-1 underline-offset-4">Architecting a headless CMS with Rust and Axum</h2>
+<p class="font-body text-sm text-hacker-green-dim leading-relaxed max-w-3xl">
+                        An exploration into memory safety and high-performance routing for content delivery networks. Leveraging async-trait for provider abstraction.
+                    </p>
+<div class="flex gap-4 mt-2 font-headline text-xs">
+<span class="text-hacker-green/60">TAGS: [RUST] [SYSTEM_DESIGN]</span>
+<span class="hidden md:inline text-hacker-green/30 ml-auto">READ_MORE -&gt;</span>
+</div>
+</div>
+</div>
+</article>
+<article class="group relative flex flex-col md:flex-row py-8 border-b border-hacker-green/10 hover:bg-hacker-green/5 transition-colors">
+<div class="md:w-48 shrink-0 mb-2 md:mb-0 font-headline text-lg">
+<span class="text-hacker-green-dim block">[2024-04-12]</span>
+<span class="text-hacker-green-dim/40 block mt-0.5">PID: 023</span>
+</div>
+<div class="flex-grow">
+<div class="flex flex-col gap-2">
+<h2 class="font-headline text-3xl text-hacker-green group-hover:underline decoration-1 underline-offset-4">The subtle art of state synchronization in React</h2>
+<p class="font-body text-sm text-hacker-green-dim leading-relaxed max-w-3xl">
+                        Diving deep into useSyncExternalStore and why the future of state management might be simpler than you think.
+                    </p>
+<div class="flex gap-4 mt-2 font-headline text-xs">
+<span class="text-hacker-green/60">TAGS: [REACT] [FRONTEND]</span>
+<span class="hidden md:inline text-hacker-green/30 ml-auto">READ_MORE -&gt;</span>
+</div>
+</div>
+</div>
+</article>
+<article class="group relative flex flex-col md:flex-row py-8 border-b border-hacker-green/10 hover:bg-hacker-green/5 transition-colors">
+<div class="md:w-48 shrink-0 mb-2 md:mb-0 font-headline text-lg">
+<span class="text-hacker-green-dim block">[2024-03-08]</span>
+<span class="text-hacker-green-dim/40 block mt-0.5">PID: 022</span>
+</div>
+<div class="flex-grow">
+<div class="flex flex-col gap-2">
+<h2 class="font-headline text-3xl text-hacker-green group-hover:underline decoration-1 underline-offset-4">Rebuilding my workspace: A minimal approach</h2>
+<p class="font-body text-sm text-hacker-green-dim leading-relaxed max-w-3xl">
+                        From NeoVim configurations to physical desk setups. How intentional friction improves deep work and focus.
+                    </p>
+<div class="flex gap-4 mt-2 font-headline text-xs">
+<span class="text-hacker-green/60">TAGS: [NEOVIM] [WORKFLOW]</span>
+<span class="hidden md:inline text-hacker-green/30 ml-auto">READ_MORE -&gt;</span>
+</div>
+</div>
+</div>
+</article>
+<article class="group relative flex flex-col md:flex-row py-8 border-b border-hacker-green/10 hover:bg-hacker-green/5 transition-colors">
+<div class="md:w-48 shrink-0 mb-2 md:mb-0 font-headline text-lg">
+<span class="text-hacker-green-dim block">[2024-01-19]</span>
+<span class="text-hacker-green-dim/40 block mt-0.5">PID: 021</span>
+</div>
+<div class="flex-grow">
+<div class="flex flex-col gap-2">
+<h2 class="font-headline text-3xl text-hacker-green group-hover:underline decoration-1 underline-offset-4">Type-Safe design systems with Tailwind CSS</h2>
+<p class="font-body text-sm text-hacker-green-dim leading-relaxed max-w-3xl">
+                        Using TypeScript to enforce design tokens and ensure visual consistency across large-scale monorepos.
+                    </p>
+<div class="flex gap-4 mt-2 font-headline text-xs">
+<span class="text-hacker-green/60">TAGS: [TYPESCRIPT] [UI_ENG]</span>
+<span class="hidden md:inline text-hacker-green/30 ml-auto">READ_MORE -&gt;</span>
+</div>
+</div>
+</div>
+</article>
+</div>
+<div class="mt-20 flex justify-center">
+<button class="font-headline text-xl border-2 border-hacker-green px-12 py-3 text-hacker-green hover:bg-hacker-green hover:text-black transition-all">
+            FETCH_ARCHIVE_DATA.BIN
+        </button>
+</div>
+</main>
+<footer class="w-full py-12 px-8 border-t border-hacker-green/20 bg-hacker-black">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 max-w-5xl mx-auto">
+<div class="flex flex-col gap-2 font-headline">
+<span class="text-2xl text-hacker-green tracking-widest">[JK//DEV]</span>
+<p class="text-hacker-green-dim">© 2024 Joël Kuijper — Solo Developer at Evangelische Omroep</p>
+</div>
+<div class="flex gap-8 font-headline text-lg">
+<a class="text-hacker-green-dim hover:text-hacker-green underline decoration-hacker-green/30" href="#">GitHub</a>
+<a class="text-hacker-green-dim hover:text-hacker-green underline decoration-hacker-green/30" href="#">LinkedIn</a>
+<a class="text-hacker-green-dim hover:text-hacker-green underline decoration-hacker-green/30" href="#">Archive</a>
+</div>
+</div>
+<div class="max-w-5xl mx-auto mt-12 text-[10px] text-hacker-green/20 font-body uppercase tracking-[0.3em]">
+        System: v2.4.0-stable // Hardware: Virtual // Encryption: AES-256
+    </div>
+</footer>
+
+</body></html>
