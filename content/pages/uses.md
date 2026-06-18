@@ -69,6 +69,11 @@ Lightweight gaming mouse. Light enough to never get in the way during long sessi
 ::spec-card{icon="i-lucide-feather" category="Laravel" name="Tinkerwell"}
 
 - A far better `php artisan tinker` environment for [Laravel](https://laravel.com/) projects
+
+::
+
+::spec-card{icon="i-lucide-layout-grid" category="Apps" name="Todoist & ProNotes"}
+
 - [Todoist](https://todoist.com) for task management, work and personal
 - [ProNotes](https://www.pronotes.app/) for Markdown notes inside Apple Notes
 
