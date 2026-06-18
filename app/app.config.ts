@@ -1,8 +1,18 @@
 export default defineAppConfig({
+  ui: {
+    // Monochrome: primary = white, neutral = Atelier greys.
+    // The actual hex values live in main.css (--ui-color-*); these names just
+    // tell Nuxt UI which scales to wire its semantic aliases to.
+    colors: {
+      primary: "primary",
+      neutral: "neutral",
+    },
+  },
+
   site: {
-    title: "Joel",
-    author: "Joel Kuijper",
-    description: "Personal website of Joel Kuijper",
+    title: "Joël",
+    author: "Joël Kuijper",
+    description: "Personal website of Joël Kuijper",
     lang: "nl-NL",
     ogLocale: "nl_NL",
   },

@@ -1,0 +1,405 @@
+<!doctype html>
+
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "inverse-surface": "#e5e2e1",
+              "on-secondary": "#1a1c1c",
+              error: "#ffb4ab",
+              "on-primary-fixed": "#ffffff",
+              "error-container": "#93000a",
+              "on-primary": "#1a1c1c",
+              "surface-container-highest": "#353534",
+              "surface-container": "#201f1f",
+              "secondary-fixed-dim": "#ababab",
+              "tertiary-container": "#919191",
+              "primary-fixed": "#5d5f5f",
+              "surface-variant": "#353534",
+              "secondary-fixed": "#c7c6c6",
+              "surface-bright": "#3a3939",
+              "on-tertiary-container": "#000000",
+              "surface-dim": "#131313",
+              "on-tertiary-fixed-variant": "#e2e2e2",
+              "tertiary-fixed-dim": "#474747",
+              "on-background": "#e5e2e1",
+              surface: "#131313",
+              "on-primary-fixed-variant": "#e2e2e2",
+              "on-surface": "#e5e2e1",
+              "inverse-on-surface": "#313030",
+              "on-tertiary": "#1b1b1b",
+              "outline-variant": "#474747",
+              "tertiary-fixed": "#5e5e5e",
+              "on-primary-container": "#000000",
+              primary: "#ffffff",
+              "surface-tint": "#c6c6c7",
+              tertiary: "#e2e2e2",
+              "on-error": "#690005",
+              "on-error-container": "#ffdad6",
+              "surface-container-low": "#1c1b1b",
+              "inverse-primary": "#5d5f5f",
+              "on-secondary-container": "#e3e2e2",
+              secondary: "#c7c6c6",
+              "primary-fixed-dim": "#454747",
+              "on-secondary-fixed-variant": "#3a3c3c",
+              "on-secondary-fixed": "#1a1c1c",
+              background: "#131313",
+              "on-tertiary-fixed": "#ffffff",
+              "secondary-container": "#464747",
+              "primary-container": "#d4d4d4",
+              outline: "#919191",
+              "surface-container-high": "#2a2a2a",
+              "surface-container-lowest": "#0e0e0e",
+              "on-surface-variant": "#c6c6c6",
+            },
+            borderRadius: {
+              DEFAULT: "0px",
+              lg: "0px",
+              xl: "0px",
+              full: "9999px",
+            },
+            fontFamily: {
+              headline: ["Space Grotesk"],
+              body: ["Manrope"],
+              label: ["Space Grotesk"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      body {
+        background-color: #131313;
+        color: #e5e2e1;
+        font-family: "Manrope", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-surface text-on-surface">
+    <!-- TopNavBar -->
+    <nav class="fixed top-0 w-full z-50 bg-[#131313]/70 backdrop-blur-xl">
+      <div class="flex justify-between items-center px-8 py-6 max-w-7xl mx-auto">
+        <a class="text-xl font-bold tracking-tighter text-white font-['Space_Grotesk']" href="/"
+          >JK//DEV</a
+        >
+        <div class="hidden md:flex gap-8 items-center">
+          <a
+            class="font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] font-medium text-gray-400 hover:text-white transition-colors duration-200"
+            href="#"
+            >Work</a
+          >
+          <a
+            class="font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] font-medium text-white border-b border-white pb-1 transition-colors duration-200"
+            href="#"
+            >Blog</a
+          >
+          <a
+            class="font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] font-medium text-gray-400 hover:text-white transition-colors duration-200"
+            href="#"
+            >/Uses</a
+          >
+          <a
+            class="font-['Space_Grotesk'] text-[0.6875rem] uppercase tracking-[0.1em] font-medium text-gray-400 hover:text-white transition-colors duration-200"
+            href="#"
+            >Contact</a
+          >
+        </div>
+        <button class="md:hidden text-white">
+          <span class="material-symbols-outlined" data-icon="menu">menu</span>
+        </button>
+      </div>
+    </nav>
+    <main class="pt-32 pb-24 px-8 max-w-7xl mx-auto">
+      <!-- Hero Header -->
+      <header class="mb-24 grid grid-cols-1 md:grid-cols-12 gap-8">
+        <div class="md:col-span-8">
+          <span
+            class="font-label text-[0.6875rem] uppercase tracking-[0.1em] text-on-surface-variant block mb-4"
+            >// TECHNICAL_LOG</span
+          >
+          <h1
+            class="font-headline text-[3.5rem] leading-[1.1] font-bold tracking-[-0.04em] text-primary"
+          >
+            Articles, side projects <br />&amp; engineering notes.
+          </h1>
+        </div>
+        <div class="md:col-span-4 flex md:items-end md:justify-end">
+          <p class="font-body text-sm text-on-surface-variant max-w-xs text-left md:text-right">
+            Documentation of my journey through distributed systems, frontend architecture, and
+            developer tooling. Updated sporadically.
+          </p>
+        </div>
+      </header>
+      <!-- Search / Filter (System Aesthetic) -->
+      <section
+        class="mb-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-surface-container-lowest p-6"
+      >
+        <div class="flex items-center gap-4">
+          <span class="material-symbols-outlined text-outline" data-icon="search">search</span>
+          <input
+            class="bg-transparent border-none focus:ring-0 font-label text-[0.6875rem] uppercase tracking-[0.1em] text-on-surface w-64 placeholder:text-outline-variant"
+            placeholder="QUERY_BY_TOPIC..."
+            type="text"
+          />
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span
+            class="bg-surface-container-highest px-3 py-1 font-label text-[0.6875rem] uppercase tracking-[0.1em] text-white"
+            >ALL</span
+          >
+          <span
+            class="bg-surface-container-low px-3 py-1 font-label text-[0.6875rem] uppercase tracking-[0.1em] text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer"
+            >ARCHITECTURE</span
+          >
+          <span
+            class="bg-surface-container-low px-3 py-1 font-label text-[0.6875rem] uppercase tracking-[0.1em] text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer"
+            >RUST</span
+          >
+          <span
+            class="bg-surface-container-low px-3 py-1 font-label text-[0.6875rem] uppercase tracking-[0.1em] text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer"
+            >UI/UX</span
+          >
+        </div>
+      </section>
+      <!-- Article List -->
+      <div class="flex flex-col">
+        <!-- Entry 01 -->
+        <article
+          class="group relative flex flex-col md:flex-row py-12 bg-surface hover:bg-surface-container-low transition-colors duration-300"
+        >
+          <div class="md:w-1/4 mb-4 md:mb-0">
+            <span
+              class="font-label text-[0.6875rem] uppercase tracking-[0.1em] text-on-surface-variant block"
+              >MAY 24, 2024</span
+            >
+            <span
+              class="font-label text-[0.6875rem] uppercase tracking-[0.1em] text-primary/40 block mt-1"
+              >#024</span
+            >
+          </div>
+          <div class="md:w-3/4">
+            <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
+              <div>
+                <h2 class="font-headline text-2xl font-bold tracking-tight text-primary mb-3">
+                  Architecting a headless CMS with Rust and Axum
+                </h2>
+                <p class="font-body text-sm text-on-surface-variant leading-relaxed max-w-2xl mb-6">
+                  An exploration into memory safety and high-performance routing for content
+                  delivery networks. Leveraging async-trait for provider abstraction.
+                </p>
+                <div class="flex gap-4">
+                  <code
+                    class="font-label text-[0.6875rem] text-primary border border-outline-variant/20 px-2 py-1 bg-surface-container-lowest"
+                    >RUST</code
+                  >
+                  <code
+                    class="font-label text-[0.6875rem] text-primary border border-outline-variant/20 px-2 py-1 bg-surface-container-lowest"
+                    >SYSTEM_DESIGN</code
+                  >
+                </div>
+              </div>
+              <span
+                class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors"
+                data-icon="arrow_outward"
+                >arrow_outward</span
+              >
+            </div>
+          </div>
+        </article>
+        <!-- Entry 02 (Tonal shift example) -->
+        <article
+          class="group relative flex flex-col md:flex-row py-12 border-t border-white/5 bg-surface hover:bg-surface-container-low transition-colors duration-300"
+        >
+          <div class="md:w-1/4 mb-4 md:mb-0">
+            <span
+              class="font-label text-[0.6875rem] uppercase tracking-[0.1em] text-on-surface-variant block"
+              >APR 12, 2024</span
+            >
+            <span
+              class="font-label text-[0.6875rem] uppercase tracking-[0.1em] text-primary/40 block mt-1"
+              >#023</span
+            >
+          </div>
+          <div class="md:w-3/4">
+            <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
+              <div>
+                <h2 class="font-headline text-2xl font-bold tracking-tight text-primary mb-3">
+                  The subtle art of state synchronization in React
+                </h2>
+                <p class="font-body text-sm text-on-surface-variant leading-relaxed max-w-2xl mb-6">
+                  Diving deep into useSyncExternalStore and why the future of state management might
+                  be simpler than you think.
+                </p>
+                <div class="flex gap-4">
+                  <code
+                    class="font-label text-[0.6875rem] text-primary border border-outline-variant/20 px-2 py-1 bg-surface-container-lowest"
+                    >REACT</code
+                  >
+                  <code
+                    class="font-label text-[0.6875rem] text-primary border border-outline-variant/20 px-2 py-1 bg-surface-container-lowest"
+                    >FRONTEND</code
+                  >
+                </div>
+              </div>
+              <span
+                class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors"
+                data-icon="arrow_outward"
+                >arrow_outward</span
+              >
+            </div>
+          </div>
+        </article>
+        <!-- Entry 03 -->
+        <article
+          class="group relative flex flex-col md:flex-row py-12 border-t border-white/5 bg-surface hover:bg-surface-container-low transition-colors duration-300"
+        >
+          <div class="md:w-1/4 mb-4 md:mb-0">
+            <span
+              class="font-label text-[0.6875rem] uppercase tracking-[0.1em] text-on-surface-variant block"
+              >MAR 08, 2024</span
+            >
+            <span
+              class="font-label text-[0.6875rem] uppercase tracking-[0.1em] text-primary/40 block mt-1"
+              >#022</span
+            >
+          </div>
+          <div class="md:w-3/4">
+            <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
+              <div>
+                <h2 class="font-headline text-2xl font-bold tracking-tight text-primary mb-3">
+                  Rebuilding my workspace: A minimal approach
+                </h2>
+                <p class="font-body text-sm text-on-surface-variant leading-relaxed max-w-2xl mb-6">
+                  From NeoVim configurations to physical desk setups. How intentional friction
+                  improves deep work and focus.
+                </p>
+                <div class="flex gap-4">
+                  <code
+                    class="font-label text-[0.6875rem] text-primary border border-outline-variant/20 px-2 py-1 bg-surface-container-lowest"
+                    >NEOVIM</code
+                  >
+                  <code
+                    class="font-label text-[0.6875rem] text-primary border border-outline-variant/20 px-2 py-1 bg-surface-container-lowest"
+                    >WORKFLOW</code
+                  >
+                </div>
+              </div>
+              <span
+                class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors"
+                data-icon="arrow_outward"
+                >arrow_outward</span
+              >
+            </div>
+          </div>
+        </article>
+        <!-- Entry 04 -->
+        <article
+          class="group relative flex flex-col md:flex-row py-12 border-t border-white/5 bg-surface hover:bg-surface-container-low transition-colors duration-300"
+        >
+          <div class="md:w-1/4 mb-4 md:mb-0">
+            <span
+              class="font-label text-[0.6875rem] uppercase tracking-[0.1em] text-on-surface-variant block"
+              >JAN 19, 2024</span
+            >
+            <span
+              class="font-label text-[0.6875rem] uppercase tracking-[0.1em] text-primary/40 block mt-1"
+              >#021</span
+            >
+          </div>
+          <div class="md:w-3/4">
+            <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
+              <div>
+                <h2 class="font-headline text-2xl font-bold tracking-tight text-primary mb-3">
+                  Type-Safe design systems with Tailwind CSS
+                </h2>
+                <p class="font-body text-sm text-on-surface-variant leading-relaxed max-w-2xl mb-6">
+                  Using TypeScript to enforce design tokens and ensure visual consistency across
+                  large-scale monorepos.
+                </p>
+                <div class="flex gap-4">
+                  <code
+                    class="font-label text-[0.6875rem] text-primary border border-outline-variant/20 px-2 py-1 bg-surface-container-lowest"
+                    >TYPESCRIPT</code
+                  >
+                  <code
+                    class="font-label text-[0.6875rem] text-primary border border-outline-variant/20 px-2 py-1 bg-surface-container-lowest"
+                    >UI_ENG</code
+                  >
+                </div>
+              </div>
+              <span
+                class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors"
+                data-icon="arrow_outward"
+                >arrow_outward</span
+              >
+            </div>
+          </div>
+        </article>
+      </div>
+      <!-- Pagination / Load More -->
+      <div class="mt-24 flex justify-center">
+        <button
+          class="font-label text-[0.6875rem] uppercase tracking-[0.2em] px-12 py-4 bg-primary text-on-primary font-bold hover:opacity-90 transition-opacity"
+        >
+          LOAD_ARCHIVE_DATA
+        </button>
+      </div>
+    </main>
+    <!-- Footer -->
+    <footer class="w-full py-12 px-8 border-t border-white/10 bg-[#131313]">
+      <div
+        class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 max-w-7xl mx-auto"
+      >
+        <div class="flex flex-col gap-2">
+          <span class="font-['Space_Grotesk'] font-bold text-white">JK//DEV</span>
+          <p class="font-['Manrope'] text-[0.875rem] text-gray-400">
+            © 2024 Joël Kuijper — Solo Developer at Evangelische Omroep
+          </p>
+        </div>
+        <div class="flex gap-8">
+          <a
+            class="font-['Manrope'] text-[0.875rem] text-gray-500 hover:text-white underline decoration-white/30 transition-all"
+            href="#"
+            >GitHub</a
+          >
+          <a
+            class="font-['Manrope'] text-[0.875rem] text-gray-500 hover:text-white underline decoration-white/30 transition-all"
+            href="#"
+            >LinkedIn</a
+          >
+          <a
+            class="font-['Manrope'] text-[0.875rem] text-gray-500 hover:text-white underline decoration-white/30 transition-all"
+            href="#"
+            >Archive</a
+          >
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

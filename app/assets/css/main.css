@@ -1,64 +1,143 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
-@import "@fontsource-variable/albert-sans";
 
-/* Custom theme colors */
+/* ==========================================================================
+   Atelier Mono — Dark · "The Monastic Engineer"
+   Monochrome palette, sharp corners (radius 0), Space Grotesk + Manrope.
+   Token-ladder per design/atelier/component-map.md — single source of truth:
+   the Atelier greys feed Nuxt UI's semantic aliases so UButton/UBadge inherit.
+   ========================================================================== */
+
 @theme {
-  --color-accent: hsl(var(--theme-accent));
-  --color-accent-2: hsl(var(--theme-accent-2));
-  --color-bg-color: hsl(var(--theme-bg));
-  --color-link: hsl(var(--theme-link));
-  --color-quote: hsl(var(--theme-quote));
-  --color-text-color: hsl(var(--theme-text));
+  /* Fonts — auto-fetched by @nuxt/fonts (bundled with Nuxt UI v4). */
+  --font-headline: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-label: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  /* `font-sans` (Tailwind/Nuxt UI default) → body for any unstyled text. */
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
 
-  --font-sans: "Albert Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  /* Atelier monochrome scale — exposed as Tailwind color utilities
+     (text-surface, bg-surface-container-high, border-outline-variant, …). */
+  --color-surface: #131313;
+  --color-surface-dim: #131313;
+  --color-surface-bright: #3a3939;
+  --color-surface-container-lowest: #0e0e0e;
+  --color-surface-container-low: #1c1b1b;
+  --color-surface-container: #201f1f;
+  --color-surface-container-high: #2a2a2a;
+  --color-surface-container-highest: #353534;
+  --color-on-surface: #e5e2e1;
+  --color-on-surface-variant: #c6c6c6;
+  --color-outline: #919191;
+  --color-outline-variant: #474747;
+}
+
+/* --------------------------------------------------------------------------
+   Wire the Atelier greys into Nuxt UI's semantic aliases.
+   Dark is the only real theme; the light block is a safe fallback so nothing
+   explodes if color-mode resolves to light before hydration.
+   -------------------------------------------------------------------------- */
+@layer theme {
+  :root {
+    --ui-radius: 0rem;
+    --ui-container: 80rem;
+
+    /* Atelier greys mapped onto Nuxt UI's neutral scale (light fallback). */
+    --ui-color-neutral-50: #e5e2e1;
+    --ui-color-neutral-100: #c6c6c6;
+    --ui-color-neutral-200: #919191;
+    --ui-color-neutral-300: #474747;
+    --ui-color-neutral-400: #353534;
+    --ui-color-neutral-500: #2a2a2a;
+    --ui-color-neutral-600: #201f1f;
+    --ui-color-neutral-700: #1c1b1b;
+    --ui-color-neutral-800: #131313;
+    --ui-color-neutral-900: #0e0e0e;
+    --ui-color-neutral-950: #0e0e0e;
+
+    /* Primary = pure white (monochrome accent). */
+    --ui-color-primary-50: #ffffff;
+    --ui-color-primary-100: #f5f5f5;
+    --ui-color-primary-200: #e5e2e1;
+    --ui-color-primary-300: #d4d4d4;
+    --ui-color-primary-400: #c6c6c6;
+    --ui-color-primary-500: #ffffff;
+    --ui-color-primary-600: #e5e2e1;
+    --ui-color-primary-700: #c6c6c6;
+    --ui-color-primary-800: #919191;
+    --ui-color-primary-900: #474747;
+    --ui-color-primary-950: #353534;
+    --ui-primary: #ffffff;
+  }
+
+  /* Canonical token-ladder → Nuxt UI semantic aliases (the real theme). */
+  .dark {
+    --ui-text-dimmed: var(--color-outline); /* meta / label   #919191 */
+    --ui-text-muted: var(--color-on-surface-variant); /* gedempte body  #c6c6c6 */
+    --ui-text-toned: var(--color-on-surface-variant);
+    --ui-text: var(--color-on-surface); /* body           #e5e2e1 */
+    --ui-text-highlighted: #ffffff; /* heading        #ffffff */
+    --ui-text-inverted: var(--color-surface);
+
+    --ui-bg: var(--color-surface); /* canvas / nav-glas  #131313 */
+    --ui-bg-muted: var(--color-surface-container-low); /* hover / sectie     #1c1b1b */
+    --ui-bg-elevated: var(--color-surface-container-high); /* card / interactief #2a2a2a */
+    --ui-bg-accented: var(--color-surface-container-highest); /*                    #353534 */
+    --ui-bg-inverted: var(--color-on-surface);
+
+    --ui-border: var(--color-outline-variant); /* hairline       #474747 */
+    --ui-border-muted: var(--color-outline-variant);
+    --ui-border-accented: var(--color-outline);
+    --ui-border-inverted: #ffffff;
+
+    --ui-primary: #ffffff;
+  }
 }
 
 @layer base {
-  :root,
-  :root[data-theme="light"],
-  html:not(.dark) {
-    color-scheme: light;
-    --theme-bg: 0deg 0% 98%;
-    --theme-link: 172deg 18% 41%;
-    --theme-text: 203deg 11% 15%;
-    --theme-accent: 351deg 66% 48%;
-    --theme-accent-2: 0deg 0% 7%;
-    --theme-quote: 351deg 66% 48%;
-  }
-
-  :root[data-theme="dark"],
-  html.dark {
-    color-scheme: dark;
-    --theme-bg: 210deg 6% 12%;
-    --theme-link: 330deg 49% 67%;
-    --theme-text: 220deg 3% 79%;
-    --theme-accent: 159deg 64% 45%;
-    --theme-accent-2: 0deg 0% 93%;
-    --theme-quote: 102deg 100% 86%;
-  }
-
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-bg-color text-text-color antialiased;
+    @apply bg-default text-default antialiased;
+    font-family: var(--font-body);
   }
 
-  /* Inline code styling (not in code blocks) */
+  /* Editorial selection — white block, dark text. */
+  ::selection {
+    background-color: #ffffff;
+    color: #1a1c1c;
+  }
+
+  /* Inline code (not in code blocks). */
   :not(pre) > code {
     font-family:
       ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
       monospace;
     font-size: 0.875em;
     padding: 0.2em 0.4em;
-    border-radius: 3px;
-    background-color: hsl(var(--theme-text) / 0.1);
+    border-radius: 0;
+    background-color: var(--color-surface-container-high);
   }
 }
 
-/* Custom component classes */
+/* --------------------------------------------------------------------------
+   Legacy utility shims.
+   Pages/components rebuilt in later tickets still reference the pre-redesign
+   tokens (accent, bg-color, text-color, link, quote, .link, .title). Remap
+   them onto the Atelier monochrome palette so every existing page renders in
+   the new system without a layout break. Later tickets drop these as they go.
+   -------------------------------------------------------------------------- */
+@theme {
+  --color-accent: var(--color-on-surface);
+  --color-accent-2: #ffffff;
+  --color-bg-color: var(--color-surface);
+  --color-link: var(--color-on-surface);
+  --color-quote: var(--color-outline);
+  --color-text-color: var(--color-on-surface);
+}
+
 @layer components {
   .link {
     @apply underline underline-offset-2;
@@ -67,20 +146,26 @@
     @apply decoration-link decoration-2;
   }
   .title {
-    @apply text-2xl font-semibold text-accent-2;
+    @apply font-headline text-2xl font-semibold tracking-tight text-highlighted;
   }
 }
 
-/* Code block styling */
+/* --------------------------------------------------------------------------
+   Code blocks
+   -------------------------------------------------------------------------- */
 pre {
   font-family:
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
     monospace;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   line-height: 1.7142857rem;
-  border-radius: 4px;
-  padding: 1rem;
+  border-radius: 0;
   overflow-x: auto;
+}
+
+/* The code panel (ProsePre.vue) owns the surface; keep pre transparent within prose. */
+.prose-atelier pre {
+  background-color: transparent;
 }
 
 pre code {
@@ -93,11 +178,158 @@ pre code {
 }
 
 /* Shiki dark mode theme switching */
-/* Remap default variables to dark values so inline styles using --shiki-default also work */
 html.dark .shiki {
   --shiki-default: var(--shiki-dark);
   --shiki-default-bg: var(--shiki-dark-bg);
   --shiki-default-font-style: var(--shiki-dark-font-style);
   --shiki-default-font-weight: var(--shiki-dark-font-weight);
   --shiki-default-text-decoration: var(--shiki-dark-text-decoration);
+}
+
+/* --------------------------------------------------------------------------
+   Prose — Atelier editorial style
+   Manrope body, Space Grotesk headings, the role-based type-scale from
+   component-map.md. Monochrome tokens only; hairlines on outline-variant.
+   -------------------------------------------------------------------------- */
+.prose-atelier {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--color-on-surface-variant);
+  /* Readable measure — keeps long-form text a comfortable width on the full-width canvas. */
+  max-width: 56rem;
+}
+
+.prose-atelier :where(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--font-headline);
+  color: var(--ui-text-highlighted);
+  scroll-margin-top: 7rem;
+}
+
+/* Heading (section H2). */
+.prose-atelier :where(h2) {
+  font-size: 1.5rem;
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.0125em;
+  margin-top: 3rem;
+  margin-bottom: 1.25rem;
+}
+
+/* Subheading (H3). */
+.prose-atelier :where(h3) {
+  font-size: 1.25rem;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.0125em;
+  margin-top: 2.25rem;
+  margin-bottom: 1rem;
+}
+
+.prose-atelier :where(h4) {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose-atelier :where(p) {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.prose-atelier :where(strong) {
+  color: var(--ui-text-highlighted);
+  font-weight: 600;
+}
+
+/* Links: underline-on-hover (tertiary button logic from the brief). */
+.prose-atelier :where(a) {
+  color: var(--ui-text-highlighted);
+  text-decoration: underline;
+  text-decoration-color: var(--color-outline-variant);
+  text-underline-offset: 2px;
+  transition: text-decoration-color 0.2s;
+}
+
+.prose-atelier :where(a):hover {
+  text-decoration-color: var(--ui-text-highlighted);
+}
+
+/* Inline code. */
+.prose-atelier :where(:not(pre) > code) {
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.875em;
+  color: var(--ui-text-highlighted);
+  background-color: var(--color-surface-container-high);
+  padding: 0.15em 0.4em;
+}
+
+.prose-atelier :where(:not(pre) > code)::before,
+.prose-atelier :where(:not(pre) > code)::after {
+  content: none;
+}
+
+.prose-atelier :where(ul, ol) {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.prose-atelier :where(li) {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose-atelier :where(ul) > li::marker {
+  color: var(--color-outline);
+}
+
+.prose-atelier :where(ol) > li::marker {
+  color: var(--color-outline);
+  font-family: var(--font-label);
+}
+
+/* Blockquote: left hairline accent, no rounded box. */
+.prose-atelier :where(blockquote) {
+  font-family: var(--font-headline);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ui-text-highlighted);
+  border-left: 2px solid var(--ui-text-highlighted);
+  padding-left: 1.5rem;
+  margin: 2rem 0;
+}
+
+.prose-atelier :where(hr) {
+  border: 0;
+  border-top: 1px solid var(--color-outline-variant);
+  margin: 3rem 0;
+}
+
+.prose-atelier :where(img) {
+  margin: 2rem 0;
+}
+
+.prose-atelier :where(table) {
+  font-size: 0.875rem;
+  width: 100%;
+}
+
+.prose-atelier :where(th) {
+  font-family: var(--font-label);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.6875rem;
+  color: var(--color-outline);
+  text-align: left;
+  border-bottom: 1px solid var(--color-outline-variant);
+  padding: 0.5rem 0.75rem;
+}
+
+.prose-atelier :where(td) {
+  border-bottom: 1px solid var(--color-outline-variant);
+  padding: 0.5rem 0.75rem;
 }

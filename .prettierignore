@@ -1,0 +1,6 @@
+# oxfmt reads this ignore file automatically.
+# The Claude GitHub Action validates that its workflow files are byte-identical
+# to the version on the default branch (a security check). Formatting them would
+# break that validation, so keep these generated files out of the formatter.
+.github/workflows/claude.yml
+.github/workflows/claude-code-review.yml

@@ -4,31 +4,79 @@ description: Here you will find a list of my favorite tools and apps that I use 
 publishDate: 2025-06-03
 ---
 
-Here you will find a list of my favorite tools and apps that I use on a daily basis; for work and personal use.
+::spec-hero{eyebrow="SYSTEM_MANIFEST" title="Technical configuration for focused production."}
+A curated list of the hardware, software, and tools I use daily — for work at [De Indruk](https://www.deindruk.nl) and personal projects.
+::
 
-## Development
+:::spec-section{index="SECTION_01" heading="Hardware" kicker="Physical Stack" layout="rows"}
 
-- For the longest time I was using [Visual Studio Code](https://code.visualstudio.com/). But since :timestamp{date="2025-06-03"}, I have been using [Cursor](https://www.cursor.com/).
-- I'm using [Ghostty](https://ghostty.org/) as my terminal emulator. Previously I was using [Warp](https://www.warp.dev/) but after a while I found it to be a little sluggish. I also don't like all their AI bloat on top.
-- I use [Chrome](https://www.google.com/chrome/) as my default browser. I tried [Arc](https://arc.net/) and [Zen](https://zen-browser.app/), I just can't get used to the vertical tabs. Chrome is also the most performant and stable.
-- For some [Laravel](https://laravel.com/) projects I like to use [Tinkerwell](https://tinkerwell.app/) for a better `php artisan tinker` enviroment. Check it out.
-- To manage and interact with my local and remote databases I use [TablePlus](https://tableplus.com/) with [DBngin](https://dbngin.com/).
-- I also use [Proxyman](https://proxyman.com/) from time to time (same developer as TablePlus) for when I need a "network tab" while developing [React Native](https://reactnative.dev/) apps.
+::spec-item{label="PRIMARY_MACHINE" name="MacBook Pro 16-inch M1 Pro" status="In Use"}
+The 2021 model. Still blazingly fast for everything I throw at it.
+::
 
-## MacOS apps
+::spec-item{label="INPUT_DEVICE" name="Keychron K8 Pro"}
+QMK/VIA wireless mechanical keyboard. My daily driver for both work and play.
+::
 
-- You should definitely try [Raycast](https://www.raycast.com/). It's my favourite app of all time and I use it for many things. For example:
-  - Window Management.
-  - AI Chat (Yes, I have the Pro subscription).
-  - Emoji Picker.
-  - Clipboard History.
-  - Text Sniping (capture text from an image)
-  - And many more things through extensions :)
-- For task management in my personal life and miscellaneous work tasks I use [Todoist](https://todoist.com).
-- I sometimes take notes in Apple Notes but I like typing in Markdown so thats where [ProNotes](https://www.pronotes.app/) app comes in.
+::spec-item{label="POINTING_DEVICE" name="Glorious Model O"}
+Lightweight gaming mouse. Light enough to never get in the way during long sessions.
+::
 
-## Desk setup
+:::
 
-- I have a Macbook Pro 16' M1 Pro (2021). Which is still blazingly fast!
-- For my mouse while gaming I use the [Glorious Model O](https://www.amazon.com/Glorious-Model-Gaming-Mouse-Windows/dp/B07LDH3TWM).
-- My keyboard is the [Keychron K8 Pro](https://www.keychron.com/products/keychron-k8-pro-qmk-via-wireless-mechanical-keyboard).
+:::spec-section{index="SECTION_02" heading="Software" kicker="Logic Stack" layout="grid"}
+
+::spec-card{icon="i-lucide-code" category="Development" name="Cursor"}
+
+- Switched from [VS Code](https://code.visualstudio.com/) on :timestamp{date="2025-06-03"}
+- AI-native editor built on the VS Code core
+- Keeps my keybindings and extensions intact
+
+::
+
+::spec-card{icon="i-lucide-terminal" category="Terminal" name="Ghostty"}
+
+- Fast, GPU-accelerated terminal emulator
+- Replaced [Warp](https://www.warp.dev/) — too sluggish, too much AI bloat
+- Zsh as my shell of choice
+
+::
+
+::spec-card{icon="i-lucide-globe" category="Browser" name="Chrome"}
+
+- The most performant and stable for me
+- Tried [Arc](https://arc.net/) and [Zen](https://zen-browser.app/) — couldn't get used to vertical tabs
+- Default browser across all my devices
+
+::
+
+::spec-card{icon="i-lucide-database" category="Data" name="TablePlus & DBngin"}
+
+- [TablePlus](https://tableplus.com/) for local and remote databases
+- [DBngin](https://dbngin.com/) to spin up local DB servers
+- [Proxyman](https://proxyman.com/) as a network tab for [React Native](https://reactnative.dev/) apps
+
+::
+
+::spec-card{icon="i-lucide-command" category="Productivity" name="Raycast"}
+
+- My favourite app of all time — Pro subscription and all
+- Window management, clipboard history, emoji picker, text sniping
+- Endlessly extensible through community extensions
+
+::
+
+::spec-card{icon="i-lucide-feather" category="Laravel" name="Tinkerwell"}
+
+- A far better `php artisan tinker` environment for [Laravel](https://laravel.com/) projects
+
+::
+
+::spec-card{icon="i-lucide-layout-grid" category="Apps" name="Todoist & ProNotes"}
+
+- [Todoist](https://todoist.com) for task management, work and personal
+- [ProNotes](https://www.pronotes.app/) for Markdown notes inside Apple Notes
+
+::
+
+:::

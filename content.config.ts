@@ -30,6 +30,7 @@ export default defineContentConfig({
       },
       schema: z.object({
         title: z.string(),
+        description: z.string().optional(),
         ogImage: z.string().optional(),
         publishDate: z.string().date(),
         updatedDate: z.string().date().optional(),
@@ -44,6 +45,25 @@ export default defineContentConfig({
         draft: z.boolean().default(true),
         description: z.string().optional(),
         publishDate: z.coerce.date(),
+      }),
+    }),
+
+    projects: defineCollection({
+      type: "page",
+      source: "projects/**/*.md",
+      schema: z.object({
+        title: z.string().max(60),
+        description: z.string(),
+        techStack: z.array(z.string()).default([]),
+        link: z.string().optional(),
+        order: z.number().default(0),
+        draft: z.boolean().default(true),
+        coverImage: z
+          .object({
+            src: z.string(),
+            alt: z.string(),
+          })
+          .optional(),
       }),
     }),
   },

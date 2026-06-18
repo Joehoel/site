@@ -1,9 +1,7 @@
 <template>
-  <div
-    class="mx-auto flex min-h-screen max-w-3xl flex-col bg-bg-color px-4 pt-16 font-sans font-normal text-text-color antialiased sm:px-8"
-  >
+  <div class="flex min-h-screen flex-col bg-default font-body text-default antialiased">
     <LayoutHeader />
-    <main id="main" class="flex-1">
+    <main id="main" class="mx-auto w-full max-w-[1800px] flex-1 px-6 pt-28 sm:px-8 lg:px-12">
       <slot />
     </main>
     <LayoutFooter />

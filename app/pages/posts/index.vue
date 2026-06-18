@@ -3,28 +3,44 @@ const { data: posts } = await useAsyncData("all-posts", () =>
   queryCollection("posts").where("draft", "=", false).order("publishDate", "DESC").all(),
 );
 
-// Group posts by year
-const groupedByYear = computed(() => {
-  if (!posts.value) return {};
-  return posts.value.reduce(
-    (acc, post) => {
-      const year = new Date(post.publishDate).getFullYear().toString();
-      if (!acc[year]) acc[year] = [];
-      acc[year].push(post);
-      return acc;
-    },
-    {} as Record<string, typeof posts.value>,
-  );
-});
+// Topic filter — `null` means "ALL".
+const activeTag = ref<string | null>(null);
 
-const descYearKeys = computed(() => Object.keys(groupedByYear.value).sort((a, b) => +b - +a));
-
-// Get unique tags (max 7)
-const uniqueTags = computed(() => {
+// Unique topics across all posts, in first-seen order.
+const topics = computed(() => {
   if (!posts.value) return [];
-  const tags = posts.value.flatMap((post) => post.tags || []);
-  return [...new Set(tags)].slice(0, 7);
+  return [...new Set(posts.value.flatMap((post) => post.tags ?? []))];
 });
+
+// Posts matching the active topic filter.
+const filteredPosts = computed(() => {
+  if (!posts.value) return [];
+  if (!activeTag.value) return posts.value;
+  return posts.value.filter((post) => post.tags?.includes(activeTag.value as string));
+});
+
+// Entry № counts down from the newest filtered post.
+const total = computed(() => filteredPosts.value.length);
+
+// Load-more: reveal posts in batches.
+const PAGE_SIZE = 8;
+const visibleCount = ref(PAGE_SIZE);
+
+// Reset pagination whenever the filter changes.
+watch(activeTag, () => {
+  visibleCount.value = PAGE_SIZE;
+});
+
+const visiblePosts = computed(() => filteredPosts.value.slice(0, visibleCount.value));
+const hasMore = computed(() => visibleCount.value < total.value);
+
+const loadMore = () => {
+  visibleCount.value += PAGE_SIZE;
+};
+
+const selectTag = (tag: string | null) => {
+  activeTag.value = tag;
+};
 
 useSeoMeta({
   title: "Posts",
@@ -34,67 +50,75 @@ useSeoMeta({
 
 <template>
   <div>
-    <h1 class="title mb-6 flex items-center gap-3">
-      Posts
-      <a class="text-accent" href="/rss.xml" target="_blank">
-        <span class="sr-only">RSS feed</span>
-        <Icon aria-hidden="true" class="h-6 w-6" focusable="false" name="mdi:rss" />
-      </a>
-    </h1>
-    <div class="grid gap-y-16 sm:grid-cols-[3fr_1fr] sm:gap-x-8">
-      <section aria-label="Blog post list">
-        <template v-for="yearKey in descYearKeys" :key="yearKey">
-          <h2 class="title text-lg">{{ yearKey }}</h2>
-          <ul class="mb-16 mt-5 space-y-4 text-start">
-            <li
-              v-for="post in groupedByYear[yearKey]"
-              :key="post.path"
-              class="grid gap-2 sm:grid-cols-[auto_1fr] sm:[&_q]:col-start-2"
-            >
-              <BlogPostPreview :post="post" />
-            </li>
-          </ul>
-        </template>
-      </section>
-      <aside v-if="uniqueTags.length">
-        <h2 class="title mb-4 flex items-center gap-2 text-lg">
-          Tags
-          <svg
-            aria-hidden="true"
-            class="h-6 w-6"
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1.5"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
+    <!-- Hero header -->
+    <header class="mb-16 grid grid-cols-1 gap-8 md:grid-cols-12">
+      <div class="md:col-span-8">
+        <Eyebrow class="mb-4" label="TECHNICAL_LOG" />
+        <h1
+          class="font-headline text-5xl font-bold leading-[1.05] tracking-[-0.04em] text-highlighted md:text-6xl"
+        >
+          Articles, side projects &amp; engineering notes.
+        </h1>
+      </div>
+      <div class="flex items-start md:col-span-4 md:items-end md:justify-end">
+        <p class="max-w-xs font-body text-sm leading-relaxed text-muted md:text-right">
+          Documentation of my journey through distributed systems, frontend architecture, and
+          developer tooling. Updated sporadically.
+          <a
+            class="ml-1 inline-flex align-middle text-outline transition-colors hover:text-highlighted"
+            href="/rss.xml"
+            target="_blank"
           >
-            <path d="M0 0h24v24H0z" fill="none" stroke="none" />
-            <path
-              d="M7.859 6h-2.834a2.025 2.025 0 0 0 -2.025 2.025v2.834c0 .537 .213 1.052 .593 1.432l6.116 6.116a2.025 2.025 0 0 0 2.864 0l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-6.117 -6.116a2.025 2.025 0 0 0 -1.431 -.593z"
-            />
-            <path d="M17.573 18.407l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-7.117 -7.116" />
-            <path d="M6 9h-.01" />
-          </svg>
-        </h2>
-        <ul class="flex flex-wrap gap-2">
-          <li v-for="tag in uniqueTags" :key="tag">
-            <a
-              :aria-label="`View all posts with the tag: ${tag}`"
-              class="link flex items-center justify-center"
-              :href="`/tags/${tag}/`"
-            >
-              #{{ tag }}
-            </a>
-          </li>
-        </ul>
-        <span class="mt-4 block sm:text-end">
-          <a aria-label="View all blog categories" class="sm:hover:text-link" href="/tags/">
-            View all →
+            <span class="sr-only">RSS feed</span>
+            <UIcon aria-hidden="true" class="size-4" name="i-mdi-rss" />
           </a>
-        </span>
-      </aside>
+        </p>
+      </div>
+    </header>
+
+    <!-- Topic filter -->
+    <section
+      v-if="topics.length"
+      aria-label="Filter posts by topic"
+      class="mb-12 flex flex-wrap gap-2 bg-surface-container-lowest p-4"
+    >
+      <FilterChip label="ALL" :active="activeTag === null" @select="selectTag(null)" />
+      <FilterChip
+        v-for="topic in topics"
+        :key="topic"
+        :label="topic"
+        :active="activeTag === topic"
+        @select="selectTag(topic)"
+      />
+    </section>
+
+    <!-- Article list -->
+    <div class="flex flex-col divide-y divide-outline-variant">
+      <BlogPostListItem
+        v-for="(post, i) in visiblePosts"
+        :key="post.path"
+        :post="post"
+        :index="total - i"
+      />
+    </div>
+
+    <p v-if="!visiblePosts.length" class="py-16 text-center font-body text-sm text-muted">
+      No posts match this topic yet.
+    </p>
+
+    <!-- Load more -->
+    <div v-if="hasMore" class="mt-16 flex justify-center">
+      <UButton
+        color="primary"
+        variant="solid"
+        size="lg"
+        :ui="{
+          base: 'rounded-none font-label text-[0.6875rem] uppercase tracking-[0.2em] font-bold px-12 py-4',
+        }"
+        @click="loadMore"
+      >
+        LOAD_ARCHIVE_DATA
+      </UButton>
     </div>
   </div>
 </template>

@@ -24,15 +24,13 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
-    class="mx-auto flex min-h-screen max-w-3xl flex-col bg-bg-color px-4 pt-16 font-sans font-normal text-text-color antialiased sm:px-8"
-  >
+  <div class="flex min-h-screen flex-col bg-default font-body text-default antialiased">
     <LayoutHeader />
-    <main id="main" class="flex-1">
+    <main id="main" class="mx-auto w-full max-w-[1800px] flex-1 px-6 pt-28 sm:px-8 lg:px-12">
       <slot />
       <button
         aria-label="Back to Top"
-        class="z-90 fixed bottom-8 end-4 flex h-10 w-10 translate-y-28 items-center justify-center rounded-full border-2 border-transparent bg-zinc-200 text-3xl opacity-0 transition-all duration-300 hover:border-link dark:bg-zinc-700 sm:end-8 sm:h-12 sm:w-12"
+        class="z-90 fixed bottom-8 end-4 flex h-10 w-10 translate-y-28 items-center justify-center border border-outline-variant bg-surface-container-high text-3xl text-on-surface opacity-0 transition-all duration-300 hover:border-outline hover:text-highlighted sm:end-8 sm:h-12 sm:w-12"
         :class="{ '!translate-y-0 !opacity-100': showToTop }"
         type="button"
         @click="scrollToTop"

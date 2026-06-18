@@ -11,17 +11,16 @@ if (!page.value) {
 
 useSeoMeta({
   title: page.value.title,
+  description: page.value.description ?? undefined,
   ogImage: page.value.ogImage ?? undefined,
 });
 </script>
 
 <template>
-  <div v-if="page">
-    <h1 class="title mb-6">{{ page.title }}</h1>
-    <div
-      class="prose prose-sm prose-joel mt-12 prose-headings:font-semibold prose-headings:text-accent-2 prose-headings:before:absolute prose-headings:before:-ms-4 prose-headings:before:text-accent sm:prose-headings:before:content-['#'] sm:prose-th:before:content-none"
-    >
-      <ContentRenderer :value="page" />
-    </div>
-  </div>
+  <!--
+    Pages render their own Atelier MDC layout (hero + sticky-aside sections).
+    The flex gap goes on ContentRenderer's own wrapper so the top-level blocks
+    (hero + each section) become direct children and are evenly spaced.
+  -->
+  <ContentRenderer v-if="page" :value="page" class="flex flex-col gap-24 md:gap-32" />
 </template>
