@@ -29,8 +29,8 @@ const { data: notes } = await useAsyncData("latest-notes", () =>
     .all(),
 );
 
-useSeoMeta({
-  title: "Home",
+usePageSeo({
+  title: appConfig.site.title,
   description: appConfig.site.description,
 });
 </script>
@@ -39,25 +39,13 @@ useSeoMeta({
   <div class="flex flex-col gap-y-32">
     <!-- Hero -->
     <section>
-      <Eyebrow class="mb-6" label="STATUS: AVAILABLE_FOR_WORK" />
       <h1
         class="mb-10 font-headline text-5xl font-bold leading-[0.95] tracking-[-0.04em] text-highlighted md:text-7xl"
       >
-        Fullstack developer
-        <br />
-        building robust
-        <br />
-        digital infrastructure.
+        Hi, I'm Joël Kuijper.
       </h1>
       <p class="mb-10 max-w-2xl font-body text-lg leading-relaxed text-muted md:text-xl">
-        Hi, I'm Joël Kuijper — a fullstack developer from the Netherlands, currently at
-        <a
-          class="text-highlighted underline decoration-outline-variant underline-offset-4 transition-colors hover:decoration-highlighted"
-          href="https://www.deindruk.nl"
-          target="_blank"
-          rel="noreferrer"
-          >De Indruk</a
-        >. This is where I write about the things I make and learn.
+        I'm a full-stack developer at the Evangelische Omroep. I write about what I build and learn.
       </p>
 
       <!-- Repositioned social links -->
@@ -85,22 +73,17 @@ useSeoMeta({
       </ul>
     </section>
 
-    <!-- Selected Works -->
-    <section v-if="projects?.length" aria-labelledby="selected-works">
+    <section v-if="projects?.length" aria-labelledby="projects">
       <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
         <!-- Left rail: section heading -->
         <div class="lg:col-span-4">
           <div class="lg:sticky lg:top-28">
-            <Eyebrow class="mb-4" label="PROJECTS" />
             <h2
-              id="selected-works"
+              id="projects"
               class="mb-6 font-headline text-3xl font-bold tracking-tight text-highlighted md:text-4xl"
             >
-              Selected Works
+              Projects
             </h2>
-            <p class="font-label text-[0.6875rem] uppercase tracking-[0.1em] text-outline">
-              {{ String(projects.length).padStart(2, "0") }} ENTRIES
-            </p>
           </div>
         </div>
         <!-- Project list -->
@@ -115,28 +98,25 @@ useSeoMeta({
       </div>
     </section>
 
-    <!-- Technical Log -->
-    <section v-if="posts?.length" aria-labelledby="technical-log">
+    <section v-if="posts?.length" aria-labelledby="log">
       <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
         <!-- Left rail -->
         <div class="lg:col-span-4">
           <div class="lg:sticky lg:top-28">
-            <Eyebrow class="mb-4" label="RESEARCH_DEEP_DIVES" />
             <h2
-              id="technical-log"
+              id="log"
               class="mb-6 font-headline text-3xl font-bold tracking-tight text-highlighted md:text-4xl"
             >
-              Technical Log
+              Log
             </h2>
             <p class="mb-8 max-w-xs font-body text-sm leading-relaxed text-muted">
-              A chronicle of systems engineering, architectural decisions, and the pursuit of
-              performant software.
+              Articles about what I've built and learned.
             </p>
             <NuxtLink
               class="group inline-flex items-center gap-x-2 font-label text-[0.6875rem] uppercase tracking-[0.2em] text-highlighted"
-              to="/posts"
+              to="/log"
             >
-              VIEW_ALL_LOGS
+              View Log
               <UIcon
                 name="i-lucide-arrow-right"
                 class="size-3.5 transition-transform group-hover:translate-x-1"
@@ -158,7 +138,6 @@ useSeoMeta({
         <!-- Left rail: section heading -->
         <div class="lg:col-span-4">
           <div class="lg:sticky lg:top-28">
-            <Eyebrow class="mb-4" label="STREAM" />
             <h2
               id="notes"
               class="mb-6 font-headline text-3xl font-bold tracking-tight text-highlighted md:text-4xl"
@@ -166,13 +145,13 @@ useSeoMeta({
               Notes
             </h2>
             <p class="mb-8 max-w-xs font-body text-sm leading-relaxed text-muted">
-              Short, code-first jottings — patterns, configs and things worth remembering.
+              Code and configuration I want to keep handy.
             </p>
             <NuxtLink
               class="group inline-flex items-center gap-x-2 font-label text-[0.6875rem] uppercase tracking-[0.2em] text-highlighted"
               to="/notes"
             >
-              VIEW_ALL_NOTES
+              View Notes
               <UIcon
                 name="i-lucide-arrow-right"
                 class="size-3.5 transition-transform group-hover:translate-x-1"

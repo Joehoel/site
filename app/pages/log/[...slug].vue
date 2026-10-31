@@ -8,15 +8,16 @@ const { data: post } = await useAsyncData(route.path, () =>
 
 // 404 if post not found or is a draft (unless in dev mode or logged in)
 if (!post.value || (post.value.draft && !canSeeDrafts.value)) {
-  throw createError({ statusCode: 404, message: "Post not found" });
+  throw createError({ statusCode: 404, message: "Log entry not found" });
 }
 
-useSeoMeta({
-  title: post.value.title,
-  description: post.value.description,
-  ogTitle: post.value.title,
-  ogDescription: post.value.description,
-});
+usePageSeo(() => ({
+  title: post.value!.title,
+  description: post.value!.description,
+  image: post.value!.ogImage,
+  article: { published: post.value!.publishDate, modified: post.value!.updatedDate },
+  noindex: post.value!.draft,
+}));
 
 definePageMeta({
   layout: "post",

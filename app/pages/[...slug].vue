@@ -9,11 +9,11 @@ if (!page.value) {
   throw createError({ statusCode: 404, message: "Page not found" });
 }
 
-useSeoMeta({
-  title: page.value.title,
-  description: page.value.description ?? undefined,
-  ogImage: page.value.ogImage ?? undefined,
-});
+usePageSeo(() => ({
+  title: page.value!.title,
+  description: page.value!.description,
+  image: page.value!.ogImage,
+}));
 </script>
 
 <template>

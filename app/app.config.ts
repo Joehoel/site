@@ -10,16 +10,17 @@ export default defineAppConfig({
   },
 
   site: {
-    title: "Joël",
+    title: "Joël Kuijper",
     author: "Joël Kuijper",
-    description: "Personal website of Joël Kuijper",
-    lang: "nl-NL",
-    ogLocale: "nl_NL",
+    description:
+      "I'm a full-stack developer at the Evangelische Omroep. I write about what I build and learn.",
+    lang: "en",
+    ogLocale: "en_GB",
   },
 
   navigation: [
     { label: "Home", url: "/" },
-    { label: "Blog", url: "/posts" },
+    { label: "Log", url: "/log" },
     { label: "Notes", url: "/notes" },
     { label: "Uses", url: "/uses" },
   ],
@@ -34,7 +35,7 @@ export default defineAppConfig({
   ],
 
   date: {
-    locale: "nl-NL",
+    locale: "en-GB",
     options: {
       day: "numeric",
       month: "short",

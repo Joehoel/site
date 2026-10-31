@@ -1,30 +1,30 @@
 ---
 title: Uses
-description: Here you will find a list of my favorite tools and apps that I use on a daily basis; for work and personal use.
+description: The hardware and software I use for work and personal projects.
 publishDate: 2025-06-03
 ---
 
-::spec-hero{eyebrow="SYSTEM_MANIFEST" title="Technical configuration for focused production."}
-A curated list of the hardware, software, and tools I use daily — for work at [De Indruk](https://www.deindruk.nl) and personal projects.
+::spec-hero{title="Uses"}
+The hardware and software I use for work and personal projects.
 ::
 
-:::spec-section{index="SECTION_01" heading="Hardware" kicker="Physical Stack" layout="rows"}
+:::spec-section{heading="Hardware" layout="rows"}
 
-::spec-item{label="PRIMARY_MACHINE" name="MacBook Pro 16-inch M1 Pro" status="In Use"}
+::spec-item{label="Laptop" name="MacBook Pro 16-inch M1 Pro" status="In use"}
 The 2021 model. Still blazingly fast for everything I throw at it.
 ::
 
-::spec-item{label="INPUT_DEVICE" name="Keychron K8 Pro"}
+::spec-item{label="Keyboard" name="Keychron K8 Pro"}
 QMK/VIA wireless mechanical keyboard. My daily driver for both work and play.
 ::
 
-::spec-item{label="POINTING_DEVICE" name="Glorious Model O"}
+::spec-item{label="Mouse" name="Glorious Model O"}
 Lightweight gaming mouse. Light enough to never get in the way during long sessions.
 ::
 
 :::
 
-:::spec-section{index="SECTION_02" heading="Software" kicker="Logic Stack" layout="grid"}
+:::spec-section{heading="Software" layout="grid"}
 
 ::spec-card{icon="i-lucide-code" category="Development" name="Cursor"}
 

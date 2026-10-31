@@ -26,22 +26,23 @@ const props = defineProps({
   },
 });
 
-// Spec-header label: prefer the filename, else the language, else a generic
-// SOURCE tag. Mirrors the "// engine/wal.rs" header from the Atelier mock.
 const sourceLabel = computed(() => props.filename ?? props.language ?? "source");
 
-const copied = ref(false);
+const copyStatus = ref<"idle" | "copied" | "error">("idle");
 let resetTimer: ReturnType<typeof setTimeout> | undefined;
 
 async function copy() {
-  if (!props.code || !import.meta.client || !navigator.clipboard) return;
+  clearTimeout(resetTimer);
   try {
+    if (!import.meta.client || !navigator.clipboard) {
+      copyStatus.value = "error";
+      return;
+    }
     await navigator.clipboard.writeText(props.code);
-    copied.value = true;
-    clearTimeout(resetTimer);
-    resetTimer = setTimeout(() => (copied.value = false), 1500);
+    copyStatus.value = "copied";
+    resetTimer = setTimeout(() => (copyStatus.value = "idle"), 1500);
   } catch {
-    // Clipboard unavailable (e.g. insecure context) — fail silently.
+    copyStatus.value = "error";
   }
 }
 
@@ -49,9 +50,7 @@ onBeforeUnmount(() => clearTimeout(resetTimer));
 </script>
 
 <template>
-  <!-- Inset code panel: tonal layering (surface-container-lowest), no border. -->
   <div class="not-prose group my-8 bg-surface-container-lowest">
-    <!-- Spec header: // SOURCE label + copy affordance. -->
     <div class="flex items-center justify-between px-4 py-3">
       <Eyebrow :label="sourceLabel" />
       <button
@@ -60,10 +59,20 @@ onBeforeUnmount(() => clearTimeout(resetTimer));
         type="button"
         @click="copy"
       >
-        <UIcon :name="copied ? 'i-lucide-check' : 'i-lucide-copy'" class="size-3.5" />
-        <span>{{ copied ? "Copied" : "Copy" }}</span>
+        <UIcon
+          :name="copyStatus === 'copied' ? 'i-lucide-check' : 'i-lucide-copy'"
+          aria-hidden="true"
+          class="size-3.5"
+        />
+        <span>{{ copyStatus === "copied" ? "Copied" : "Copy code" }}</span>
       </button>
     </div>
+    <p class="px-4 text-sm text-on-surface-variant" role="status" aria-live="polite">
+      <template v-if="copyStatus === 'error'">
+        Couldn't copy the code. Select it and copy manually.
+      </template>
+      <span v-else-if="copyStatus === 'copied'" class="sr-only">Copied</span>
+    </p>
 
     <pre :class="['overflow-x-auto px-4 pb-4', $props.class]"><slot /></pre>
   </div>

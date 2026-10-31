@@ -67,26 +67,28 @@ watch(
         <Search />
 
         <!-- Theme toggle -->
-        <button
-          class="relative flex h-9 w-9 items-center justify-center text-outline transition-colors hover:text-highlighted"
-          type="button"
-          role="switch"
-          :aria-checked="colorMode.value === 'dark'"
-          aria-label="Toggle theme"
-          @click="toggleTheme"
-        >
-          <span class="sr-only">Toggle theme</span>
-          <UIcon
-            :name="colorMode.value === 'dark' ? 'i-lucide-moon' : 'i-lucide-sun'"
-            class="size-5"
-          />
-        </button>
+        <ColorScheme tag="span" class="flex h-9 w-9">
+          <button
+            class="relative flex h-9 w-9 items-center justify-center text-outline transition-colors hover:text-highlighted"
+            type="button"
+            role="switch"
+            :aria-checked="colorMode.value === 'dark'"
+            aria-label="Dark mode"
+            @click="toggleTheme"
+          >
+            <span class="sr-only">Dark mode</span>
+            <UIcon
+              :name="colorMode.value === 'dark' ? 'i-lucide-moon' : 'i-lucide-sun'"
+              class="size-5"
+            />
+          </button>
+        </ColorScheme>
 
         <!-- Mobile menu button -->
         <button
           :aria-expanded="menuOpen"
-          aria-haspopup="menu"
-          aria-label="Open main menu"
+          :aria-label="menuOpen ? 'Close main menu' : 'Open main menu'"
+          aria-controls="mobile-menu"
           class="flex h-9 w-9 items-center justify-center text-outline transition-colors hover:text-highlighted sm:hidden"
           type="button"
           @click="toggleMenu"
@@ -98,6 +100,7 @@ watch(
 
     <!-- Mobile nav -->
     <nav
+      id="mobile-menu"
       v-show="menuOpen"
       aria-label="Mobile menu"
       class="border-t border-outline-variant bg-surface/95 backdrop-blur-xl sm:hidden"

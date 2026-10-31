@@ -3,9 +3,9 @@ const { data: notes } = await useAsyncData("all-notes", () =>
   queryCollection("notes").where("draft", "=", false).order("publishDate", "DESC").all(),
 );
 
-useSeoMeta({
+usePageSeo({
   title: "Notes",
-  description: "Read my collection of notes",
+  description: "Code and configuration I want to keep handy.",
 });
 </script>
 
@@ -14,16 +14,15 @@ useSeoMeta({
     <!-- Hero header -->
     <header class="mb-16 grid grid-cols-1 gap-8 md:grid-cols-12">
       <div class="md:col-span-8">
-        <Eyebrow class="mb-4" label="FIELD_NOTES" />
         <h1
           class="font-headline text-5xl font-bold leading-[1.05] tracking-[-0.04em] text-highlighted md:text-6xl"
         >
-          Notes &amp; snippets.
+          Notes
         </h1>
       </div>
       <div class="flex items-start md:col-span-4 md:items-end md:justify-end">
         <p class="max-w-xs font-body text-sm leading-relaxed text-muted md:text-right">
-          Short, code-first jottings — patterns, configs and things worth remembering.
+          Code and configuration I want to keep handy.
           <a
             class="ml-1 inline-flex align-middle text-outline transition-colors hover:text-highlighted"
             href="/notes/rss.xml"

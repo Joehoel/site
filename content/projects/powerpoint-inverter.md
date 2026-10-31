@@ -6,6 +6,7 @@ techStack:
   - python-pptx
   - Pillow
 order: 1
+link: https://github.com/Joehoel/powerpoint-inverter
 draft: false
 ---
 

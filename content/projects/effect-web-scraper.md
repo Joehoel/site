@@ -6,7 +6,7 @@ techStack:
   - Effect
   - Bun
 order: 2
-draft: false
+draft: true
 ---
 
 An exploration of building a production-grade web scraper with Effect. Requests,

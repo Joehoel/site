@@ -11,15 +11,15 @@ const posts = computed(
 );
 
 if (posts.value.length === 0) {
-  throw createError({ statusCode: 404, message: `No posts found with tag: ${tag.value}` });
+  throw createError({ statusCode: 404, message: `No Log entries found with tag: ${tag.value}` });
 }
 
 const total = computed(() => posts.value.length);
 
-useSeoMeta({
+usePageSeo(() => ({
   title: `Tag: ${tag.value}`,
-  description: `View all posts with the tag - ${tag.value}`,
-});
+  description: `View all Log entries with the tag - ${tag.value}`,
+}));
 </script>
 
 <template>
@@ -32,7 +32,7 @@ useSeoMeta({
           class="mb-4 inline-flex items-center gap-x-2 font-label text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-outline transition-colors hover:text-highlighted"
         >
           <UIcon aria-hidden="true" name="i-lucide-arrow-left" class="size-3.5" />
-          ALL_TOPICS
+          All tags
         </NuxtLink>
         <h1
           class="font-headline text-5xl font-bold leading-[1.05] tracking-[-0.04em] text-highlighted md:text-6xl"
@@ -50,7 +50,7 @@ useSeoMeta({
     </header>
 
     <!-- Article list -->
-    <section aria-label="Blog post list">
+    <section aria-label="Log entry list">
       <div class="flex flex-col divide-y divide-outline-variant">
         <BlogPostListItem
           v-for="(post, i) in posts"

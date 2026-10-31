@@ -6,7 +6,6 @@ const appConfig = useAppConfig();
 const props = withDefaults(
   defineProps<{
     note: NoteCollectionItem;
-    /** Listing context: the title links to the note and the body is hidden from Pagefind. */
     isPreview?: boolean;
     headingLevel?: "h1" | "h2" | "h3";
   }>(),
@@ -16,7 +15,6 @@ const props = withDefaults(
   },
 );
 
-// Notes carry a full timestamp — surface date + time in the technical-terminal style.
 const dateTimeOptions: Intl.DateTimeFormatOptions = {
   ...appConfig.date.options,
   hour: "2-digit",
@@ -38,7 +36,6 @@ const HeadingTag = computed(() => props.headingLevel);
 
 <template>
   <article class="flex flex-col gap-y-4" :data-pagefind-body="!isPreview">
-    <!-- Spec header: // NOTE eyebrow + timestamp -->
     <div class="flex flex-col gap-y-3">
       <Eyebrow :label="eyebrowLabel" />
       <MetaRow>
@@ -52,7 +49,6 @@ const HeadingTag = computed(() => props.headingLevel);
       </MetaRow>
     </div>
 
-    <!-- Title -->
     <component
       :is="HeadingTag"
       class="font-headline font-bold tracking-[-0.04em] text-highlighted"
@@ -68,9 +64,22 @@ const HeadingTag = computed(() => props.headingLevel);
       <template v-else>{{ note.title }}</template>
     </component>
 
-    <!-- Body: full content inline; code rendered via the compact CodeBlock. -->
-    <div class="prose prose-atelier mt-2 max-w-4xl [&>:first-child]:mt-0 [&>:last-child]:mb-0">
+    <div
+      class="prose prose-atelier mt-2 max-w-4xl [&>:first-child]:mt-0 [&>:last-child]:mb-0"
+      :class="isPreview ? 'max-h-80 overflow-hidden' : undefined"
+      :inert="isPreview ? true : undefined"
+      :data-pagefind-ignore="isPreview ? true : undefined"
+    >
       <ContentRenderer :value="note" />
     </div>
+    <NuxtLink
+      v-if="isPreview"
+      :to="note.path"
+      :aria-label="`Read note: ${note.title}`"
+      class="inline-flex self-start items-center gap-2 font-label text-sm text-highlighted underline underline-offset-4"
+    >
+      Read note
+      <UIcon name="i-lucide-arrow-right" aria-hidden="true" class="size-4" />
+    </NuxtLink>
   </article>
 </template>

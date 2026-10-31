@@ -4,7 +4,7 @@ const year = new Date().getFullYear();
 
 const footerLinks = [
   ...appConfig.socials.map((s) => ({ label: s.label, url: s.url })),
-  { label: "RSS", url: "/rss.xml" },
+  { label: "Log RSS", url: "/rss.xml" },
 ];
 </script>
 
@@ -14,7 +14,7 @@ const footerLinks = [
       class="mx-auto flex max-w-[1800px] flex-col gap-y-6 px-6 py-12 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-12"
     >
       <p class="font-label text-[0.625rem] uppercase tracking-[0.2em] text-outline">
-        &copy; {{ year }} {{ appConfig.site.author }}. Built for precision.
+        &copy; {{ year }} {{ appConfig.site.author }}.
       </p>
       <nav aria-label="More on this site" class="flex gap-x-8">
         <NuxtLink

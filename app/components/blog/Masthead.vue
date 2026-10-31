@@ -60,14 +60,14 @@ const updatedDisplay = computed(() =>
     <!-- Editorial header: meta in the left rail, title in the main column. -->
     <div class="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
       <div class="flex flex-col gap-y-3 lg:col-span-3">
-        <Eyebrow :label="post.draft ? 'Technical Post // Draft' : 'Technical Post'" />
+        <Eyebrow :label="post.draft ? 'Log // Draft' : 'Log'" />
         <MetaRow :items="[displayDate]">
           <template v-if="updatedDisplay">
             <span aria-hidden="true" class="h-px w-6 bg-outline-variant" />
             <span
               class="font-label text-[0.6875rem] uppercase tracking-[0.1em] text-on-surface-variant"
             >
-              Bijgewerkt
+              Updated
               <time :datetime="updatedIso" :title="updatedIso">{{ updatedDisplay }}</time>
             </span>
           </template>

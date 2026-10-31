@@ -21,7 +21,7 @@ defineProps<{
     <div class="flex flex-col">
       <span
         v-if="label"
-        class="mb-1 font-label text-[0.6875rem] uppercase tracking-[0.2em] text-outline-variant"
+        class="mb-1 font-label text-[0.6875rem] uppercase tracking-[0.2em] text-on-surface-variant"
       >
         {{ label }}
       </span>

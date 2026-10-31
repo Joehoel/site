@@ -29,7 +29,8 @@ onMounted(() => {
     <main id="main" class="mx-auto w-full max-w-[1800px] flex-1 px-6 pt-28 sm:px-8 lg:px-12">
       <slot />
       <button
-        aria-label="Back to Top"
+        aria-label="Back to top"
+        :inert="!showToTop ? true : undefined"
         class="z-90 fixed bottom-8 end-4 flex h-10 w-10 translate-y-28 items-center justify-center border border-outline-variant bg-surface-container-high text-3xl text-on-surface opacity-0 transition-all duration-300 hover:border-outline hover:text-highlighted sm:end-8 sm:h-12 sm:w-12"
         :class="{ '!translate-y-0 !opacity-100': showToTop }"
         type="button"
