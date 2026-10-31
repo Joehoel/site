@@ -2,7 +2,7 @@
 @import "@nuxt/ui";
 
 /* ==========================================================================
-   Atelier Mono — Dark · "The Monastic Engineer"
+   Atelier Mono
    Monochrome palette, sharp corners (radius 0), Space Grotesk + Manrope.
    Token-ladder per design/atelier/component-map.md — single source of truth:
    the Atelier greys feed Nuxt UI's semantic aliases so UButton/UBadge inherit.
@@ -34,15 +34,12 @@
 
 /* --------------------------------------------------------------------------
    Wire the Atelier greys into Nuxt UI's semantic aliases.
-   Dark is the only real theme; the light block is a safe fallback so nothing
-   explodes if color-mode resolves to light before hydration.
    -------------------------------------------------------------------------- */
 @layer theme {
   :root {
     --ui-radius: 0rem;
     --ui-container: 80rem;
 
-    /* Atelier greys mapped onto Nuxt UI's neutral scale (light fallback). */
     --ui-color-neutral-50: #e5e2e1;
     --ui-color-neutral-100: #c6c6c6;
     --ui-color-neutral-200: #919191;
@@ -55,7 +52,6 @@
     --ui-color-neutral-900: #0e0e0e;
     --ui-color-neutral-950: #0e0e0e;
 
-    /* Primary = pure white (monochrome accent). */
     --ui-color-primary-50: #ffffff;
     --ui-color-primary-100: #f5f5f5;
     --ui-color-primary-200: #e5e2e1;
@@ -67,30 +63,70 @@
     --ui-color-primary-800: #919191;
     --ui-color-primary-900: #474747;
     --ui-color-primary-950: #353534;
-    --ui-primary: #ffffff;
   }
 
-  /* Canonical token-ladder → Nuxt UI semantic aliases (the real theme). */
+  :root,
+  .light,
   .dark {
-    --ui-text-dimmed: var(--color-outline); /* meta / label   #919191 */
-    --ui-text-muted: var(--color-on-surface-variant); /* gedempte body  #c6c6c6 */
+    --ui-primary: var(--color-accent-2);
+    --ui-text-dimmed: var(--color-outline);
+    --ui-text-muted: var(--color-on-surface-variant);
     --ui-text-toned: var(--color-on-surface-variant);
-    --ui-text: var(--color-on-surface); /* body           #e5e2e1 */
-    --ui-text-highlighted: #ffffff; /* heading        #ffffff */
+    --ui-text: var(--color-on-surface);
+    --ui-text-highlighted: var(--color-accent-2);
     --ui-text-inverted: var(--color-surface);
 
-    --ui-bg: var(--color-surface); /* canvas / nav-glas  #131313 */
-    --ui-bg-muted: var(--color-surface-container-low); /* hover / sectie     #1c1b1b */
-    --ui-bg-elevated: var(--color-surface-container-high); /* card / interactief #2a2a2a */
-    --ui-bg-accented: var(--color-surface-container-highest); /*                    #353534 */
+    --ui-bg: var(--color-surface);
+    --ui-bg-muted: var(--color-surface-container-low);
+    --ui-bg-elevated: var(--color-surface-container-high);
+    --ui-bg-accented: var(--color-surface-container-highest);
     --ui-bg-inverted: var(--color-on-surface);
 
-    --ui-border: var(--color-outline-variant); /* hairline       #474747 */
+    --ui-border: var(--color-outline-variant);
     --ui-border-muted: var(--color-outline-variant);
     --ui-border-accented: var(--color-outline);
-    --ui-border-inverted: #ffffff;
+    --ui-border-inverted: var(--color-accent-2);
+  }
 
-    --ui-primary: #ffffff;
+  .light {
+    --color-surface: #faf9f6;
+    --color-surface-dim: #dedbd8;
+    --color-surface-bright: #ffffff;
+    --color-surface-container-lowest: #ffffff;
+    --color-surface-container-low: #f4f1ee;
+    --color-surface-container: #eeebe8;
+    --color-surface-container-high: #e8e5e2;
+    --color-surface-container-highest: #e2dfdc;
+    --color-on-surface: #1c1b1b;
+    --color-on-surface-variant: #474747;
+    --color-outline: #727272;
+    --color-outline-variant: #c6c6c6;
+    --color-accent-2: #131313;
+
+    --ui-color-neutral-50: var(--color-surface-container-low);
+    --ui-color-neutral-100: var(--color-surface-container);
+    --ui-color-neutral-200: var(--color-surface-container-high);
+    --ui-color-neutral-300: var(--color-outline-variant);
+    --ui-color-neutral-400: #919191;
+    --ui-color-neutral-500: var(--color-outline);
+    --ui-color-neutral-600: #5c5c5c;
+    --ui-color-neutral-700: var(--color-on-surface-variant);
+    --ui-color-neutral-800: #353534;
+    --ui-color-neutral-900: var(--color-on-surface);
+    --ui-color-neutral-950: var(--color-accent-2);
+
+    --ui-color-primary-50: var(--ui-color-neutral-50);
+    --ui-color-primary-100: var(--ui-color-neutral-100);
+    --ui-color-primary-200: var(--ui-color-neutral-200);
+    --ui-color-primary-300: var(--ui-color-neutral-300);
+    --ui-color-primary-400: var(--ui-color-neutral-400);
+    --ui-color-primary-500: var(--ui-color-neutral-500);
+    --ui-color-primary-600: var(--ui-color-neutral-600);
+    --ui-color-primary-700: var(--ui-color-neutral-700);
+    --ui-color-primary-800: var(--ui-color-neutral-800);
+    --ui-color-primary-900: var(--ui-color-neutral-900);
+    --ui-color-primary-950: var(--ui-color-neutral-950);
+    --ui-text-inverted: #ffffff;
   }
 }
 
@@ -104,10 +140,13 @@
     font-family: var(--font-body);
   }
 
-  /* Editorial selection — white block, dark text. */
   ::selection {
-    background-color: #ffffff;
+    background-color: var(--ui-primary);
     color: #1a1c1c;
+  }
+
+  .light ::selection {
+    color: var(--ui-text-inverted);
   }
 
   /* Inline code (not in code blocks). */
