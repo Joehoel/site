@@ -6,7 +6,7 @@ Personal website and blog (joelkuijper.me) — a fully static Nuxt 4 site deploy
 
 ## Commands
 
-This project uses **bun** (not npm/pnpm). Node is pinned to 22.22.0 via Volta.
+This project uses **bun** (not npm/pnpm). Node is pinned to 24.22.2 via Volta.
 
 ```bash
 bun install          # install deps
