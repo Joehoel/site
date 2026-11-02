@@ -12,8 +12,7 @@ export default defineAppConfig({
   site: {
     title: "Joël Kuijper",
     author: "Joël Kuijper",
-    description:
-      "I'm a full-stack developer at the Evangelische Omroep. I write about what I build and learn.",
+    description: "I write about what I build and learn.",
     lang: "en",
     ogLocale: "en_GB",
   },

@@ -1,9 +1,29 @@
 <script setup lang="ts">
+import { selectCurrent } from "#shared/career";
+import { currentRoleSentence } from "#shared/home";
+
 const appConfig = useAppConfig();
 
 const MAX_PROJECTS = 5;
 const MAX_POSTS = 4;
 const MAX_NOTES = 3;
+
+const { data: intro } = await useAsyncData("home-intro", async () => {
+  const [home, career] = await Promise.all([
+    queryCollection("home").first(),
+    queryCollection("career").first(),
+  ]);
+  return { home, career, asOf: new Date().toISOString().slice(0, 10) };
+});
+
+if (!intro.value?.home) {
+  throw createError({ statusCode: 404, message: "Home not found" });
+}
+
+const home = computed(() => intro.value!.home!);
+const currentSelection = computed(() =>
+  selectCurrent(intro.value!.career ?? { roles: [] }, intro.value!.asOf),
+);
 
 const { data: projects } = await useAsyncData("home-projects", () =>
   queryCollection("projects")
@@ -29,10 +49,12 @@ const { data: notes } = await useAsyncData("latest-notes", () =>
     .all(),
 );
 
-usePageSeo({
-  title: appConfig.site.title,
-  description: appConfig.site.description,
-});
+usePageSeo(
+  computed(() => ({
+    title: appConfig.site.title,
+    description: `${currentRoleSentence(currentSelection.value, home.value)} ${home.value.description}`,
+  })),
+);
 </script>
 
 <template>
@@ -42,11 +64,14 @@ usePageSeo({
       <h1
         class="mb-10 font-headline text-5xl font-bold leading-[0.95] tracking-[-0.04em] text-highlighted md:text-7xl"
       >
-        Hi, I'm Joël Kuijper.
+        {{ home.title }}
       </h1>
-      <p class="mb-10 max-w-2xl font-body text-lg leading-relaxed text-muted md:text-xl">
-        I'm a full-stack developer at the Evangelische Omroep. I write about what I build and learn.
-      </p>
+      <ContentRenderer
+        :value="home"
+        :data="{ currentSelection }"
+        :prose="false"
+        class="home-intro"
+      />
 
       <!-- Repositioned social links -->
       <ul class="flex items-center gap-x-6" role="list">
@@ -169,3 +194,11 @@ usePageSeo({
     </section>
   </div>
 </template>
+
+<style scoped>
+@reference "../assets/css/main.css";
+
+.home-intro :deep(p) {
+  @apply mb-10 max-w-2xl font-body text-lg leading-relaxed text-muted md:text-xl;
+}
+</style>
