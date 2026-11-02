@@ -51,6 +51,8 @@ bun run generate
 bun run fix
 ```
 
+Career data fields and date semantics are described in [Career data reference](CAREER.md).
+
 ## License
 
 [MIT](LICENSE)
