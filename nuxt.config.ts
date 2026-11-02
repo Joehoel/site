@@ -3,6 +3,10 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { imageMeta } from "image-meta";
 import type { BundledLanguage } from "shiki";
+import { parse as parseYaml } from "yaml";
+import { parseCareer } from "./shared/career.ts";
+
+parseCareer(parseYaml(readFileSync(new URL("./content/career.yml", import.meta.url), "utf8")));
 
 const publicDir = fileURLToPath(new URL("./public", import.meta.url));
 const seoImages: Record<string, { width: number; height: number }> = {};
@@ -107,6 +111,12 @@ export default defineNuxtConfig({
       markdown: {
         highlight: highlightOptions,
       },
+    },
+  },
+
+  hooks: {
+    "content:file:afterParse"({ collection, content }) {
+      if (collection.name === "career") parseCareer(content);
     },
   },
 
