@@ -51,11 +51,10 @@ Array order never chooses the current role.
 
 `careerSchema` in `shared/career.ts` owns the field structure and semantic rules.
 `content.config.ts` uses that same schema for Content and Studio.
-`nuxt.config.ts` parses the actual career YAML and calls `careerSchema.parse` when Nuxt loads its configuration.
-Invalid career data stops configuration loading, so a build cannot silently omit it.
-The `content:file:afterParse` hook also calls `careerSchema.parse` for every career ingestion, including development updates.
-Content can warn and skip an invalid update rather than stop the process.
-Content's JSON Schema conversion drops custom refinements, so both runtime validation calls are required.
+Tests parse the actual `content/career.yml` with the shared `careerSchema`.
+CI runs these tests with `bun run test`.
+Full semantic validation is a test and CI gate, not a guarantee at configuration load or Content ingestion.
+Content's JSON Schema conversion omits custom refinements, so local career edits must pass the tests before merging.
 
 ## Static publication
 
