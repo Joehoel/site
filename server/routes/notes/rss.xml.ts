@@ -2,7 +2,7 @@ import { Feed } from "feed";
 
 export default defineEventHandler(async (event) => {
   const config = useAppConfig();
-  const siteUrl = getRequestURL(event).origin;
+  const siteUrl = new URL(getSiteConfig(event).url).origin;
 
   const feed = new Feed({
     title: `${config.site.title} - Notes`,

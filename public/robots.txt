@@ -1,2 +1,5 @@
 User-Agent: *
-Disallow:
+Disallow: /admin
+Disallow: /__nuxt_studio/
+
+Sitemap: https://joelkuijper.me/sitemap.xml

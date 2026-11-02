@@ -1,12 +1,12 @@
 ---
 title: Inverting PowerPoints with Python
-draft: false
 description: How to invert PowerPoints with Python
+draft: false
+publishDate: 2025-01-30
 tags:
   - Python
   - PowerPoints
   - Automation
-publishDate: 2025-01-30
 ---
 
 I've worked with several community team members from churches that use PowerPoint to present the lyrics of their hymns and songs. These slides contain the lyrics along with music notation above them. Most of the time, the entire slide is an image, with a textbox containing metadata below it, separate from the image.

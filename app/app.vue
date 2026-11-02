@@ -1,59 +1,74 @@
 <script setup lang="ts">
 useHead({
   htmlAttrs: {
-    class: "scroll-smooth border-t-8 border-t-accent",
+    class: "scroll-smooth",
   },
 });
 
-const canSeeDrafts = useCanSeeDrafts();
+const site = useSiteConfig();
+const fallbackImage = new URL("/og/default.png", site.url).href;
+useServerSeoMeta({
+  ogImage: fallbackImage,
+  ogImageWidth: 1200,
+  ogImageHeight: 630,
+  ogImageType: "image/png",
+  twitterImage: fallbackImage,
+});
 
-// Fetch published content paths for filtering search results
-const { data: publishedPaths } = useLazyAsyncData(
-  "published-paths",
+const canSeeDrafts = useCanSeeDrafts();
+const audience = computed(() => (canSeeDrafts.value ? "preview" : "published"));
+const searchKey = computed(() => `content-search-${audience.value}`);
+
+const { data: searchSnapshot, status: searchStatus } = useLazyAsyncData(
+  searchKey,
   async () => {
-    if (canSeeDrafts.value) return null;
-    const [posts, notes] = await Promise.all([
-      queryCollection("posts").select("path").where("draft", "=", false).all(),
-      queryCollection("notes").select("path").where("draft", "=", false).all(),
+    const requestAudience = audience.value;
+    const postSections = queryCollectionSearchSections("posts");
+    const noteSections = queryCollectionSearchSections("notes");
+    const postNavigation = queryCollectionNavigation("posts");
+    const noteNavigation = queryCollectionNavigation("notes");
+
+    if (requestAudience === "published") {
+      postSections.where("draft", "=", false);
+      noteSections.where("draft", "=", false);
+      postNavigation.where("draft", "=", false);
+      noteNavigation.where("draft", "=", false);
+    }
+
+    const [posts, notes, postsNav, notesNav] = await Promise.all([
+      postSections,
+      noteSections,
+      postNavigation,
+      noteNavigation,
     ]);
-    return new Set([...posts, ...notes].map((p) => p.path));
+
+    return {
+      audience: requestAudience,
+      files: [...posts, ...notes],
+      navigation: [...postsNav, ...notesNav],
+    };
   },
   { server: false },
 );
 
-// Fetch search files for ContentSearch
-const { data: files } = useLazyAsyncData(
-  "search-files",
-  () =>
-    Promise.all([queryCollectionSearchSections("posts"), queryCollectionSearchSections("notes")]),
-  {
-    server: false,
-    transform: (data) => {
-      const flat = data.flat();
-      if (canSeeDrafts.value || !publishedPaths.value) return flat;
-      return flat.filter((section) => {
-        const contentPath = section.id.split("#")[0] ?? section.id;
-        return publishedPaths.value!.has(contentPath);
-      });
-    },
-  },
+const currentSearch = computed(() =>
+  searchStatus.value === "success" && searchSnapshot.value?.audience === audience.value
+    ? searchSnapshot.value
+    : undefined,
 );
-
-// Fetch navigation for ContentSearch
-const { data: navigation } = useLazyAsyncData(
-  "search-navigation",
-  () => Promise.all([queryCollectionNavigation("posts"), queryCollectionNavigation("notes")]),
-  {
-    server: false,
-    transform: (data) => data.flat(),
-  },
+const searchMessage = computed(() =>
+  searchStatus.value === "error"
+    ? "Search couldn't load. Reload the page and try again."
+    : !currentSearch.value
+      ? "Loading search…"
+      : "",
 );
 
 const links = [
   {
-    label: "Posts",
+    label: "Log",
     icon: "i-lucide-file-text",
-    to: "/posts",
+    to: "/log",
   },
   {
     label: "Notes",
@@ -68,6 +83,21 @@ const links = [
     <NuxtPage />
   </NuxtLayout>
   <ClientOnly>
-    <LazyUContentSearch :files="files || []" :navigation="navigation || []" :links="links" />
+    <LazyUContentSearch
+      :files="currentSearch?.files ?? []"
+      :navigation="currentSearch?.navigation ?? []"
+      :links="links"
+      :loading="!currentSearch && searchStatus !== 'error'"
+      title="Search"
+      description="Search Log entries and notes."
+      placeholder="Search Log entries and notes"
+    >
+      <template #empty>
+        <p v-if="currentSearch" role="status">No results found. Try another search.</p>
+      </template>
+      <template v-if="searchMessage" #footer>
+        <p class="px-4 py-3 text-sm text-muted" role="status">{{ searchMessage }}</p>
+      </template>
+    </LazyUContentSearch>
   </ClientOnly>
 </template>

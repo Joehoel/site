@@ -1,0 +1,413 @@
+<!doctype html>
+
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container": "#201f1f",
+              "on-primary-container": "#000000",
+              "on-tertiary-fixed-variant": "#e2e2e2",
+              "surface-bright": "#3a3939",
+              secondary: "#c7c6c6",
+              primary: "#ffffff",
+              "on-surface": "#e5e2e1",
+              "on-error": "#690005",
+              "inverse-primary": "#5d5f5f",
+              "on-error-container": "#ffdad6",
+              "on-background": "#e5e2e1",
+              "on-primary-fixed-variant": "#e2e2e2",
+              "surface-container-lowest": "#0e0e0e",
+              "secondary-fixed": "#c7c6c6",
+              "on-tertiary-fixed": "#ffffff",
+              "tertiary-container": "#919191",
+              "tertiary-fixed-dim": "#474747",
+              "on-tertiary": "#1b1b1b",
+              "inverse-on-surface": "#313030",
+              "on-secondary-container": "#e3e2e2",
+              "surface-dim": "#131313",
+              "secondary-container": "#464747",
+              "outline-variant": "#474747",
+              "on-secondary-fixed-variant": "#3a3c3c",
+              "inverse-surface": "#e5e2e1",
+              background: "#131313",
+              tertiary: "#e2e2e2",
+              "tertiary-fixed": "#5e5e5e",
+              "primary-container": "#d4d4d4",
+              "surface-variant": "#353534",
+              "surface-container-low": "#1c1b1b",
+              outline: "#919191",
+              "on-tertiary-container": "#000000",
+              "on-secondary-fixed": "#1a1c1c",
+              "on-primary": "#1a1c1c",
+              "surface-container-highest": "#353534",
+              "on-secondary": "#1a1c1c",
+              surface: "#131313",
+              "primary-fixed": "#5d5f5f",
+              "on-surface-variant": "#c6c6c6",
+              "on-primary-fixed": "#ffffff",
+              error: "#ffb4ab",
+              "surface-tint": "#c6c6c7",
+              "surface-container-high": "#2a2a2a",
+              "secondary-fixed-dim": "#ababab",
+              "error-container": "#93000a",
+              "primary-fixed-dim": "#454747",
+            },
+            borderRadius: {
+              DEFAULT: "0px",
+              lg: "0px",
+              xl: "0px",
+              full: "9999px",
+            },
+            fontFamily: {
+              headline: ["Space Grotesk"],
+              body: ["Manrope"],
+              label: ["Space Grotesk"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      body {
+        background-color: #131313;
+        color: #e5e2e1;
+        font-family: "Manrope", sans-serif;
+      }
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+    </style>
+  </head>
+  <body class="bg-surface selection:bg-primary selection:text-on-primary">
+    <!-- TopNavBar -->
+    <nav class="fixed top-0 w-full z-50 bg-neutral-950/70 backdrop-blur-xl">
+      <div
+        class="flex justify-between items-center px-6 py-4 max-w-screen-2xl mx-auto font-['Space_Grotesk'] tracking-tight"
+      >
+        <div class="text-lg font-bold tracking-tighter text-white">JK_DEV // EO</div>
+        <div class="hidden md:flex items-center space-x-8">
+          <a
+            class="text-white border-b border-white pb-1 transition-opacity hover:opacity-80"
+            href="#"
+            >WORK</a
+          >
+          <a class="text-neutral-500 hover:text-neutral-200 transition-colors" href="#">BLOG</a>
+          <a class="text-neutral-500 hover:text-neutral-200 transition-colors" href="#">/USES</a>
+          <a class="text-neutral-500 hover:text-neutral-200 transition-colors" href="#">CONTACT</a>
+        </div>
+        <div class="flex items-center">
+          <span
+            class="material-symbols-outlined text-white cursor-pointer hover:opacity-80 transition-opacity"
+            data-icon="terminal"
+            >terminal</span
+          >
+        </div>
+      </div>
+    </nav>
+    <main class="pt-32 pb-24 px-6 md:px-12 max-w-screen-2xl mx-auto">
+      <!-- Hero Section -->
+      <section class="mb-48">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+          <div class="md:col-start-4 md:col-span-9">
+            <span
+              class="font-label text-[0.6875rem] uppercase tracking-[0.2em] text-outline mb-6 block"
+              >// STATUS: ACTIVE_ENGAGEMENT</span
+            >
+            <h1
+              class="font-headline text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.9] tracking-[-0.04em] text-primary mb-12"
+            >
+              SOLO DEVELOPER.<br />ENGINEERING PRECISION<br />FOR EVANGELISCHE OMROEP.
+            </h1>
+            <p class="font-body text-xl md:text-2xl text-secondary max-w-2xl leading-relaxed">
+              Building robust digital infrastructure with a focus on high-performance streaming
+              architecture and automated media pipelines.
+            </p>
+          </div>
+        </div>
+      </section>
+      <!-- Selected Projects Section -->
+      <section class="mb-48">
+        <div class="flex items-baseline justify-between mb-16 border-b border-outline-variant pb-4">
+          <h2 class="font-headline text-2xl font-medium text-primary">SELECTED_WORKS</h2>
+          <span class="font-label text-[0.6875rem] uppercase tracking-[0.2em] text-outline"
+            >v.2024.01</span
+          >
+        </div>
+        <div class="space-y-1">
+          <!-- Project Item 01 -->
+          <div
+            class="group grid grid-cols-1 md:grid-cols-12 py-12 items-center hover:bg-surface-container-low transition-colors px-4 -mx-4 cursor-pointer"
+          >
+            <div class="hidden md:block md:col-span-1 font-label text-[0.6875rem] text-outline">
+              01
+            </div>
+            <div class="md:col-span-5">
+              <h3
+                class="font-headline text-3xl md:text-4xl text-primary group-hover:translate-x-2 transition-transform duration-300"
+              >
+                Media Asset Pipeline
+              </h3>
+            </div>
+            <div class="md:col-span-4 mt-4 md:mt-0">
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="bg-surface-container-high px-3 py-1 font-label text-[0.6875rem] text-on-surface-variant"
+                  >RUST</span
+                >
+                <span
+                  class="bg-surface-container-high px-3 py-1 font-label text-[0.6875rem] text-on-surface-variant"
+                  >FFMPEG</span
+                >
+                <span
+                  class="bg-surface-container-high px-3 py-1 font-label text-[0.6875rem] text-on-surface-variant"
+                  >AWS</span
+                >
+              </div>
+            </div>
+            <div class="md:col-span-2 text-right hidden md:block">
+              <span
+                class="material-symbols-outlined text-primary group-hover:rotate-45 transition-transform"
+                data-icon="north_east"
+                >north_east</span
+              >
+            </div>
+          </div>
+          <!-- Project Item 02 -->
+          <div
+            class="group grid grid-cols-1 md:grid-cols-12 py-12 items-center hover:bg-surface-container-low transition-colors px-4 -mx-4 cursor-pointer"
+          >
+            <div class="hidden md:block md:col-span-1 font-label text-[0.6875rem] text-outline">
+              02
+            </div>
+            <div class="md:col-span-5">
+              <h3
+                class="font-headline text-3xl md:text-4xl text-primary group-hover:translate-x-2 transition-transform duration-300"
+              >
+                Streaming Core Engine
+              </h3>
+            </div>
+            <div class="md:col-span-4 mt-4 md:mt-0">
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="bg-surface-container-high px-3 py-1 font-label text-[0.6875rem] text-on-surface-variant"
+                  >GO</span
+                >
+                <span
+                  class="bg-surface-container-high px-3 py-1 font-label text-[0.6875rem] text-on-surface-variant"
+                  >WEBRTC</span
+                >
+                <span
+                  class="bg-surface-container-high px-3 py-1 font-label text-[0.6875rem] text-on-surface-variant"
+                  >KUBERNETES</span
+                >
+              </div>
+            </div>
+            <div class="md:col-span-2 text-right hidden md:block">
+              <span
+                class="material-symbols-outlined text-primary group-hover:rotate-45 transition-transform"
+                data-icon="north_east"
+                >north_east</span
+              >
+            </div>
+          </div>
+          <!-- Project Item 03 -->
+          <div
+            class="group grid grid-cols-1 md:grid-cols-12 py-12 items-center hover:bg-surface-container-low transition-colors px-4 -mx-4 cursor-pointer"
+          >
+            <div class="hidden md:block md:col-span-1 font-label text-[0.6875rem] text-outline">
+              03
+            </div>
+            <div class="md:col-span-5">
+              <h3
+                class="font-headline text-3xl md:text-4xl text-primary group-hover:translate-x-2 transition-transform duration-300"
+              >
+                Design System Bridge
+              </h3>
+            </div>
+            <div class="md:col-span-4 mt-4 md:mt-0">
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="bg-surface-container-high px-3 py-1 font-label text-[0.6875rem] text-on-surface-variant"
+                  >TYPESCRIPT</span
+                >
+                <span
+                  class="bg-surface-container-high px-3 py-1 font-label text-[0.6875rem] text-on-surface-variant"
+                  >FIGMA_API</span
+                >
+              </div>
+            </div>
+            <div class="md:col-span-2 text-right hidden md:block">
+              <span
+                class="material-symbols-outlined text-primary group-hover:rotate-45 transition-transform"
+                data-icon="north_east"
+                >north_east</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Technical Log Section -->
+      <section>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          <div class="lg:col-span-4">
+            <div class="sticky top-32">
+              <span
+                class="font-label text-[0.6875rem] uppercase tracking-[0.2em] text-outline mb-4 block"
+                >// RESEARCH_DEEP_DIVES</span
+              >
+              <h2 class="font-headline text-4xl font-bold text-primary mb-6">Technical Log</h2>
+              <p class="font-body text-secondary mb-8 leading-relaxed">
+                A chronicle of systems engineering, architectural decisions, and the pursuit of
+                performant software.
+              </p>
+              <a
+                class="inline-flex items-center gap-2 group font-label text-[0.6875rem] uppercase tracking-widest text-primary"
+                href="#"
+              >
+                VIEW_ALL_LOGS
+                <span
+                  class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform"
+                  data-icon="arrow_forward"
+                  >arrow_forward</span
+                >
+              </a>
+            </div>
+          </div>
+          <div class="lg:col-start-6 lg:col-span-7 space-y-24">
+            <!-- Log 01 -->
+            <article class="group">
+              <div class="flex items-center gap-4 mb-6">
+                <span class="font-label text-[0.6875rem] text-outline">OCT 24, 2023</span>
+                <span class="w-8 h-px bg-outline-variant"></span>
+                <span class="font-label text-[0.6875rem] text-primary">SYSTEM_DESIGN</span>
+              </div>
+              <h3
+                class="font-headline text-2xl md:text-3xl text-primary mb-4 group-hover:text-secondary transition-colors"
+              >
+                Why Rust is our choice for the high-concurrency video processor
+              </h3>
+              <p class="font-body text-secondary mb-6 line-clamp-3 leading-relaxed">
+                Exploring the trade-offs between Go and Rust when handling thousands of simultaneous
+                HLS segments. Memory safety without a garbage collector became the deciding factor
+                for our latest infrastructure upgrade at EO.
+              </p>
+              <div class="flex gap-4">
+                <span class="text-xs font-label text-outline uppercase tracking-tighter"
+                  >#RUST</span
+                >
+                <span class="text-xs font-label text-outline uppercase tracking-tighter"
+                  >#PERFORMANCE</span
+                >
+              </div>
+            </article>
+            <!-- Log 02 -->
+            <article class="group">
+              <div class="flex items-center gap-4 mb-6">
+                <span class="font-label text-[0.6875rem] text-outline">SEP 12, 2023</span>
+                <span class="w-8 h-px bg-outline-variant"></span>
+                <span class="font-label text-[0.6875rem] text-primary">FRONTEND</span>
+              </div>
+              <h3
+                class="font-headline text-2xl md:text-3xl text-primary mb-4 group-hover:text-secondary transition-colors"
+              >
+                Atomic Design in the context of React Server Components
+              </h3>
+              <p class="font-body text-secondary mb-6 line-clamp-3 leading-relaxed">
+                How we adapted our shared component library to leverage RSC. Reducing bundle sizes
+                by 40% while maintaining the flexibility required by our diverse digital newsroom.
+              </p>
+              <div class="flex gap-4">
+                <span class="text-xs font-label text-outline uppercase tracking-tighter"
+                  >#REACT</span
+                >
+                <span class="text-xs font-label text-outline uppercase tracking-tighter"
+                  >#ARCHITECTURE</span
+                >
+              </div>
+            </article>
+            <!-- Log 03 -->
+            <article class="group">
+              <div class="flex items-center gap-4 mb-6">
+                <span class="font-label text-[0.6875rem] text-outline">AUG 05, 2023</span>
+                <span class="w-8 h-px bg-outline-variant"></span>
+                <span class="font-label text-[0.6875rem] text-primary">DEVOPS</span>
+              </div>
+              <h3
+                class="font-headline text-2xl md:text-3xl text-primary mb-4 group-hover:text-secondary transition-colors"
+              >
+                Observability: Measuring what matters in a distributed pipeline
+              </h3>
+              <p class="font-body text-secondary mb-6 line-clamp-3 leading-relaxed">
+                Implementing OpenTelemetry across our Go microservices to find the bottlenecks in
+                our transcode-on-demand service. A look into our Prometheus and Grafana setup.
+              </p>
+              <div class="flex gap-4">
+                <span class="text-xs font-label text-outline uppercase tracking-tighter"
+                  >#MONITORING</span
+                >
+                <span class="text-xs font-label text-outline uppercase tracking-tighter"
+                  >#OTEL</span
+                >
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- Footer -->
+    <footer class="w-full border-t border-neutral-900 bg-neutral-950">
+      <div
+        class="flex flex-col md:flex-row justify-between items-center px-8 py-12 w-full max-w-screen-2xl mx-auto"
+      >
+        <div
+          class="font-['Space_Grotesk'] text-[10px] uppercase tracking-[0.2em] text-neutral-500 mb-8 md:mb-0"
+        >
+          © 2024 JOËL KUIJPER. BUILT FOR PRECISION.
+        </div>
+        <div class="flex gap-12">
+          <a
+            class="font-['Space_Grotesk'] text-[10px] uppercase tracking-[0.2em] text-neutral-600 hover:text-white transition-colors"
+            href="#"
+            >GITHUB</a
+          >
+          <a
+            class="font-['Space_Grotesk'] text-[10px] uppercase tracking-[0.2em] text-neutral-600 hover:text-white transition-colors"
+            href="#"
+            >LINKEDIN</a
+          >
+          <a
+            class="font-['Space_Grotesk'] text-[10px] uppercase tracking-[0.2em] text-neutral-600 hover:text-white transition-colors"
+            href="#"
+            >RSS</a
+          >
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

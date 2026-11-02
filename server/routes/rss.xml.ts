@@ -2,13 +2,13 @@ import { Feed } from "feed";
 
 export default defineEventHandler(async (event) => {
   const config = useAppConfig();
-  const siteUrl = getRequestURL(event).origin;
+  const siteUrl = new URL(getSiteConfig(event).url).origin;
 
   const feed = new Feed({
-    title: config.site.title,
-    description: config.site.description,
-    id: siteUrl,
-    link: siteUrl,
+    title: `${config.site.title} - Log`,
+    description: `Log entries by ${config.site.author}`,
+    id: `${siteUrl}/log`,
+    link: `${siteUrl}/log`,
     language: config.site.lang,
     copyright: `All rights reserved ${new Date().getFullYear()}, ${config.site.author}`,
     feedLinks: {

@@ -11,14 +11,27 @@ if (!note.value || (note.value.draft && !canSeeDrafts.value)) {
   throw createError({ statusCode: 404, message: "Note not found" });
 }
 
-useSeoMeta({
-  title: note.value.title,
-  description:
-    note.value.description ||
-    `Read about my note posted on: ${new Date(note.value.publishDate).toLocaleDateString()}`,
-});
+usePageSeo(() => ({
+  title: note.value!.title,
+  description: note.value!.description,
+  article: { published: note.value!.publishDate },
+  noindex: note.value!.draft,
+}));
 </script>
 
 <template>
-  <NoteCard v-if="note" :note="note" heading-level="h1" />
+  <article v-if="note" class="break-words">
+    <NuxtLink
+      to="/notes"
+      class="group mb-12 inline-flex items-center gap-2 font-label text-[0.6875rem] uppercase tracking-[0.1em] text-outline transition-colors hover:text-highlighted"
+    >
+      <UIcon
+        name="i-lucide-arrow-left"
+        class="size-3.5 transition-transform group-hover:-translate-x-0.5"
+      />
+      All notes
+    </NuxtLink>
+
+    <NoteCard :note="note" heading-level="h1" />
+  </article>
 </template>

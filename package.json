@@ -17,21 +17,29 @@
   "dependencies": {
     "@fontsource-variable/albert-sans": "^5.2.8",
     "@nuxt/content": "^3.14.0",
+    "@nuxt/fonts": "0.14.0",
     "@nuxt/image": "^2.0.0",
     "@nuxt/ui": "^4.9.0",
     "@nuxtjs/color-mode": "^4.0.1",
     "@nuxtjs/sitemap": "^8.2.1",
+    "@resvg/resvg-js": "2.6.2",
     "@vercel/analytics": "^2.0.1",
     "better-sqlite3": "^12.11.1",
     "feed": "^5.2.1",
+    "image-meta": "0.2.2",
     "nuxt": "^4.4.8",
+    "nuxt-og-image": "6.10.4",
     "nuxt-studio": "^1.7.0",
+    "satori": "0.33.5",
     "vue": "^3.5.38",
     "vue-router": "^5.1.0"
   },
   "devDependencies": {
     "oxfmt": "^0.55.0",
     "oxlint": "^1.70.0"
+  },
+  "engines": {
+    "node": "22.x"
   },
   "volta": {
     "node": "22.22.0"
