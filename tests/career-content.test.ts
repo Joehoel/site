@@ -2,11 +2,12 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
 import { parse as parseYaml } from "yaml";
-import { parseCareer } from "../shared/career.ts";
+import { z } from "zod";
+import { careerSchema } from "../shared/career.ts";
 
 test("the actual career YAML contains only the confirmed month-precision EO role", () => {
   const source = readFileSync(new URL("../content/career.yml", import.meta.url), "utf8");
-  assert.deepEqual(parseCareer(parseYaml(source)), {
+  assert.deepEqual(careerSchema.parse(parseYaml(source)), {
     roles: [
       {
         id: "eo-full-stack-developer-2026",
@@ -20,7 +21,7 @@ test("the actual career YAML contains only the confirmed month-precision EO role
 
 for (const date of ["2026", "2026-02", "2024-02-29"]) {
   test(`YAML parsing preserves quoted ${date} precision without filling missing dates`, () => {
-    const career = parseCareer(
+    const career = careerSchema.parse(
       parseYaml(`
 roles:
   - id: example
@@ -37,7 +38,7 @@ roles:
 }
 
 test("an empty YAML roles list remains empty", () => {
-  assert.deepEqual(parseCareer(parseYaml("roles: []")), { roles: [] });
+  assert.deepEqual(careerSchema.parse(parseYaml("roles: []")), { roles: [] });
 });
 
 const invalidDocuments = [
@@ -51,7 +52,7 @@ roles:
     title: Developer
     start: "2026-02-29"
 `,
-    error: /roles\[0\]\.start: invalid calendar date/,
+    path: ["roles", 0, "start"],
   },
   {
     name: "end before start",
@@ -64,7 +65,7 @@ roles:
     start: "2026-02"
     end: "2026-01"
 `,
-    error: /roles\[0\]\.end: period ends before it starts/,
+    path: ["roles", 0, "end"],
   },
   {
     name: "duplicate role IDs",
@@ -81,21 +82,24 @@ roles:
     title: Another title
     start: "2025"
 `,
-    error: /roles\[1\]\.id: duplicate role ID/,
+    path: ["roles", 1, "id"],
   },
 ];
 
-for (const { name, source, error } of invalidDocuments) {
+for (const { name, source, path } of invalidDocuments) {
   test(`career YAML rejects ${name} with a field-addressed error`, () => {
-    assert.throws(() => parseCareer(parseYaml(source)), { name: "TypeError", message: error });
+    const result = careerSchema.safeParse(parseYaml(source));
+    assert.equal(result.success, false);
+    if (!result.success) {
+      assert.ok(result.error instanceof z.ZodError);
+      assert.deepEqual(result.error.issues[0]?.path, path);
+    }
   });
 }
 
 test("a numeric YAML year is rejected rather than silently coerced into a date", () => {
-  assert.throws(
-    () =>
-      parseCareer(
-        parseYaml(`
+  const result = careerSchema.safeParse(
+    parseYaml(`
 roles:
   - id: example
     employer:
@@ -103,11 +107,14 @@ roles:
     title: Developer
     start: 2026
 `),
-      ),
-    { name: "TypeError", message: /roles\[0\]\.start: expected a nonempty string/ },
   );
+  assert.equal(result.success, false);
+  if (!result.success) {
+    assert.ok(result.error instanceof z.ZodError);
+    assert.deepEqual(result.error.issues[0]?.path, ["roles", 0, "start"]);
+  }
 });
 
 test("malformed career YAML fails before domain parsing", () => {
-  assert.throws(() => parseCareer(parseYaml("roles: [")), { name: "YAMLParseError" });
+  assert.throws(() => careerSchema.parse(parseYaml("roles: [")), { name: "YAMLParseError" });
 });

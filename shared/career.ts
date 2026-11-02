@@ -1,38 +1,71 @@
-declare const careerDateBrand: unique symbol;
-declare const asOfBrand: unique symbol;
+import { z } from "zod";
 
-export type CareerDate = string & { readonly [careerDateBrand]: true };
-export type AsOf = CareerDate & { readonly [asOfBrand]: true };
+export const asOfSchema = z
+  .string()
+  .date()
+  .regex(/^(?!0000)\d{4}-\d{2}-\d{2}(?![\s\S])/, "Expected a full calendar day in years 0001-9999");
 
-export type Role = {
-  readonly id: string;
-  readonly employer: { readonly name: string; readonly url?: string };
-  readonly title: string;
-  readonly start: CareerDate;
-  readonly end?: CareerDate;
-  readonly summary?: string;
-  readonly primary?: boolean;
-};
+const dateSchema = z.union([
+  z.string().regex(/^(?!0000)\d{4}(?:-(?:0[1-9]|1[0-2]))?(?![\s\S])/, "Expected YYYY or YYYY-MM"),
+  asOfSchema,
+]);
+const nonemptyString = z.string().regex(/\S/, "Must not be blank");
+const roleSchema = z
+  .object({
+    id: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*(?![\s\S])/, "Expected a lowercase ASCII slug"),
+    employer: z.object({
+      name: nonemptyString,
+      url: z
+        .string()
+        .url()
+        .refine((url) => /^https?:/i.test(url.trim()), "Expected an HTTP or HTTPS URL")
+        .optional(),
+    }),
+    title: nonemptyString,
+    start: dateSchema,
+    end: dateSchema.optional(),
+    summary: nonemptyString.optional(),
+    primary: z.boolean().optional(),
+  })
+  .refine((role) => role.end === undefined || bounds(role.start).first <= bounds(role.end).last, {
+    path: ["end"],
+    message: "Period ends before it starts",
+  });
 
-export type Career = { readonly roles: readonly Role[] };
+export const careerSchema = z.object({
+  roles: z.array(roleSchema).superRefine((roles, ctx) => {
+    const ids = new Set<string>();
+    let hasPrimary = false;
+    roles.forEach((role, index) => {
+      if (ids.has(role.id)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: [index, "id"],
+          message: `Duplicate role ID ${role.id}`,
+        });
+      }
+      ids.add(role.id);
+      if (role.primary) {
+        if (hasPrimary) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: [index, "primary"],
+            message: "Only one primary role is allowed",
+          });
+        }
+        hasPrimary = true;
+      }
+    });
+  }),
+});
+
+export type Career = z.infer<typeof careerSchema>;
+export type Role = z.infer<typeof roleSchema>;
+export type AsOf = z.infer<typeof asOfSchema>;
 export type CurrentSelection =
   | { readonly kind: "none" }
   | { readonly kind: "selected"; readonly role: Role }
   | { readonly kind: "ambiguous"; readonly roles: readonly Role[] };
-
-function object(input: unknown, path: string): Record<string, unknown> {
-  if (typeof input !== "object" || input === null || Array.isArray(input)) {
-    throw new TypeError(`${path}: expected an object`);
-  }
-  return input as Record<string, unknown>;
-}
-
-function text(input: unknown, path: string): string {
-  if (typeof input !== "string" || input.trim().length === 0) {
-    throw new TypeError(`${path}: expected a nonempty string`);
-  }
-  return input;
-}
 
 function daysInMonth(year: number, month: number): number {
   if (month === 2) {
@@ -41,22 +74,7 @@ function daysInMonth(year: number, month: number): number {
   return [4, 6, 9, 11].includes(month) ? 30 : 31;
 }
 
-function parseDate(input: unknown, path: string): CareerDate {
-  const value = text(input, path);
-  const match = /^(\d{4})(?:-(\d{2})(?:-(\d{2}))?)?$/.exec(value);
-  if (!match || match[0] !== value) {
-    throw new TypeError(`${path}: expected YYYY, YYYY-MM, or YYYY-MM-DD`);
-  }
-  const year = Number(match[1]);
-  const month = match[2] === undefined ? 1 : Number(match[2]);
-  const day = match[3] === undefined ? 1 : Number(match[3]);
-  if (year < 1 || month < 1 || month > 12 || day < 1 || day > daysInMonth(year, month)) {
-    throw new TypeError(`${path}: invalid calendar date`);
-  }
-  return value as CareerDate;
-}
-
-function bounds(date: CareerDate): { first: number; last: number } {
+function bounds(date: string): { first: number; last: number } {
   const [year = 0, month = 1, day = 1] = date.split("-").map(Number);
   const lastMonth = date.length === 4 ? 12 : month;
   const lastDay = date.length === 10 ? day : daysInMonth(year, lastMonth);
@@ -64,70 +82,6 @@ function bounds(date: CareerDate): { first: number; last: number } {
     first: year * 10000 + month * 100 + day,
     last: year * 10000 + lastMonth * 100 + lastDay,
   };
-}
-
-export function parseCareer(input: unknown): Career {
-  const career = object(input, "career");
-  if (!Array.isArray(career.roles)) {
-    throw new TypeError("roles: expected an array");
-  }
-  const ids = new Set<string>();
-  let primaryId: string | undefined;
-  const roles = Array.from(career.roles, (input: unknown, index: number): Role => {
-    const path = `roles[${index}]`;
-    const role = object(input, path);
-    const id = text(role.id, `${path}.id`);
-    if (/^[a-z0-9]+(?:-[a-z0-9]+)*$/.exec(id)?.[0] !== id) {
-      throw new TypeError(`${path}.id: expected a lowercase ASCII slug`);
-    }
-    if (ids.has(id)) {
-      throw new TypeError(`${path}.id: duplicate role ID ${id}`);
-    }
-    ids.add(id);
-    const employer = object(role.employer, `${path}.employer`);
-    const name = text(employer.name, `${path}.employer.name`);
-    const title = text(role.title, `${path}.title`);
-    const start = parseDate(role.start, `${path}.start`);
-    const end = role.end === undefined ? undefined : parseDate(role.end, `${path}.end`);
-    if (end !== undefined && bounds(start).first > bounds(end).last) {
-      throw new TypeError(`${path}.end: period ends before it starts`);
-    }
-    const summary = role.summary === undefined ? undefined : text(role.summary, `${path}.summary`);
-    if (role.primary !== undefined && typeof role.primary !== "boolean") {
-      throw new TypeError(`${path}.primary: expected a boolean`);
-    }
-    if (role.primary === true) {
-      if (primaryId !== undefined) {
-        throw new TypeError(`${path}.primary: only one primary role is allowed`);
-      }
-      primaryId = id;
-    }
-    let url: string | undefined;
-    if (employer.url !== undefined) {
-      url = text(employer.url, `${path}.employer.url`);
-      if (!URL.canParse(url) || !["http:", "https:"].includes(new URL(url).protocol)) {
-        throw new TypeError(`${path}.employer.url: expected an absolute HTTP or HTTPS URL`);
-      }
-    }
-    return {
-      id,
-      employer: { name, ...(url === undefined ? {} : { url }) },
-      title,
-      start,
-      ...(end === undefined ? {} : { end }),
-      ...(summary === undefined ? {} : { summary }),
-      ...(role.primary === undefined ? {} : { primary: role.primary }),
-    };
-  });
-  return { roles };
-}
-
-export function parseAsOf(input: string): AsOf {
-  const date = parseDate(input, "asOf");
-  if (date.length !== 10) {
-    throw new TypeError("asOf: expected a full YYYY-MM-DD calendar date");
-  }
-  return date as AsOf;
 }
 
 export function orderRoles(career: Career): readonly Role[] {

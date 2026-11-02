@@ -1,26 +1,12 @@
 import { defineCollection, defineContentConfig, z } from "@nuxt/content";
+import { careerSchema } from "./shared/career.ts";
 
 export default defineContentConfig({
   collections: {
     career: defineCollection({
       type: "data",
       source: "career.yml",
-      schema: z.object({
-        roles: z.array(
-          z.object({
-            id: z.string().min(1),
-            employer: z.object({
-              name: z.string().min(1),
-              url: z.string().optional(),
-            }),
-            title: z.string().min(1),
-            start: z.string().min(1),
-            end: z.string().optional(),
-            summary: z.string().optional(),
-            primary: z.boolean().optional(),
-          }),
-        ),
-      }),
+      schema: careerSchema,
     }),
 
     posts: defineCollection({

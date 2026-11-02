@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { orderRoles, parseAsOf, parseCareer, selectCurrent } from "../shared/career.ts";
+import { z } from "zod";
+import { asOfSchema, careerSchema, orderRoles, selectCurrent } from "../shared/career.ts";
 
 function role(id = "role-a", fields: Record<string, unknown> = {}) {
   return {
@@ -19,35 +20,35 @@ test("empty, future, and completed careers have no current role", () => {
     [role("completed", { start: "2024", end: "2025" })],
     [role("future", { start: "2027" }), role("completed", { start: "2024", end: "2025" })],
   ]) {
-    assert.deepEqual(selectCurrent(parseCareer({ roles }), parseAsOf("2026-11-02")), {
+    assert.deepEqual(selectCurrent(careerSchema.parse({ roles }), asOfSchema.parse("2026-11-02")), {
       kind: "none",
     });
   }
 });
 
 test("one active role is selected without an explicit primary", () => {
-  const career = parseCareer({ roles: [role()] });
-  assert.deepEqual(selectCurrent(career, parseAsOf("2026-11-02")), {
+  const career = careerSchema.parse({ roles: [role()] });
+  assert.deepEqual(selectCurrent(career, asOfSchema.parse("2026-11-02")), {
     kind: "selected",
     role: career.roles[0],
   });
 });
 
 test("overlap is explicit and ordered, regardless of false primary flags", () => {
-  const career = parseCareer({
+  const career = careerSchema.parse({
     roles: [role("older", { start: "2025", primary: false }), role("newer")],
   });
-  assert.deepEqual(selectCurrent(career, parseAsOf("2026-11-02")), {
+  assert.deepEqual(selectCurrent(career, asOfSchema.parse("2026-11-02")), {
     kind: "ambiguous",
     roles: [career.roles[1], career.roles[0]],
   });
 });
 
 test("an active primary resolves overlap even when another role starts later", () => {
-  const career = parseCareer({
+  const career = careerSchema.parse({
     roles: [role("primary", { start: "2025", primary: true }), role("newer")],
   });
-  assert.deepEqual(selectCurrent(career, parseAsOf("2026-11-02")), {
+  assert.deepEqual(selectCurrent(career, asOfSchema.parse("2026-11-02")), {
     kind: "selected",
     role: career.roles[0],
   });
@@ -58,13 +59,13 @@ test("future and completed primary roles cannot resolve an active overlap", () =
     role("primary", { start: "2027", primary: true }),
     role("primary", { start: "2024", end: "2025", primary: true }),
   ]) {
-    const career = parseCareer({ roles: [primary, role("active-a"), role("active-b")] });
-    assert.deepEqual(selectCurrent(career, parseAsOf("2026-11-02")), {
+    const career = careerSchema.parse({ roles: [primary, role("active-a"), role("active-b")] });
+    assert.deepEqual(selectCurrent(career, asOfSchema.parse("2026-11-02")), {
       kind: "ambiguous",
       roles: [career.roles[1], career.roles[2]],
     });
-    const single = parseCareer({ roles: [primary, role("active")] });
-    assert.deepEqual(selectCurrent(single, parseAsOf("2026-11-02")), {
+    const single = careerSchema.parse({ roles: [primary, role("active")] });
+    assert.deepEqual(selectCurrent(single, asOfSchema.parse("2026-11-02")), {
       kind: "selected",
       role: single.roles[1],
     });
@@ -106,12 +107,12 @@ for (const period of [
   },
 ]) {
   test(`${period.start} through ${period.end} includes the whole supplied period`, () => {
-    const career = parseCareer({ roles: [role("role", period)] });
+    const career = careerSchema.parse({ roles: [role("role", period)] });
     for (const day of [period.first, period.last]) {
-      assert.equal(selectCurrent(career, parseAsOf(day)).kind, "selected", day);
+      assert.equal(selectCurrent(career, asOfSchema.parse(day)).kind, "selected", day);
     }
     for (const day of [period.before, period.after]) {
-      assert.equal(selectCurrent(career, parseAsOf(day)).kind, "none", day);
+      assert.equal(selectCurrent(career, asOfSchema.parse(day)).kind, "none", day);
     }
   });
 }
@@ -122,7 +123,7 @@ test("overlapping partial periods are valid without inventing more precise dates
     ["2026-12", "2026"],
     ["2026-02-28", "2026-02"],
   ]) {
-    const career = parseCareer({ roles: [role("role", { start, end })] });
+    const career = careerSchema.parse({ roles: [role("role", { start, end })] });
     assert.equal(career.roles[0]?.start, start);
     assert.equal(career.roles[0]?.end, end);
   }
@@ -142,16 +143,16 @@ test("all date precisions and optional supplied fields survive parsing and selec
     ],
   };
   const original = structuredClone(input);
-  const career = parseCareer(input);
+  const career = careerSchema.parse(input);
   assert.deepEqual(career, original);
   orderRoles(career);
-  selectCurrent(career, parseAsOf("2026-11-02"));
+  selectCurrent(career, asOfSchema.parse("2026-11-02"));
   assert.deepEqual(career, original);
   assert.deepEqual(input, original);
 });
 
 test("ordering uses start bounds, then ASCII IDs, without mutating frozen inputs", () => {
-  const career = parseCareer({
+  const career = careerSchema.parse({
     roles: [
       role("a-2", { start: "2026" }),
       role("newest", { start: "2026-02" }),
@@ -170,7 +171,7 @@ test("ordering uses start bounds, then ASCII IDs, without mutating frozen inputs
     orderRoles(career).map((item) => item.id),
     ["newest", "a-1", "a-10", "a-2"],
   );
-  assert.equal(selectCurrent(career, parseAsOf("2026-11-02")).kind, "ambiguous");
+  assert.equal(selectCurrent(career, asOfSchema.parse("2026-11-02")).kind, "ambiguous");
   assert.deepEqual(career, original);
 });
 
@@ -188,13 +189,13 @@ test("all input permutations produce the same ordering and current selection", (
       [third, a, b],
       [third, b, a],
     ];
-    const expected = parseCareer({ roles: permutations[0] });
+    const expected = careerSchema.parse({ roles: permutations[0] });
     for (const roles of permutations) {
-      const career = parseCareer({ roles });
+      const career = careerSchema.parse({ roles });
       assert.deepEqual(orderRoles(career), orderRoles(expected));
       assert.deepEqual(
-        selectCurrent(career, parseAsOf("2026-11-02")),
-        selectCurrent(expected, parseAsOf("2026-11-02")),
+        selectCurrent(career, asOfSchema.parse("2026-11-02")),
+        selectCurrent(expected, asOfSchema.parse("2026-11-02")),
       );
     }
   }
@@ -206,6 +207,8 @@ for (const date of [
   "2100-02-29",
   "2024-04-31",
   "0000",
+  "0000-02",
+  "0000-01-01",
   "10000",
   "2026-00",
   "2026-13",
@@ -216,21 +219,25 @@ for (const date of [
   "2026-01-01T00:00:00Z",
   " 2026",
   "2026\n",
+  "2026-02\n",
   "2026-02-01\n",
   "not-a-date",
 ]) {
   test(`invalid calendar value ${JSON.stringify(date)} is rejected at either period boundary`, () => {
-    assert.throws(
-      () => parseCareer({ roles: [role("role", { start: date })] }),
-      /roles\[0\]\.start/,
-    );
-    assert.throws(() => parseCareer({ roles: [role("role", { end: date })] }), /roles\[0\]\.end/);
+    for (const field of ["start", "end"]) {
+      const result = careerSchema.safeParse({ roles: [role("role", { [field]: date })] });
+      assert.equal(result.success, false);
+      if (!result.success) {
+        assert.ok(result.error instanceof z.ZodError);
+        assert.ok(result.error.issues.some((issue) => issue.path.join(".") === `roles.0.${field}`));
+      }
+    }
   });
 }
 
 test("full reference days validate leap years and the supported year range", () => {
   for (const date of ["0001-01-01", "2000-02-29", "2024-02-29", "9999-12-31"]) {
-    assert.equal(parseAsOf(date), date);
+    assert.equal(asOfSchema.parse(date), date);
   }
   for (const date of [
     "2026",
@@ -240,7 +247,7 @@ test("full reference days validate leap years and the supported year range", () 
     "0000-01-01",
     "2026-11-02\n",
   ]) {
-    assert.throws(() => parseAsOf(date), /asOf/);
+    assert.throws(() => asOfSchema.parse(date), z.ZodError);
   }
 });
 
@@ -269,10 +276,12 @@ test("malformed documents and required fields are rejected", () => {
       { primary: "true" },
       { employer: { name: "Employer", url: "not-a-url" } },
       { employer: { name: "Employer", url: "javascript:alert(1)" } },
+      { employer: { name: "Employer", url: "ftp://example.com" } },
+      { employer: { name: "Employer", url: " " } },
     ].map((fields) => ({ roles: [role("role", fields)] })),
   ];
   for (const input of invalid) {
-    assert.throws(() => parseCareer(input), TypeError, JSON.stringify(input));
+    assert.throws(() => careerSchema.parse(input), z.ZodError, JSON.stringify(input));
   }
 });
 
@@ -282,20 +291,31 @@ test("periods cannot end before their earliest start", () => {
     ["2026-03", "2026-02"],
     ["2026-02-02", "2026-02-01"],
   ]) {
-    assert.throws(() => parseCareer({ roles: [role("role", { start, end })] }), /ends before/);
+    const result = careerSchema.safeParse({ roles: [role("role", { start, end })] });
+    assert.equal(result.success, false);
+    if (!result.success) {
+      assert.deepEqual(result.error.issues[0]?.path, ["roles", 0, "end"]);
+      assert.match(result.error.issues[0]?.message ?? "", /ends before/);
+    }
   }
 });
 
 test("IDs are unique and only one explicit primary is allowed, even without overlap", () => {
-  assert.throws(() => parseCareer({ roles: [role("same"), role("same")] }), /duplicate role ID/);
-  assert.throws(
-    () =>
-      parseCareer({
-        roles: [
-          role("past", { start: "2024", end: "2025", primary: true }),
-          role("future", { start: "2027", primary: true }),
-        ],
-      }),
-    /only one primary/,
-  );
+  const duplicate = careerSchema.safeParse({ roles: [role("same"), role("same")] });
+  assert.equal(duplicate.success, false);
+  if (!duplicate.success) {
+    assert.deepEqual(duplicate.error.issues[0]?.path, ["roles", 1, "id"]);
+    assert.match(duplicate.error.issues[0]?.message ?? "", /Duplicate role ID/);
+  }
+  const multiplePrimary = careerSchema.safeParse({
+    roles: [
+      role("past", { start: "2024", end: "2025", primary: true }),
+      role("future", { start: "2027", primary: true }),
+    ],
+  });
+  assert.equal(multiplePrimary.success, false);
+  if (!multiplePrimary.success) {
+    assert.deepEqual(multiplePrimary.error.issues[0]?.path, ["roles", 1, "primary"]);
+    assert.match(multiplePrimary.error.issues[0]?.message ?? "", /Only one primary/);
+  }
 });

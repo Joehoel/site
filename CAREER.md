@@ -29,9 +29,10 @@ Comparison bounds never replace stored dates.
 
 ## Selection and ordering
 
-`shared/career.ts` exports `parseCareer`, `parseAsOf`, `orderRoles`, and `selectCurrent`.
-`parseCareer` validates raw data and throws a path-addressed `TypeError` for invalid data.
-`parseAsOf` requires an explicit full calendar day.
+`shared/career.ts` exports `careerSchema`, `asOfSchema`, `orderRoles`, and `selectCurrent`.
+Use `careerSchema.parse(data)` to validate raw data. Invalid data throws a `ZodError` with field paths.
+Use `asOfSchema.parse(day)` for an explicit full calendar day.
+`Career`, `Role`, and `AsOf` are inferred from the Zod schemas.
 The module does not read the clock.
 
 Roles sort by their most recent start bound, then by ascending ASCII ID.
@@ -48,13 +49,13 @@ Array order never chooses the current role.
 
 ## Validation
 
-`content.config.ts` declares the editable field structure for Content and Studio.
-`parseCareer` in `shared/career.ts` owns the semantic rules.
-`nuxt.config.ts` parses the actual career YAML and validates it when Nuxt loads its configuration.
+`careerSchema` in `shared/career.ts` owns the field structure and semantic rules.
+`content.config.ts` uses that same schema for Content and Studio.
+`nuxt.config.ts` parses the actual career YAML and calls `careerSchema.parse` when Nuxt loads its configuration.
 Invalid career data stops configuration loading, so a build cannot silently omit it.
-The `content:file:afterParse` hook also validates every career ingestion, including development updates.
+The `content:file:afterParse` hook also calls `careerSchema.parse` for every career ingestion, including development updates.
 Content can warn and skip an invalid update rather than stop the process.
-Studio's field schema does not enforce every semantic rule.
+Content's JSON Schema conversion drops custom refinements, so both runtime validation calls are required.
 
 ## Static publication
 
