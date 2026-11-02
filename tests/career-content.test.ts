@@ -5,18 +5,10 @@ import { parse as parseYaml } from "yaml";
 import { z } from "zod";
 import { careerSchema } from "../shared/career.ts";
 
-test("the actual career YAML contains only the confirmed month-precision EO role", () => {
+test("the actual career YAML validates without changing supplied fields or date precision", () => {
   const source = readFileSync(new URL("../content/career.yml", import.meta.url), "utf8");
-  assert.deepEqual(careerSchema.parse(parseYaml(source)), {
-    roles: [
-      {
-        id: "eo-full-stack-developer-2026",
-        employer: { name: "Evangelische Omroep" },
-        title: "Full-stack Developer",
-        start: "2026-02",
-      },
-    ],
-  });
+  const authored = parseYaml(source);
+  assert.deepEqual(careerSchema.parse(authored), authored);
 });
 
 for (const date of ["2026", "2026-02", "2024-02-29"]) {

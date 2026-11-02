@@ -1,8 +1,15 @@
 import { defineCollection, defineContentConfig, z } from "@nuxt/content";
 import { careerSchema } from "./shared/career.ts";
+import { homeSchema } from "./shared/home.ts";
 
 export default defineContentConfig({
   collections: {
+    home: defineCollection({
+      type: "page",
+      source: "index.md",
+      schema: homeSchema,
+    }),
+
     career: defineCollection({
       type: "data",
       source: "career.yml",
