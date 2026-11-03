@@ -7,6 +7,9 @@
   "sourceSha256": "ebcbf31904d13b4b1a2e4bbfc3c8f11bf200883bf2663d6e50a4cbd9bb828720",
   "recordCreationVerified": true,
   "unchangedRerun": { "recordReads": 2, "recordWrites": 0 },
-  "readerAcceptance": "pending-publication-indexing",
+  "readerAcceptance": "blocked-api-canonical-after-publication-indexing",
+  "readerPublicationName": "Log",
+  "readerHtmlCanonical": "https://joelkuijper.me/log/powerpoint-inverter",
+  "readerApiCanonical": null,
   "websiteVerification": "not-deployed"
 }

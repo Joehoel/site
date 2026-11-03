@@ -51,15 +51,16 @@ The anonymous API preserves the exact Markpub body.
 The actual browser renders six highlighted Python blocks with preserved indentation and internal newlines, all three source links and the original image, which loaded at 3200 pixels wide.
 CommonMark excludes the closing-fence separator newline from each rendered code block. The record still preserves the source fences verbatim.
 
-Full reader acceptance has not passed.
-At the last completed check, the document API had no publication name or original canonical because the owning publication was not indexed.
-The reader used its own article URL as canonical instead of the original website URL.
-The public account lookup could see Log directly in the repository, but that is not proof of publication indexing.
-Do not describe body rendering alone as a successful publication or use this partial result as the go-ahead for unattended export.
+The owning publication initially was not indexed. A bounded watch later confirmed that it resolves as Log.
+The reader HTML now carries the original website canonical correctly.
+The public document API still returns `canonicalUrl: null` despite the indexed publication and correct HTML canonical.
+The cause of that remaining mismatch has not been established.
+The stricter test contract requires both the API and HTML canonical to match, so full acceptance remains unpassed.
+Do not describe the remaining mismatch as a missing publication or broken HTML canonical, and do not use a partial verification result as the go-ahead for unattended export.
 
 ## Production decision
 
-Defer the general publisher until the chosen reader resolves the owning publication and preserves the original canonical for this sample.
+Defer the general publisher until the full verification contract passes, including the document API canonical.
 The existing Content/MDC stack remains in place. There is no CMS migration.
 
 Once that reader gate passes, a separately reviewed implementation must provide:
