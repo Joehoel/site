@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { selectCurrent } from "#shared/career";
+import { orderRoles, selectCurrent } from "#shared/career";
 import { currentRoleSentence } from "#shared/home";
+import { formatWorkPeriod } from "#shared/work-history";
 
 const appConfig = useAppConfig();
 
@@ -21,6 +22,7 @@ if (!intro.value?.home) {
 }
 
 const home = computed(() => intro.value!.home!);
+const orderedRoles = computed(() => orderRoles(intro.value!.career ?? { roles: [] }));
 const currentSelection = computed(() =>
   selectCurrent(intro.value!.career ?? { roles: [] }, intro.value!.asOf),
 );
@@ -120,6 +122,37 @@ usePageSeo(
             :index="i + 1"
           />
         </div>
+      </div>
+    </section>
+
+    <section v-if="home.showWorkHistory && orderedRoles.length" aria-labelledby="work">
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
+        <div class="lg:col-span-4">
+          <div class="lg:sticky lg:top-28">
+            <h2
+              id="work"
+              class="mb-6 font-headline text-3xl font-bold tracking-tight text-highlighted md:text-4xl"
+            >
+              Work
+            </h2>
+          </div>
+        </div>
+        <ol class="min-w-0 divide-y divide-outline-variant lg:col-span-8" role="list">
+          <li v-for="role in orderedRoles" :key="role.id" class="py-6 wrap-anywhere first:pt-0">
+            <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+              <h3 class="font-headline text-xl font-semibold text-highlighted">
+                {{ role.title }}
+              </h3>
+              <p class="font-label text-xs text-outline">
+                {{ formatWorkPeriod(role, intro!.asOf) }}
+              </p>
+            </div>
+            <p class="mt-2 font-body text-sm text-muted">{{ role.employer.name }}</p>
+            <p v-if="role.summary" class="mt-3 font-body text-sm leading-relaxed text-muted">
+              {{ role.summary }}
+            </p>
+          </li>
+        </ol>
       </div>
     </section>
 

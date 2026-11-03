@@ -8,6 +8,11 @@ import { currentRoleSentence, homeSchema } from "../shared/home.ts";
 const source = readFileSync(new URL("../content/index.md", import.meta.url), "utf8");
 const document = await parseMarkdown(source);
 const fixtureCopy = { rolePrefix: "I'm a", employerPrefix: "at the" };
+const fixtureHome = {
+  title: "Example home",
+  description: "Example description.",
+  ...fixtureCopy,
+};
 const asOf = "2026-11-02";
 
 function role(fields: Partial<Role> = {}): Role {
@@ -24,6 +29,25 @@ test("the home Markdown supplies editable copy without an authored path or publi
   homeSchema.parse(document.data);
   assert.equal("path" in document.data, false);
   assert.equal("publishDate" in document.data, false);
+});
+
+test("work history is hidden by default when the home flag is omitted", () => {
+  assert.equal(homeSchema.parse(fixtureHome).showWorkHistory, false);
+});
+
+for (const showWorkHistory of [true, false]) {
+  test(`authors can set showWorkHistory to ${showWorkHistory}`, () => {
+    assert.equal(
+      homeSchema.parse({ ...fixtureHome, showWorkHistory }).showWorkHistory,
+      showWorkHistory,
+    );
+  });
+}
+
+test("the work history flag rejects strings instead of treating them as booleans", () => {
+  for (const showWorkHistory of ["true", "false"]) {
+    assert.equal(homeSchema.safeParse({ ...fixtureHome, showWorkHistory }).success, false);
+  }
 });
 
 test("the home body has one current role inside a paragraph with explicit data bindings", () => {
