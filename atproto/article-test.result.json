@@ -1,0 +1,12 @@
+{
+  "publicationUri": "at://did:plc:eaonwx2kkhteprf62aguraqu/site.standard.publication/3mzfod6ratk2t",
+  "publicationCid": "bafyreigh7ikyqeens6jisfqrkgzk7m3tc52pq5hsaqv27febagftashnbq",
+  "documentUri": "at://did:plc:eaonwx2kkhteprf62aguraqu/site.standard.document/3mzfod6ratl2t",
+  "documentCid": "bafyreifpf5uabg2jovxpff6duyndda3xfld2xupn4jgrypom2dmjozhjha",
+  "canonicalUrl": "https://joelkuijper.me/log/powerpoint-inverter",
+  "sourceSha256": "ebcbf31904d13b4b1a2e4bbfc3c8f11bf200883bf2663d6e50a4cbd9bb828720",
+  "recordCreationVerified": true,
+  "unchangedRerun": { "recordReads": 2, "recordWrites": 0 },
+  "readerAcceptance": "pending-publication-indexing",
+  "websiteVerification": "not-deployed"
+}

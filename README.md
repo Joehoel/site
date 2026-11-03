@@ -53,6 +53,8 @@ bun run fix
 
 Career data fields and date semantics are described in [Career data reference](CAREER.md).
 
+The bounded AT Protocol sample, durable identities and remaining rollout gates are documented in [AT Protocol article test](ATPROTO-DECISION.md).
+
 ## License
 
 [MIT](LICENSE)
