@@ -1,7 +1,10 @@
 import { defineCollection, defineContentConfig, z } from "@nuxt/content";
+import { contentSource } from "./lib/content-source.ts";
 import { careerSchema } from "./shared/career.ts";
 import { homeSchema } from "./shared/home.ts";
 import { pageSchema } from "./shared/page.ts";
+
+const audience = process.env.NODE_ENV === "development" ? "authoring" : "public";
 
 export default defineContentConfig({
   collections: {
@@ -19,10 +22,13 @@ export default defineContentConfig({
 
     posts: defineCollection({
       type: "page",
-      source: {
-        include: "posts/**/*.md",
-        prefix: "/log",
-      },
+      source: contentSource(
+        {
+          include: "posts/**/*.md",
+          prefix: "/log",
+        },
+        audience,
+      ),
       schema: z.object({
         title: z.string().max(60),
         draft: z.boolean().default(true),
@@ -51,7 +57,7 @@ export default defineContentConfig({
 
     notes: defineCollection({
       type: "page",
-      source: "notes/**/*.md",
+      source: contentSource({ include: "notes/**/*.md" }, audience),
       schema: z.object({
         title: z.string(),
         draft: z.boolean().default(true),
@@ -62,7 +68,7 @@ export default defineContentConfig({
 
     projects: defineCollection({
       type: "page",
-      source: "projects/**/*.md",
+      source: contentSource({ include: "projects/**/*.md" }, audience),
       schema: z.object({
         title: z.string().max(60),
         description: z.string(),
