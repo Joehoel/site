@@ -22,6 +22,7 @@ export default defineAppConfig({
     { label: "Log", url: "/log" },
     { label: "Notes", url: "/notes" },
     { label: "Uses", url: "/uses" },
+    { label: "Brag", url: "/brag" },
   ],
 
   socials: [
