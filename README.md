@@ -53,6 +53,8 @@ bun run fix
 
 Career data fields and date semantics are described in [Career data reference](CAREER.md).
 
+The retained content stack and deferred Comark migration are documented in [Content renderer decision](CONTENT-DECISION.md).
+
 ## License
 
 [MIT](LICENSE)
