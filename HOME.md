@@ -10,5 +10,10 @@ Keep the supplied date precision as described in [Career data reference](CAREER.
 Adjust `rolePrefix` or `employerPrefix` when the sentence needs a different article or preposition.
 Update `description` alongside the writing sentence to keep plain SEO copy aligned.
 
+To show the Work section, enable `showWorkHistory` in Studio or set it to `true` in `content/index.md`.
+The section starts off so you can review the career data before showing it publicly.
+It uses `content/career.yml` and preserves year, month, or day precision in each period.
+If no roles are listed, the section stays hidden even when enabled.
+
 Run `bun run test` with Node 24 before publishing.
 Rebuild the static site after content edits or when a scheduled role becomes current.

@@ -6,6 +6,7 @@ export const homeSchema = z.object({
   description: z.string().min(1),
   rolePrefix: z.string().min(1),
   employerPrefix: z.string().min(1),
+  showWorkHistory: z.boolean().default(false),
 });
 
 export type HomeIntro = z.infer<typeof homeSchema>;
