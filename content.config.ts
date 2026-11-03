@@ -1,6 +1,7 @@
 import { defineCollection, defineContentConfig, z } from "@nuxt/content";
 import { careerSchema } from "./shared/career.ts";
 import { homeSchema } from "./shared/home.ts";
+import { pageSchema } from "./shared/page.ts";
 
 export default defineContentConfig({
   collections: {
@@ -45,13 +46,7 @@ export default defineContentConfig({
         include: "pages/**/*.md",
         prefix: "/",
       },
-      schema: z.object({
-        title: z.string(),
-        description: z.string().optional(),
-        ogImage: z.string().optional(),
-        publishDate: z.string().date(),
-        updatedDate: z.string().date().optional(),
-      }),
+      schema: pageSchema,
     }),
 
     notes: defineCollection({
