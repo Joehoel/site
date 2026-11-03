@@ -53,6 +53,21 @@ bun run fix
 
 Career data fields and date semantics are described in [Career data reference](CAREER.md).
 
+## Tooling history
+
+Edit `content/tooling.yml` in local Studio or as YAML. `content/pages/uses.md` owns the introduction; its tooling component derives current use and history from the one YAML payload.
+Keep tool IDs stable when names change. Add another period when use restarts. Parallel tools and periods are allowed.
+
+Quote known dates as `YYYY`, `YYYY-MM`, or `YYYY-MM-DD`. Use `start: null` for an unknown start, not an invented day.
+Choose an explicit endpoint:
+
+- `end: { kind: unknown }` means current use is unconfirmed.
+- `end: { kind: ended, date: null }` records past use with an unknown end date. A quoted partial date can replace `null`.
+- `end: { kind: ongoing, verifiedOn: "2026-11-03" }` explicitly confirms ongoing use on the given day. Use the actual confirmation day. This assertion remains until edited; the page displays its date rather than silently renewing it.
+
+No tool in the migrated seed is confirmed as current. Preserved descriptions are earlier wording, not new current-use assertions.
+The shared schema and date/period checks run in `bun run test` and CI. No semantic validation preflight is added to Nuxt.
+
 ## License
 
 [MIT](LICENSE)

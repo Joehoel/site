@@ -1,6 +1,7 @@
 import { defineCollection, defineContentConfig, z } from "@nuxt/content";
 import { careerSchema } from "./shared/career.ts";
 import { homeSchema } from "./shared/home.ts";
+import { toolingSchema } from "./shared/tooling.ts";
 
 export default defineContentConfig({
   collections: {
@@ -14,6 +15,12 @@ export default defineContentConfig({
       type: "data",
       source: "career.yml",
       schema: careerSchema,
+    }),
+
+    tooling: defineCollection({
+      type: "data",
+      source: "tooling.yml",
+      schema: toolingSchema,
     }),
 
     posts: defineCollection({

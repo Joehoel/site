@@ -1,0 +1,193 @@
+tools:
+  - id: macbook-pro
+    name: MacBook Pro 16-inch M1 Pro
+    category: Hardware
+    description: |-
+      The 2021 model. Still blazingly fast for everything I throw at it.
+    periods:
+      - start: null
+        end: { kind: unknown }
+        context: "Legacy label: Laptop. Legacy status: In use. This wording is preserved from the previous Uses page, not a current-use confirmation."
+
+  - id: keychron-k8-pro
+    name: Keychron K8 Pro
+    category: Hardware
+    description: |-
+      QMK/VIA wireless mechanical keyboard. My daily driver for both work and play.
+    periods:
+      - start: null
+        end: { kind: unknown }
+        context: "Legacy label: Keyboard."
+
+  - id: glorious-model-o
+    name: Glorious Model O
+    category: Hardware
+    description: |-
+      Lightweight gaming mouse. Light enough to never get in the way during long sessions.
+    periods:
+      - start: null
+        end: { kind: unknown }
+        context: "Legacy label: Mouse."
+
+  - id: cursor
+    name: Cursor
+    category: Development
+    description: |-
+      - Switched from [VS Code](https://code.visualstudio.com/) on :timestamp{date="2025-06-03"}
+      - AI-native editor built on the VS Code core
+      - Keeps my keybindings and extensions intact
+    periods:
+      - start: "2025-06-03"
+        end: { kind: unknown }
+
+  - id: vs-code
+    name: VS Code
+    category: Development
+    url: https://code.visualstudio.com/
+    description: |-
+      Previously used before switching to Cursor.
+    periods:
+      - start: null
+        end: { kind: ended, date: "2025-06-03" }
+
+  - id: ghostty
+    name: Ghostty
+    category: Terminal
+    description: |-
+      - Fast, GPU-accelerated terminal emulator
+      - Replaced [Warp](https://www.warp.dev/) — too sluggish, too much AI bloat
+    periods:
+      - start: null
+        end: { kind: unknown }
+
+  - id: warp
+    name: Warp
+    category: Terminal
+    url: https://www.warp.dev/
+    description: |-
+      Previously used before Ghostty. The reason for switching is preserved in Ghostty's description.
+    periods:
+      - start: null
+        end: { kind: ended, date: null }
+
+  - id: zsh
+    name: Zsh
+    category: Terminal
+    description: |-
+      - Zsh as my shell of choice
+    periods:
+      - start: null
+        end: { kind: unknown }
+        context: Previously listed with Ghostty.
+
+  - id: chrome
+    name: Chrome
+    category: Browser
+    description: |-
+      - The most performant and stable for me
+      - Tried [Arc](https://arc.net/) and [Zen](https://zen-browser.app/) — couldn't get used to vertical tabs
+      - Default browser across all my devices
+    periods:
+      - start: null
+        end: { kind: unknown }
+
+  - id: arc
+    name: Arc
+    category: Browser
+    url: https://arc.net/
+    description: |-
+      Previously tried. The reason for switching is preserved in Chrome's description.
+    periods:
+      - start: null
+        end: { kind: ended, date: null }
+
+  - id: zen
+    name: Zen
+    category: Browser
+    url: https://zen-browser.app/
+    description: |-
+      Previously tried. The reason for switching is preserved in Chrome's description.
+    periods:
+      - start: null
+        end: { kind: ended, date: null }
+
+  - id: tableplus
+    name: TablePlus
+    category: Data
+    url: https://tableplus.com/
+    description: |-
+      - [TablePlus](https://tableplus.com/) for local and remote databases
+    periods:
+      - start: null
+        end: { kind: unknown }
+        context: "Previously listed under TablePlus & DBngin."
+
+  - id: dbngin
+    name: DBngin
+    category: Data
+    url: https://dbngin.com/
+    description: |-
+      - [DBngin](https://dbngin.com/) to spin up local DB servers
+    periods:
+      - start: null
+        end: { kind: unknown }
+
+  - id: proxyman
+    name: Proxyman
+    category: Data
+    url: https://proxyman.com/
+    description: |-
+      - [Proxyman](https://proxyman.com/) as a network tab for [React Native](https://reactnative.dev/) apps
+    periods:
+      - start: null
+        end: { kind: unknown }
+
+  - id: raycast
+    name: Raycast
+    category: Productivity
+    description: |-
+      - My favourite app of all time — Pro subscription and all
+      - Window management, clipboard history, emoji picker, text sniping
+      - Endlessly extensible through community extensions
+    periods:
+      - start: null
+        end: { kind: unknown }
+
+  - id: tinkerwell
+    name: Tinkerwell
+    category: Laravel
+    description: |-
+      - A far better `php artisan tinker` environment for [Laravel](https://laravel.com/) projects
+    periods:
+      - start: null
+        end: { kind: unknown }
+
+  - id: todoist
+    name: Todoist
+    category: Apps
+    url: https://todoist.com
+    description: |-
+      - [Todoist](https://todoist.com) for task management, work and personal
+    periods:
+      - start: null
+        end: { kind: unknown }
+        context: "Previously listed under Todoist & ProNotes."
+
+  - id: pronotes
+    name: ProNotes
+    category: Apps
+    url: https://www.pronotes.app/
+    description: |-
+      - [ProNotes](https://www.pronotes.app/) for Markdown notes inside Apple Notes
+    periods:
+      - start: null
+        end: { kind: unknown }
+
+  - id: apple-notes
+    name: Apple Notes
+    category: Apps
+    description: |-
+      Notes application previously listed with ProNotes.
+    periods:
+      - start: null
+        end: { kind: unknown }
