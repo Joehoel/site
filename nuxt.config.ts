@@ -129,6 +129,7 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
+    "/__compat/**": { prerender: false, sitemap: false },
     "/admin/**": { ssr: true },
     "/__nuxt_studio/**": { ssr: true },
     "/**": { prerender: true },
