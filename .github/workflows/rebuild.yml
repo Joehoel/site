@@ -1,0 +1,17 @@
+# Rebuild the site daily so build-time data (Brag page GitHub + WakaTime stats) stays fresh.
+# VERCEL_DEPLOY_HOOK is a repo secret (Vercel → Settings → Git → Deploy Hooks, branch master).
+name: Daily rebuild
+
+on:
+  schedule:
+    - cron: "17 4 * * *"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel deploy hook
+        run: curl -fsS -X POST "$HOOK" > /dev/null
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}

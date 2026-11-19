@@ -131,6 +131,8 @@ export default defineNuxtConfig({
     "/admin/**": { prerender: false },
     "/__nuxt_studio/**": { prerender: false },
     "/**": { prerender: true },
+    // Prerendered API JSON has no file extension, so Vercel would serve it as octet-stream.
+    "/api/**": { headers: { "content-type": "application/json; charset=utf-8" } },
   },
 
   nitro: {
