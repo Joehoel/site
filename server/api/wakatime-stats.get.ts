@@ -71,74 +71,108 @@ function aiModels(data: NonNullable<StatsResponse["data"]>) {
     );
 }
 
+const TOKEN_FIX =
+  "Check NUXT_WAKATIME_TOKEN (Vercel env + local .env): the OAuth token from wakatime.com/oauth.";
+
 /**
+ * WakaTime coding stats for the Brag page. Prerendered; runs at build time only.
  * With NUXT_WAKATIME_TOKEN: the private past-year stats plus a per-day series.
  * Without it: the public profile, which only shares all-time stats.
  */
 export default defineEventHandler(async (event) => {
+  const log = useLogger(event);
   const { wakatimeToken } = useRuntimeConfig(event);
-  const base = { retry: 0, timeout: 8000 } as const;
-  const auth = { ...base, headers: { Authorization: `Bearer ${wakatimeToken}` } };
+  const auth = { headers: { Authorization: `Bearer ${wakatimeToken}` } };
+  log.set({ wakatime: { source: wakatimeToken ? "private" : "public" } });
+  if (!wakatimeToken) {
+    log.warn("NUXT_WAKATIME_TOKEN is not set; falling back to public all-time stats");
+  }
 
-  try {
-    const [{ data }, days, languages] = await Promise.all([
-      wakatimeToken
-        ? $fetch<StatsResponse>(`${API}/users/current/stats/last_year`, auth)
-        : $fetch<StatsResponse>(`${API}/users/joehoel/stats/all_time`, base),
-      wakatimeToken
-        ? $fetch<DaysResponse>(`${API}/users/current/insights/days/last_year`, auth).catch(
-            () => null,
-          )
-        : null,
-      // Linguist colours per language; optional, so a failure only drops the colours.
-      $fetch<LanguagesResponse>(`${API}/program_languages`, base).catch(() => null),
-    ]);
-    if (!data?.total_seconds) return null;
+  const [stats, days, languages] = await Promise.all([
+    wakatimeToken
+      ? fetchUpstream<StatsResponse>(`${API}/users/current/stats/last_year`, {
+          ...auth,
+          name: "wakatimeStats",
+          fix: TOKEN_FIX,
+        })
+      : fetchUpstream<StatsResponse>(`${API}/users/joehoel/stats/all_time`, {
+          name: "wakatimeStats",
+          fix: "Make sure the WakaTime profile shares its stats publicly.",
+        }),
+    wakatimeToken
+      ? fetchUpstream<DaysResponse>(`${API}/users/current/insights/days/last_year`, {
+          ...auth,
+          name: "wakatimeDays",
+          fix: TOKEN_FIX,
+        })
+      : null,
+    // Linguist colours per language; optional, so a failure only drops the colours.
+    fetchUpstream<LanguagesResponse>(`${API}/program_languages`, {
+      name: "wakatimeLanguages",
+      fix: "Transient WakaTime API issue; language swatches fall back to grey.",
+    }),
+  ]);
 
-    const colors = new Map(languages?.data?.map(({ name, color }) => [name, color]));
-    const ai = data.categories?.find((category) => category.name === "AI Coding");
-
-    return {
-      range: wakatimeToken ? "past year" : data.human_readable_range,
-      totalSeconds: Math.round(data.total_seconds),
-      dailyAverageSeconds: Math.round(data.daily_average),
-      daysCoded: data.days_including_holidays - data.holidays,
-      bestDay: data.best_day
-        ? { date: data.best_day.date, seconds: Math.round(data.best_day.total_seconds) }
-        : null,
-      ai: ai?.total_seconds
-        ? { seconds: Math.round(ai.total_seconds), percent: round1(ai.percent) }
-        : null,
-      languages: top(data.languages, 6).map((l) => ({
-        name: l.name,
-        percent: l.percent,
-        color: colors.get(l.name) ?? null,
-        aiPercent: l.total_seconds
-          ? Math.round((Number(l.ai_coding_seconds) / l.total_seconds) * 100)
-          : 0,
-      })),
-      editors: top(data.editors, 4).map(({ name, percent }) => ({ name, percent })),
-      /** Share of AI line changes per model family (private), or of AI time (public). */
-      aiModels: aiModels(data),
-      agents: data.ai_sessions
-        ? {
-            sessions: data.ai_sessions,
-            prompts: data.ai_prompt_events_total ?? 0,
-            additions: data.ai_additions ?? 0,
-            deletions: data.ai_deletions ?? 0,
-            inputTokens: data.ai_input_tokens ?? 0,
-            outputTokens: data.ai_output_tokens ?? 0,
-          }
-        : null,
-      /** Seconds per day, split into AI and other coding. Only with a token. */
-      days:
-        days?.data?.days.map(({ date, total, categories }) => {
-          const ai = categories.find((c) => c.name === "AI Coding")?.total ?? 0;
-          return { date, ai: Math.round(ai), other: Math.round(Math.max(total - ai, 0)) };
-        }) ?? null,
-    };
-  } catch {
-    console.warn("[wakatime-stats] Could not load WakaTime stats.");
+  const data = stats?.data;
+  if (!data?.total_seconds) {
+    if (stats) log.warn("WakaTime returned no coding time; the section will be hidden");
     return null;
   }
+
+  const colors = new Map(languages?.data?.map(({ name, color }) => [name, color]));
+  const ai = data.categories?.find((category) => category.name === "AI Coding");
+  const series =
+    days?.data?.days.map(({ date, total, categories }) => {
+      const aiSeconds = categories.find((c) => c.name === "AI Coding")?.total ?? 0;
+      return {
+        date,
+        ai: Math.round(aiSeconds),
+        other: Math.round(Math.max(total - aiSeconds, 0)),
+      };
+    }) ?? null;
+
+  log.set({
+    wakatime: {
+      totalHours: Math.round(data.total_seconds / 3600),
+      aiPercent: ai ? round1(ai.percent) : 0,
+      days: series?.length ?? 0,
+      colors: colors.size > 0,
+    },
+  });
+
+  return {
+    range: wakatimeToken ? "past year" : data.human_readable_range,
+    totalSeconds: Math.round(data.total_seconds),
+    dailyAverageSeconds: Math.round(data.daily_average),
+    daysCoded: data.days_including_holidays - data.holidays,
+    bestDay: data.best_day
+      ? { date: data.best_day.date, seconds: Math.round(data.best_day.total_seconds) }
+      : null,
+    ai: ai?.total_seconds
+      ? { seconds: Math.round(ai.total_seconds), percent: round1(ai.percent) }
+      : null,
+    languages: top(data.languages, 6).map((l) => ({
+      name: l.name,
+      percent: l.percent,
+      color: colors.get(l.name) ?? null,
+      aiPercent: l.total_seconds
+        ? Math.round((Number(l.ai_coding_seconds) / l.total_seconds) * 100)
+        : 0,
+    })),
+    editors: top(data.editors, 4).map(({ name, percent }) => ({ name, percent })),
+    /** Share of AI line changes per model family (private), or of AI time (public). */
+    aiModels: aiModels(data),
+    agents: data.ai_sessions
+      ? {
+          sessions: data.ai_sessions,
+          prompts: data.ai_prompt_events_total ?? 0,
+          additions: data.ai_additions ?? 0,
+          deletions: data.ai_deletions ?? 0,
+          inputTokens: data.ai_input_tokens ?? 0,
+          outputTokens: data.ai_output_tokens ?? 0,
+        }
+      : null,
+    /** Seconds per day, split into AI and other coding. Only with a token. */
+    days: series,
+  };
 });

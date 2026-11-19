@@ -39,29 +39,39 @@ const view = computed(() => {
         value: hours(stats.totalSeconds),
         note: `hrs · ${stats.range}`,
       },
-      stats.ai && {
-        label: "AI coding",
-        value: hours(stats.ai.seconds),
-        note: `hrs · ${pct(stats.ai.percent)} of coding`,
-      },
+      ...(stats.ai
+        ? [
+            {
+              label: "AI coding",
+              value: hours(stats.ai.seconds),
+              note: `hrs · ${pct(stats.ai.percent)} of coding`,
+            },
+          ]
+        : []),
       {
         label: "Daily average",
         value: hoursExact(stats.dailyAverageSeconds),
         note: `hrs · ${num.format(stats.daysCoded)} days coded`,
       },
-      stats.bestDay
-        ? {
-            label: "Best day",
-            value: hoursExact(stats.bestDay.seconds),
-            note: `hrs · ${day(stats.bestDay.date)}`,
-          }
-        : topLanguage && {
-            label: "Top language",
-            value: topLanguage.name,
-            note: pct(topLanguage.percent),
-            word: true,
-          },
-    ].filter(Boolean) as { label: string; value: string; note: string; word?: boolean }[],
+      ...(stats.bestDay
+        ? [
+            {
+              label: "Best day",
+              value: hoursExact(stats.bestDay.seconds),
+              note: `hrs · ${day(stats.bestDay.date)}`,
+            },
+          ]
+        : topLanguage
+          ? [
+              {
+                label: "Top language",
+                value: topLanguage.name,
+                note: pct(topLanguage.percent),
+                word: true,
+              },
+            ]
+          : []),
+    ],
     // Stacked bar per day (AI on top of other coding), scaled to the busiest day.
     chart: stats.days?.length
       ? {

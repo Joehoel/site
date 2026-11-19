@@ -1,6 +1,8 @@
 import { Feed } from "feed";
 
+/** RSS feed of published Log entries. Query failures surface as a 500 on the wide event. */
 export default defineEventHandler(async (event) => {
+  const log = useLogger(event);
   const config = useAppConfig();
   const siteUrl = new URL(getSiteConfig(event).url).origin;
 
@@ -24,6 +26,8 @@ export default defineEventHandler(async (event) => {
     .where("draft", "=", false)
     .order("publishDate", "DESC")
     .all();
+
+  log.set({ feed: { items: posts.length, latest: posts[0]?.path ?? null } });
 
   for (const post of posts) {
     feed.addItem({

@@ -13,7 +13,7 @@ const LEVELS = {
   SECOND_QUARTILE: 2,
   THIRD_QUARTILE: 3,
   FOURTH_QUARTILE: 4,
-} as const;
+};
 const STEP = 12; // 10px cell + 2px gap, in SVG units
 const CELL = 10;
 

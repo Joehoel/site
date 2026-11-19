@@ -18,51 +18,68 @@ type GitHubResponse = {
   data?: {
     user: { contributionsCollection: { contributionCalendar: ContributionCalendar } } | null;
   };
-  errors?: unknown[];
+  errors?: { message: string }[];
 };
 
+const USER = "Joehoel";
+const TOKEN_FIX =
+  "Check NUXT_GITHUB_TOKEN (Vercel env + local .env): a fine-grained token with public read access that hasn't expired.";
 const emptyCalendar: ContributionCalendar = { totalContributions: 0, weeks: [] };
-let warned = false;
 
-function unavailable(reason: string) {
-  if (!warned) {
-    console.warn(`[github-contributions] ${reason}`);
-    warned = true;
-  }
-  return emptyCalendar;
-}
-
+/** GitHub contribution calendar for the Brag page. Prerendered; runs at build time only. */
 export default defineEventHandler(async (event) => {
+  const log = useLogger(event);
   const { githubToken } = useRuntimeConfig(event);
-  if (!githubToken) return unavailable("NUXT_GITHUB_TOKEN is missing.");
+  log.set({ github: { user: USER } });
 
-  try {
-    const response = await $fetch<GitHubResponse>("https://api.github.com/graphql", {
-      method: "POST",
-      headers: { Authorization: `bearer ${githubToken}` },
-      retry: 0,
-      timeout: 5000,
-      body: {
-        query: `{
-          user(login: "Joehoel") {
-            contributionsCollection {
-              contributionCalendar {
-                totalContributions
-                weeks {
-                  contributionDays { date contributionCount contributionLevel }
-                }
+  if (!githubToken) {
+    log.warn("NUXT_GITHUB_TOKEN is not set; the contribution graph will be hidden", {
+      github: { skipped: "no-token" },
+    });
+    return emptyCalendar;
+  }
+
+  const response = await fetchUpstream<GitHubResponse>("https://api.github.com/graphql", {
+    name: "github",
+    fix: TOKEN_FIX,
+    method: "POST",
+    headers: { Authorization: `bearer ${githubToken}` },
+    body: {
+      query: `{
+        user(login: "${USER}") {
+          contributionsCollection {
+            contributionCalendar {
+              totalContributions
+              weeks {
+                contributionDays { date contributionCount contributionLevel }
               }
             }
           }
-        }`,
-      },
-    });
+        }
+      }`,
+    },
+  });
 
-    const calendar = response.data?.user?.contributionsCollection.contributionCalendar;
-    if (calendar && !response.errors?.length) return calendar;
-  } catch {
-    // Upstream errors can contain request details, so log only a fixed message.
+  if (response?.errors?.length) {
+    log.error(
+      createEvlogError({
+        message: "GitHub GraphQL returned errors",
+        status: 502,
+        why: response.errors.map((error) => error.message).join("; "),
+        fix: TOKEN_FIX,
+      }),
+    );
+    return emptyCalendar;
   }
 
-  return unavailable("Could not load the GitHub contribution calendar.");
+  const calendar = response?.data?.user?.contributionsCollection.contributionCalendar;
+  if (!calendar) {
+    if (response) log.warn(`GitHub returned no contribution calendar for ${USER}`);
+    return emptyCalendar;
+  }
+
+  log.set({
+    github: { totalContributions: calendar.totalContributions, weeks: calendar.weeks.length },
+  });
+  return calendar;
 });

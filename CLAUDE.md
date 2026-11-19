@@ -66,6 +66,15 @@ Instant search uses Nuxt Content's `queryCollectionSearchSections` in Nuxt UI's 
 - Global site metadata, nav, socials, and date-formatting options live in `app/app.config.ts` (`useAppConfig()`). Locale is Dutch (`nl-NL`).
 - Theming is in `app/assets/css/main.css` — Tailwind v4 (`@theme`) with CSS-variable color tokens (`--color-accent`, etc.) driven by `[data-theme]` / `.dark`. Color mode (`@nuxtjs/color-mode`) uses `classSuffix: ""` so the dark class is plain `.dark`.
 
+### Server logging & errors (evlog)
+
+Server routes log with [evlog](https://www.evlog.dev) wide events (`evlog/nuxt`, config under `evlog` in `nuxt.config.ts`; server-only, scoped to `/api/**`, `/rss.xml`, `/__sitemap__/**`). One event per request, emitted automatically:
+
+- `const log = useLogger(event)` (auto-imported), then `log.set({ ... })` for context, `log.warn()`/`log.error()` for problems. Thrown errors are captured automatically; use `createEvlogError({ message, status, why, fix })` for structured ones (Nuxt's own `createError` stays as-is in pages).
+- Third-party calls go through `fetchUpstream()` (`server/utils/upstream.ts`): it records `upstream.<name>` (ok/status/ms) and logs failures with why/fix, then returns `null`. It finds the request logger via `useEvent()` (`nitro.experimental.asyncContext`).
+- Build-time routes must degrade (return empty data + `log.error`), never throw: a failed prerender leaves a live endpoint that spends the token. Never log raw `FetchError`s (their `options` include the `Authorization` header).
+- These routes run during prerender, so their events show up in the Vercel **build** log.
+
 ### Deployment
 
 The Brag page's activity sections fetch third-party stats at build time: `server/api/github-contributions.get.ts` (`NUXT_GITHUB_TOKEN`) and `server/api/wakatime-stats.get.ts` (`NUXT_WAKATIME_TOKEN`; falls back to WakaTime's public all-time stats without it). Both are listed in `nitro.prerender.routes` so they ship as static JSON — keep any new token-backed route there too, or it becomes a live, uncached endpoint spending the token. Without a token a section hides itself instead of failing the build.
