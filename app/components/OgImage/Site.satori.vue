@@ -17,7 +17,7 @@ withDefaults(defineProps<{ title?: string }>(), { title: "Joël Kuijper" });
       font-weight: 700;
     "
   >
-    <div style="display: flex; font-size: 28px; color: #919191">JOËL KUIJPER / LOG &amp; NOTES</div>
+    <div style="display: flex; font-size: 28px; color: #919191">JOËL KUIJPER / LOG</div>
     <div
       :style="{
         display: 'flex',

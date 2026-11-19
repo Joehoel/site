@@ -7,7 +7,6 @@ const appConfig = useAppConfig();
 
 const MAX_PROJECTS = 5;
 const MAX_POSTS = 4;
-const MAX_NOTES = 3;
 
 const { data: intro } = await useAsyncData("home-intro", async () => {
   const [home, career] = await Promise.all([
@@ -40,14 +39,6 @@ const { data: posts } = await useAsyncData("latest-posts", () =>
     .where("draft", "=", false)
     .order("publishDate", "DESC")
     .limit(MAX_POSTS)
-    .all(),
-);
-
-const { data: notes } = await useAsyncData("latest-notes", () =>
-  queryCollection("notes")
-    .where("draft", "=", false)
-    .order("publishDate", "DESC")
-    .limit(MAX_NOTES)
     .all(),
 );
 
@@ -187,42 +178,6 @@ usePageSeo(
         <div class="flex flex-col divide-y divide-outline-variant lg:col-span-8">
           <BlogPostListItem v-for="post in posts" :key="post.path" :post="post" />
         </div>
-      </div>
-    </section>
-
-    <!-- Notes -->
-    <section v-if="notes?.length" aria-labelledby="notes">
-      <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
-        <!-- Left rail: section heading -->
-        <div class="lg:col-span-4">
-          <div class="lg:sticky lg:top-28">
-            <h2
-              id="notes"
-              class="mb-6 font-headline text-3xl font-bold tracking-tight text-highlighted md:text-4xl"
-            >
-              Notes
-            </h2>
-            <p class="mb-8 max-w-xs font-body text-sm leading-relaxed text-muted">
-              Code and configuration I want to keep handy.
-            </p>
-            <NuxtLink
-              class="group inline-flex items-center gap-x-2 font-label text-[0.6875rem] uppercase tracking-[0.2em] text-highlighted"
-              to="/notes"
-            >
-              View Notes
-              <UIcon
-                name="i-lucide-arrow-right"
-                class="size-3.5 transition-transform group-hover:translate-x-1"
-              />
-            </NuxtLink>
-          </div>
-        </div>
-        <!-- Note list -->
-        <ul class="flex flex-col divide-y divide-outline-variant lg:col-span-8" role="list">
-          <li v-for="note in notes" :key="note.path" class="py-10 first:pt-0">
-            <NoteCard :note="note" is-preview heading-level="h3" />
-          </li>
-        </ul>
       </div>
     </section>
   </div>

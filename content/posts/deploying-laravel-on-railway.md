@@ -8,8 +8,6 @@ tags:
 publishDate: 2025-06-22
 ---
 
-> If you are just here for the Nixpacks config, you can find it [here](/notes/laravel-nixpacks/).
-
 Recently I have been busy with a side-project. I am building it in Laravel and was looking for a platform to deploy it on. I wanted it to be easy, cheap and reliable. I looked into self-hosting with Coolify, Laravel Forge and Cloud. But ultimately decided on Railway. I deployed some stuff on there before and I like the experience a lot and heard they made some improvements to reliability and speed of the deployments.
 
 So I this is a guide for you on how to deploy your Laravel application on Railway. With some bonus info for adding Inertia, Pulse, Nightwatch and other Laravel services.

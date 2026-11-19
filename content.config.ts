@@ -49,17 +49,6 @@ export default defineContentConfig({
       schema: pageSchema,
     }),
 
-    notes: defineCollection({
-      type: "page",
-      source: "notes/**/*.md",
-      schema: z.object({
-        title: z.string(),
-        draft: z.boolean().default(true),
-        description: z.string().optional(),
-        publishDate: z.coerce.date(),
-      }),
-    }),
-
     projects: defineCollection({
       type: "page",
       source: "projects/**/*.md",

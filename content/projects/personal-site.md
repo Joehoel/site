@@ -11,6 +11,6 @@ draft: false
 ---
 
 The site you are reading. Built on Nuxt 4 with `srcDir: app/`, content lives in
-Markdown collections (posts, notes, projects) validated by Zod schemas. Search
+Markdown collections (posts, projects) validated by Zod schemas. Search
 uses Nuxt Content's search sections. Styling uses shared design tokens.
 Deployed to Vercel.

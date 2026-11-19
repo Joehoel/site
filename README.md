@@ -11,17 +11,17 @@
 </p>
 
 <p align="center">
-  Personal website and blog built with Nuxt 4 — featuring posts, notes, dark mode, RSS feeds, and instant search.
+  Personal website and blog built with Nuxt 4 — featuring posts, dark mode, RSS feeds, and instant search.
 </p>
 
 ---
 
 ## Features
 
-- Blog posts and quick notes with Markdown
+- Blog posts with Markdown
 - Instant search powered by Pagefind
 - Dark mode with system preference detection
-- RSS feeds for posts and notes
+- RSS feed for posts
 - View transitions for smooth navigation
 - Fully static, SEO-friendly output
 

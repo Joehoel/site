@@ -170,12 +170,6 @@ export default defineNuxtConfig({
           title: "Log RSS feed",
           href: "/rss.xml",
         },
-        {
-          rel: "alternate",
-          type: "application/rss+xml",
-          title: "Notes RSS Feed",
-          href: "/notes/rss.xml",
-        },
       ],
     },
   },

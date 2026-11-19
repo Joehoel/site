@@ -7,7 +7,7 @@ const origin = new URL(process.env.SITE_ORIGIN || "https://joelkuijper.me");
 const failures = [];
 const pages = [];
 const checkedImages = new Map();
-const queued = new Set(["/", "/log", "/notes", "/uses", "/tags"]);
+const queued = new Set(["/", "/log", "/uses", "/tags"]);
 const sitemapPaths = new Set();
 const drafts = ["/log/building-a-web-scraper-with-effect", "/log/deploying-laravel-on-railway"];
 
@@ -61,7 +61,7 @@ check(sitemapPaths.size >= 5, "Sitemap contains public pages");
 check(!/\/posts(?:[<\s/]|$)/.test(sitemap), "Sitemap excludes legacy posts routes");
 for (const draft of drafts) check(!sitemap.includes(draft), `Sitemap excludes ${draft}`);
 
-for (const path of ["/rss.xml", "/notes/rss.xml"]) {
+for (const path of ["/rss.xml"]) {
   const response = await request(path);
   const xml = await response.text();
   check(response.ok && /<rss\b/.test(xml), `${path} is a working RSS feed`);
@@ -247,12 +247,12 @@ check(
     ),
   "Compatible favicon contains 16, 32 and 48 pixel icons",
 );
-const queryPage = await (await request("/notes?from=verification")).text();
+const queryPage = await (await request("/log?from=verification")).text();
 const queryCanonical = [...queryPage.matchAll(/<link\b[^>]*>/g)]
   .map(([tag]) => attributes(tag))
   .filter((data) => data.rel === "canonical");
 check(
-  queryCanonical.length === 1 && queryCanonical[0].href === new URL("/notes", origin).href,
+  queryCanonical.length === 1 && queryCanonical[0].href === new URL("/log", origin).href,
   "Tracking queries do not alter the canonical URL",
 );
 

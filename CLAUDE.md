@@ -28,17 +28,16 @@ Linting/formatting use **OxLint + OxFmt** (not ESLint/Prettier). CI (`.github/wo
 
 ### Content (Nuxt Content v3)
 
-Content is the heart of the site. Three collections defined in `content.config.ts`, each with a Zod schema:
+Content is the heart of the site. Collections defined in `content.config.ts`, each with a Zod schema:
 
 - **posts** (`content/posts/**/*.md`) — blog posts. Have `tags`, `coverImage`, `draft`, dates.
-- **notes** (`content/notes/**/*.md`) — short notes. Have `draft`.
 - **pages** (`content/pages/**/*.md`) — standalone pages (e.g. `uses`), mounted at the site root via `prefix: "/"`.
 
 Query content with `queryCollection("posts")` (auto-imported). Pages use `useAsyncData`; server routes pass the `event`: `queryCollection(event, "posts")`.
 
 ### Draft handling
 
-`draft` defaults to `true` in the schema, so **new posts/notes are drafts until explicitly set `draft: false`**. Draft visibility is gated by `useCanSeeDrafts()` (`app/composables/useCanSeeDrafts.ts`), which is true in dev mode OR when the `studio-session-check` cookie is set (logged into Nuxt Studio).
+`draft` defaults to `true` in the schema, so **new posts are drafts until explicitly set `draft: false`**. Draft visibility is gated by `useCanSeeDrafts()` (`app/composables/useCanSeeDrafts.ts`), which is true in dev mode OR when the `studio-session-check` cookie is set (logged into Nuxt Studio).
 
 Two patterns to keep consistent when touching content pages:
 
@@ -49,7 +48,7 @@ Two patterns to keep consistent when touching content pages:
 
 - `nuxt-studio` provides a CMS at `/admin` (configured against the `Joehoel/site` GitHub repo). `/admin/**` and `/__nuxt_studio/**` are SSR; **everything else is prerendered** (`routeRules` in `nuxt.config.ts`). `prerender.failOnError` is off because drafts may produce dead links.
 - Layouts: `default.vue` and `post.vue` (post pages set `definePageMeta({ layout: "post" })`).
-- Components are namespaced by directory and auto-imported with the path as prefix: `app/components/blog/PostPreview.vue` → `<BlogPostPreview>`, `app/components/note/Card.vue` → `<NoteCard>`.
+- Components are namespaced by directory and auto-imported with the path as prefix: `app/components/blog/PostPreview.vue` → `<BlogPostPreview>`.
 
 ### Search
 
@@ -57,7 +56,7 @@ Instant search uses **Pagefind** via Nuxt UI's `<UContentSearchButton>` / `Conte
 
 ### RSS feeds
 
-`server/routes/rss.xml.ts` (posts) and `server/routes/notes/rss.xml.ts` (notes) build feeds with the `feed` package, pulling site metadata from `useAppConfig()`. Both linked from `app.head` in `nuxt.config.ts`.
+`server/routes/rss.xml.ts` builds the posts feed with the `feed` package, pulling site metadata from `useAppConfig()`. Linked from `app.head` in `nuxt.config.ts`.
 
 ### Site config & theming
 

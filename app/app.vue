@@ -24,29 +24,16 @@ const { data: searchSnapshot, status: searchStatus } = useLazyAsyncData(
   async () => {
     const requestAudience = audience.value;
     const postSections = queryCollectionSearchSections("posts");
-    const noteSections = queryCollectionSearchSections("notes");
     const postNavigation = queryCollectionNavigation("posts");
-    const noteNavigation = queryCollectionNavigation("notes");
 
     if (requestAudience === "published") {
       postSections.where("draft", "=", false);
-      noteSections.where("draft", "=", false);
       postNavigation.where("draft", "=", false);
-      noteNavigation.where("draft", "=", false);
     }
 
-    const [posts, notes, postsNav, notesNav] = await Promise.all([
-      postSections,
-      noteSections,
-      postNavigation,
-      noteNavigation,
-    ]);
+    const [files, navigation] = await Promise.all([postSections, postNavigation]);
 
-    return {
-      audience: requestAudience,
-      files: [...posts, ...notes],
-      navigation: [...postsNav, ...notesNav],
-    };
+    return { audience: requestAudience, files, navigation };
   },
   { server: false },
 );
@@ -70,11 +57,6 @@ const links = [
     icon: "i-lucide-file-text",
     to: "/log",
   },
-  {
-    label: "Notes",
-    icon: "i-lucide-notebook-pen",
-    to: "/notes",
-  },
 ];
 </script>
 
@@ -89,8 +71,8 @@ const links = [
       :links="links"
       :loading="!currentSearch && searchStatus !== 'error'"
       title="Search"
-      description="Search Log entries and notes."
-      placeholder="Search Log entries and notes"
+      description="Search Log entries."
+      placeholder="Search Log entries"
     >
       <template #empty>
         <p v-if="currentSearch" role="status">No results found. Try another search.</p>
