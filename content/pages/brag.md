@@ -11,12 +11,28 @@ Last updated :timestamp{:date="updatedDate"}.
 
 :github-contributions{heading="Activity"}
 
-::spec-section{heading="Contributions" layout="rows"}
-:::spec-item{label="Nuxt Sanity" name="TypeGen support" status="Merged"}
-Added automatic TypeScript type generation for GROQ queries to the [Nuxt Sanity](https://sanity.nuxtjs.org) module, using `@sanity/codegen`. `groq`, `defineQuery` and the generated query result types are auto-imported, and the Sanity query composables can use those types. Merged in January 2026 as [nuxt-modules/sanity#1374](https://github.com/nuxt-modules/sanity/pull/1374).
-:::
+:wakatime-stats{heading="Coding"}
 
-:::spec-item{label="Knip" name="Varlock plugin support" status="Merged"}
-Added built-in [Varlock](https://varlock.dev) support to [Knip](https://knip.dev), so packages and local files referenced by Varlock env-spec configuration are no longer reported as unused or unresolved. Merged in September 2026 as [webpro-nl/knip#2000](https://github.com/webpro-nl/knip/pull/2000).
-:::
+::spec-section{heading="Contributions" layout="rows"}
+  :::spec-item
+  ---
+  href: https://github.com/nuxt-modules/sanity
+  icon: /images/projects/nuxt-sanity.png
+  label: Nuxt Sanity
+  name: TypeGen support
+  status: Merged
+  ---
+  Added automatic TypeScript type generation for GROQ queries to the [Nuxt Sanity](https://sanity.nuxtjs.org) module, using `@sanity/codegen`. `groq`, `defineQuery` and the generated query result types are auto-imported, and the Sanity query composables can use those types. Merged in January 2026 as [nuxt-modules/sanity#1374](https://github.com/nuxt-modules/sanity/pull/1374).
+  :::
+
+  :::spec-item
+  ---
+  href: https://github.com/webpro-nl/knip
+  icon: /images/projects/knip.svg
+  label: Knip
+  name: Varlock plugin support
+  status: Merged
+  ---
+  Added built-in [Varlock](https://varlock.dev) support to [Knip](https://knip.dev), so packages and local files referenced by Varlock env-spec configuration are no longer reported as unused or unresolved. Merged in September 2026 as [webpro-nl/knip#2000](https://github.com/webpro-nl/knip/pull/2000).
+  :::
 ::

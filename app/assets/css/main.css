@@ -30,6 +30,14 @@
   --color-on-surface-variant: #c6c6c6;
   --color-outline: #919191;
   --color-outline-variant: #474747;
+
+  /* Activity ramp (GitHub heatmap, WakaTime chart): vivid OKLCH green + AI violet. */
+  --color-heat-0: var(--color-surface-container-highest);
+  --color-heat-1: oklch(0.45 0.12 152);
+  --color-heat-2: oklch(0.6 0.18 150);
+  --color-heat-3: oklch(0.75 0.23 148);
+  --color-heat-4: oklch(0.88 0.25 146);
+  --color-ai: oklch(0.72 0.18 300);
 }
 
 /* --------------------------------------------------------------------------
@@ -102,6 +110,11 @@
     --color-outline: #727272;
     --color-outline-variant: #c6c6c6;
     --color-accent-2: #131313;
+    --color-heat-1: oklch(0.88 0.1 152);
+    --color-heat-2: oklch(0.8 0.17 150);
+    --color-heat-3: oklch(0.72 0.21 148);
+    --color-heat-4: oklch(0.64 0.22 147);
+    --color-ai: oklch(0.6 0.2 300);
 
     --ui-color-neutral-50: var(--color-surface-container-low);
     --ui-color-neutral-100: var(--color-surface-container);

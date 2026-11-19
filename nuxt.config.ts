@@ -79,6 +79,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     githubToken: "",
+    wakatimeToken: "",
     public: { seoImages },
   },
 
@@ -144,7 +145,15 @@ export default defineNuxtConfig({
     },
     prerender: {
       crawlLinks: true,
-      routes: ["/", "/sitemap.xml", "/__sitemap__/published-content.json"],
+      routes: [
+        "/",
+        "/sitemap.xml",
+        "/__sitemap__/published-content.json",
+        // Build-time only: these call GitHub/WakaTime with private tokens, so ship them as
+        // static JSON instead of live (uncached, rate-limit-draining) serverless endpoints.
+        "/api/github-contributions",
+        "/api/wakatime-stats",
+      ],
       // Don't fail on 404s - some content may link to draft posts
       failOnError: false,
     },

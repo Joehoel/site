@@ -204,36 +204,21 @@ const github = appConfig.socials.find((social) => social.label === "GitHub");
 </template>
 
 <style scoped>
-/* Vivid OKLCH green ramp, tuned per color mode. Empty cells sit one step above the panel. */
-svg,
-.legend {
-  --heat-0: var(--color-surface-container-highest);
-  --heat-1: oklch(0.88 0.1 152);
-  --heat-2: oklch(0.8 0.17 150);
-  --heat-3: oklch(0.72 0.21 148);
-  --heat-4: oklch(0.64 0.22 147);
-}
-:where(.dark) svg,
-:where(.dark) .legend {
-  --heat-1: oklch(0.45 0.12 152);
-  --heat-2: oklch(0.6 0.18 150);
-  --heat-3: oklch(0.75 0.23 148);
-  --heat-4: oklch(0.88 0.25 146);
-}
+/* Activity ramp tokens (--color-heat-0…4) live in main.css, per colour mode. */
 .level-0 {
-  --level: var(--heat-0);
+  --level: var(--color-heat-0);
 }
 .level-1 {
-  --level: var(--heat-1);
+  --level: var(--color-heat-1);
 }
 .level-2 {
-  --level: var(--heat-2);
+  --level: var(--color-heat-2);
 }
 .level-3 {
-  --level: var(--heat-3);
+  --level: var(--color-heat-3);
 }
 .level-4 {
-  --level: var(--heat-4);
+  --level: var(--color-heat-4);
 }
 rect {
   fill: var(--level);

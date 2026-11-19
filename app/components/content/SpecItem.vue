@@ -6,6 +6,10 @@ defineProps<{
   name: string;
   /** Optional status badge (e.g. "In Use"), rendered as a UBadge. */
   status?: string;
+  /** Optional project icon (image path), shown before the label. */
+  icon?: string;
+  /** Optional link (e.g. the repo) for the icon + label. */
+  href?: string;
 }>();
 </script>
 
@@ -19,12 +23,18 @@ defineProps<{
     class="group flex flex-col justify-between gap-4 bg-surface-container-low p-8 transition-colors duration-300 hover:bg-surface-container md:flex-row md:items-center"
   >
     <div class="flex flex-col">
-      <span
-        v-if="label"
-        class="mb-1 font-label text-[0.6875rem] uppercase tracking-[0.2em] text-on-surface-variant"
+      <component
+        :is="href ? 'a' : 'span'"
+        v-if="label || icon"
+        :href="href"
+        :target="href ? '_blank' : undefined"
+        :rel="href ? 'noreferrer' : undefined"
+        class="mb-2 inline-flex items-center gap-2 self-start font-label text-[0.6875rem] uppercase tracking-[0.2em] text-on-surface-variant"
+        :class="{ 'transition-colors hover:text-highlighted': href }"
       >
+        <img v-if="icon" :src="icon" alt="" width="20" height="20" class="size-5 shrink-0" />
         {{ label }}
-      </span>
+      </component>
       <h3 class="font-headline text-lg text-highlighted">{{ name }}</h3>
       <div
         v-if="$slots.default"
