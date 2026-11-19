@@ -9,9 +9,7 @@ updatedDate: 2026-11-19
 Last updated :timestamp{:date="updatedDate"}.
 ::
 
-::spec-section{.github-activity heading="Activity"}
-:github-contributions
-::
+:github-contributions{heading="Activity"}
 
 ::spec-section{heading="Contributions" layout="rows"}
 :::spec-item{label="Nuxt Sanity" name="TypeGen support" status="Merged"}
