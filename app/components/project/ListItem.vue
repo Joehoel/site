@@ -2,7 +2,7 @@
 import type { ProjectsCollectionItem } from "@nuxt/content";
 
 const props = defineProps<{
-  project: ProjectsCollectionItem;
+  project: Pick<ProjectsCollectionItem, "path" | "title" | "link" | "techStack">;
   /** Sequential entry number (e.g. 1 → rendered as `01`). */
   index: number;
 }>();

@@ -19,7 +19,14 @@ const canSeeDrafts = useCanSeeDrafts();
 const audience = computed(() => (canSeeDrafts.value ? "preview" : "published"));
 const searchKey = computed(() => `content-search-${audience.value}`);
 
-const { data: searchSnapshot, status: searchStatus } = useLazyAsyncData(
+// Search pulls the content SQLite dump (+ WASM engine) into the browser, so only load it once
+// the search modal is first opened (button or shortcut), not on every page view.
+const { open: searchOpen } = useContentSearch();
+const {
+  data: searchSnapshot,
+  status: searchStatus,
+  execute: loadSearch,
+} = useLazyAsyncData(
   searchKey,
   async () => {
     const requestAudience = audience.value;
@@ -35,7 +42,7 @@ const { data: searchSnapshot, status: searchStatus } = useLazyAsyncData(
 
     return { audience: requestAudience, files, navigation };
   },
-  { server: false },
+  { server: false, immediate: false },
 );
 
 const currentSearch = computed(() =>
@@ -50,6 +57,9 @@ const searchMessage = computed(() =>
       ? "Loading search…"
       : "",
 );
+watch(searchOpen, (isOpen) => {
+  if (isOpen && !currentSearch.value && searchStatus.value !== "pending") loadSearch();
+});
 
 const links = [
   {

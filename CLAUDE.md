@@ -42,17 +42,20 @@ Query content with `queryCollection("posts")` (auto-imported). Pages use `useAsy
 Two patterns to keep consistent when touching content pages:
 
 - **Listings & RSS** filter at the query: `.where("draft", "=", false)`.
-- **Single-item pages** (`[...slug].vue`) load the item regardless, then `throw createError({ statusCode: 404 })` if it's a draft and `!canSeeDrafts.value` — this lets logged-in editors preview drafts.
+- **Single-item pages** (`[...slug].vue`) load the item regardless, then `throw createError({ statusCode: 404, fatal: true })` if it's a draft and `!canSeeDrafts.value` — this lets logged-in editors preview drafts.
+- List views share `usePublishedPosts()` (published only, list fields via `.select()`), so post bodies stay out of list payloads.
+
+**Drafts are unlisted, not secret.** The `studio-session-check` cookie is a readable hint anyone can set, and Nuxt Content ships each collection's full SQL dump (drafts included) to the browser at `/__nuxt_content/<collection>/sql_dump.txt`. Never put anything private in a draft.
 
 ### Rendering & routing
 
-- `nuxt-studio` provides a CMS at `/admin` (configured against the `Joehoel/site` GitHub repo). `/admin/**` and `/__nuxt_studio/**` are SSR; **everything else is prerendered** (`routeRules` in `nuxt.config.ts`). `prerender.failOnError` is off because drafts may produce dead links.
+- `nuxt-studio` provides a CMS at `/admin` (configured against the `Joehoel/site` GitHub repo). `/admin/**` and `/__nuxt_studio/**` are dynamic (`prerender: false`); **everything else is prerendered** (`routeRules` in `nuxt.config.ts`). `prerender.failOnError` is off because drafts may produce dead links.
 - Layouts: `default.vue` and `post.vue` (post pages set `definePageMeta({ layout: "post" })`).
 - Components are namespaced by directory and auto-imported with the path as prefix: `app/components/blog/PostPreview.vue` → `<BlogPostPreview>`.
 
 ### Search
 
-Instant search uses **Pagefind** via Nuxt UI's `<UContentSearchButton>` / `ContentSearch` modal (`app/components/Search.vue`). Article bodies are marked with `data-pagefind-body` so Pagefind indexes them at build time.
+Instant search uses Nuxt Content's `queryCollectionSearchSections` in Nuxt UI's `ContentSearch` modal (`app/app.vue`, opened by `app/components/Search.vue`). It runs client-side on the content SQLite dump, so it only loads when the modal first opens (`useContentSearch().open`).
 
 ### RSS feeds
 
@@ -64,5 +67,7 @@ Instant search uses **Pagefind** via Nuxt UI's `<UContentSearchButton>` / `Conte
 - Theming is in `app/assets/css/main.css` — Tailwind v4 (`@theme`) with CSS-variable color tokens (`--color-accent`, etc.) driven by `[data-theme]` / `.dark`. Color mode (`@nuxtjs/color-mode`) uses `classSuffix: ""` so the dark class is plain `.dark`.
 
 ### Deployment
+
+The Brag page's activity sections fetch third-party stats at build time: `server/api/github-contributions.get.ts` (`NUXT_GITHUB_TOKEN`) and `server/api/wakatime-stats.get.ts` (`NUXT_WAKATIME_TOKEN`; falls back to WakaTime's public all-time stats without it). Both are listed in `nitro.prerender.routes` so they ship as static JSON — keep any new token-backed route there too, or it becomes a live, uncached endpoint spending the token. Without a token a section hides itself instead of failing the build.
 
 Vercel via Nitro's `vercel` preset (SSG). Images use the `vercel` image provider. `vercel.json` pins install/build to bun.

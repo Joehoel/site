@@ -1,7 +1,5 @@
 <script setup lang="ts">
-const { data: posts } = await useAsyncData("all-posts", () =>
-  queryCollection("posts").where("draft", "=", false).order("publishDate", "DESC").all(),
-);
+const { data: posts } = await usePublishedPosts();
 
 // Topic filter — `null` means "ALL".
 const activeTag = ref<string | null>(null);

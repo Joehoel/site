@@ -2,16 +2,18 @@
 const route = useRoute();
 const tag = computed(() => route.params.tag as string);
 
-const { data: allPosts } = await useAsyncData("all-posts-no-draft", () =>
-  queryCollection("posts").where("draft", "=", false).order("publishDate", "DESC").all(),
-);
+const { data: allPosts } = await usePublishedPosts();
 
 const posts = computed(
   () => allPosts.value?.filter((post) => post.tags?.includes(tag.value)) ?? [],
 );
 
 if (posts.value.length === 0) {
-  throw createError({ statusCode: 404, message: `No Log entries found with tag: ${tag.value}` });
+  throw createError({
+    statusCode: 404,
+    message: `No Log entries found with tag: ${tag.value}`,
+    fatal: true,
+  });
 }
 
 const total = computed(() => posts.value.length);

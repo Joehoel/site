@@ -1,7 +1,5 @@
 <script setup lang="ts">
-const { data: posts } = await useAsyncData("all-posts-for-tags", () =>
-  queryCollection("posts").where("draft", "=", false).all(),
-);
+const { data: posts } = await usePublishedPosts();
 
 // Unique tags with post counts, sorted alphabetically.
 const tagsWithCount = computed(() => {

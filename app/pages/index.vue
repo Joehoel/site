@@ -17,7 +17,7 @@ const { data: intro } = await useAsyncData("home-intro", async () => {
 });
 
 if (!intro.value?.home) {
-  throw createError({ statusCode: 404, message: "Home not found" });
+  throw createError({ statusCode: 404, message: "Home not found", fatal: true });
 }
 
 const home = computed(() => intro.value!.home!);
@@ -31,6 +31,7 @@ const { data: projects } = await useAsyncData("home-projects", () =>
     .where("draft", "=", false)
     .order("order", "ASC")
     .limit(MAX_PROJECTS)
+    .select("path", "title", "link", "techStack")
     .all(),
 );
 
@@ -39,6 +40,7 @@ const { data: posts } = await useAsyncData("latest-posts", () =>
     .where("draft", "=", false)
     .order("publishDate", "DESC")
     .limit(MAX_POSTS)
+    .select("path", "title", "description", "publishDate", "tags", "draft")
     .all(),
 );
 

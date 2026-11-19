@@ -8,7 +8,7 @@ const { data: post } = await useAsyncData(route.path, () =>
 
 // 404 if post not found or is a draft (unless in dev mode or logged in)
 if (!post.value || (post.value.draft && !canSeeDrafts.value)) {
-  throw createError({ statusCode: 404, message: "Log entry not found" });
+  throw createError({ statusCode: 404, message: "Log entry not found", fatal: true });
 }
 
 usePageSeo(() => ({

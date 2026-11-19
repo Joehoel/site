@@ -46,10 +46,6 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
 
-  future: {
-    compatibilityVersion: 4,
-  },
-
   experimental: {
     viewTransition: true,
   },
@@ -131,8 +127,9 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    "/admin/**": { ssr: true },
-    "/__nuxt_studio/**": { ssr: true },
+    // Studio is dynamic; `/**` would otherwise mark it for prerendering too.
+    "/admin/**": { prerender: false },
+    "/__nuxt_studio/**": { prerender: false },
     "/**": { prerender: true },
   },
 
