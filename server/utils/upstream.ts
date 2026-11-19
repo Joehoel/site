@@ -1,11 +1,12 @@
+import type { ErrorOptions } from "evlog";
 import type { NitroFetchOptions } from "nitropack";
 
-type UpstreamOptions = NitroFetchOptions<string> & {
-  /** Short name used as the wide-event key (`upstream.<name>`) and in the error message. */
-  name: string;
-  /** How to fix it when the call fails; shown on the logged error. */
-  fix: string;
-};
+type UpstreamOptions = NitroFetchOptions<string> &
+  // `fix` is evlog's own field, required here so every failure says how to resolve it.
+  Required<Pick<ErrorOptions, "fix">> & {
+    /** Short name used as the wide-event key (`upstream.<name>`) and in the error message. */
+    name: string;
+  };
 
 /** Status code of an ofetch FetchError, if the request got a response at all. */
 function statusOf(error: unknown) {
