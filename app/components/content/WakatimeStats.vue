@@ -28,7 +28,7 @@ const withColor = <T extends { color: string | null }>(item: T) => ({
 });
 
 const view = computed(() => {
-  const stats = data.value;
+  const stats = data.value?.stats;
   if (!stats) return null;
   const [topLanguage] = stats.languages;
   const max = Math.max(...(stats.days ?? []).map((d) => d.ai + d.other), 1);

@@ -1,6 +1,7 @@
+import { OtelTracer } from "@effect/opentelemetry";
+import { context, propagation, trace } from "@opentelemetry/api";
 import { Config, ConfigProvider, Effect, Exit, Layer, Logger, ManagedRuntime } from "effect";
 import { FetchHttpClient, HttpClient } from "effect/http";
-import { Otlp, OtlpSerialization } from "effect/observability";
 import { Content } from "../services/Content";
 import { CurrentEvent } from "../services/CurrentEvent";
 import { GitHub, type GitHubError } from "../services/GitHub";
@@ -26,21 +27,13 @@ const LoggerLive = Layer.unwrap(
   }),
 );
 
-/**
- * Exports traces and logs over OTLP only when configured (e.g. in Vercel env):
- * OTEL_EXPORTER_OTLP_ENDPOINT, OTEL_EXPORTER_OTLP_HEADERS, OTEL_TRACES_EXPORTER=otlp,
- * OTEL_LOGS_EXPORTER=otlp and OTEL_SERVICE_NAME. Without them this layer does nothing.
- */
-const OtlpLive = Otlp.layerFromConfig().pipe(
-  Layer.provide(OtlpSerialization.layerJson),
-  Layer.provide(FetchHttpClient.layer),
-);
-
 export const runtime = ManagedRuntime.make(
   Layer.mergeAll(
     ServicesLive,
     LoggerLive,
-    OtlpLive,
+    // Effect spans become OpenTelemetry spans on the global provider, which `@vercel/otel`
+    // registers at runtime on Vercel (server/plugins/otel.ts). Elsewhere it's a no-op.
+    OtelTracer.layerGlobal,
     // Don't send traceparent/b3 headers to third-party APIs.
     Layer.succeed(HttpClient.TracerPropagationEnabled, false),
   ),
@@ -49,7 +42,7 @@ export const runtime = ManagedRuntime.make(
 type Services = ManagedRuntime.ManagedRuntime.Services<typeof runtime>;
 
 /**
- * An h3 handler that runs `program` on the shared Effect runtime inside a root server span,
+ * An h3 handler that runs `program` on the shared Effect runtime inside a server span,
  * with the request's `CurrentEvent` and `Content` provided. A failure is logged with its cause,
  * then answered with `fallback` when given, otherwise a 500. Build-time routes pass a fallback:
  * a failed prerender would leave a live endpoint that spends their token.
@@ -59,18 +52,22 @@ export const defineEffectHandler = <A, E>(
   options: { readonly fallback?: A } = {},
 ) =>
   defineEventHandler(async (event) => {
+    const traced = program.pipe(
+      Effect.tapCause((cause) => Effect.logError("Request failed", cause)),
+      Effect.provide(Content.layer),
+      Effect.provideService(CurrentEvent, event),
+      Effect.annotateLogs({ route: event.path }),
+      Effect.withSpan(`${event.method} ${event.path}`, {
+        kind: "server",
+        attributes: { "http.request.method": event.method, "url.path": event.path },
+      }),
+    );
+    // On Vercel, nest under the invocation's request span (read by @vercel/otel's propagator).
+    const parent = trace.getSpanContext(
+      propagation.extract(context.active(), getRequestHeaders(event)),
+    );
     const exit = await runtime.runPromiseExit(
-      program.pipe(
-        Effect.tapCause((cause) => Effect.logError("Request failed", cause)),
-        Effect.provide(Content.layer),
-        Effect.provideService(CurrentEvent, event),
-        Effect.annotateLogs({ route: event.path }),
-        Effect.withSpan(`${event.method} ${event.path}`, {
-          root: true,
-          kind: "server",
-          attributes: { "http.request.method": event.method, "url.path": event.path },
-        }),
-      ),
+      parent ? OtelTracer.withSpanContext(traced, parent) : traced,
     );
     if (Exit.isSuccess(exit)) return exit.value;
     if (options.fallback !== undefined) return options.fallback;

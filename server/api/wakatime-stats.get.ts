@@ -15,7 +15,7 @@ const top = <T extends { readonly name: string; readonly percent: number }>(
 /**
  * WakaTime coding stats for the Brag page. Prerendered; runs at build time only.
  * The stats are required (the section hides without them); the per-day series and
- * language colours are optional and degrade on their own.
+ * language colours are optional and degrade on their own. `stats: null` hides the section.
  */
 export default defineEffectHandler(
   Effect.gen(function* () {
@@ -99,6 +99,11 @@ export default defineEffectHandler(
       /** Seconds per day, split into AI and other coding. Only with a token. */
       days: series,
     };
-  }).pipe(Effect.catchTag("WakaTimeError", (error) => logDegraded(error).pipe(Effect.as(null)))),
-  { fallback: null },
+  }).pipe(
+    Effect.catchTag("WakaTimeError", (error) => logDegraded(error).pipe(Effect.as(null))),
+    // Always an object: a bare `null` body is never written as a static file, which would leave
+    // a live endpoint that spends the token.
+    Effect.map((stats) => ({ stats })),
+  ),
+  { fallback: { stats: null } },
 );
