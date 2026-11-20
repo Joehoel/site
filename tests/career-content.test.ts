@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { test } from "node:test";
+import { test } from "vitest";
 import { parse as parseYaml } from "yaml";
 import { z } from "zod";
 import { careerSchema } from "../shared/career.ts";

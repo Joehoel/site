@@ -8,7 +8,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "test": "node --test tests/*.test.ts",
+    "test": "vitest run --dir tests",
     "lint": "oxlint .",
     "lint:fix": "oxlint --fix .",
     "format": "oxfmt .",
@@ -27,7 +27,7 @@
     "@resvg/resvg-js": "2.6.2",
     "@vercel/analytics": "^2.0.1",
     "better-sqlite3": "^12.11.1",
-    "evlog": "^2.36.0",
+    "effect": "4.1.4",
     "feed": "^5.2.1",
     "h3": "^1.15.11",
     "image-meta": "0.2.2",
@@ -40,8 +40,10 @@
     "zod": "3.25.76"
   },
   "devDependencies": {
+    "@effect/vitest": "4.1.4",
     "oxfmt": "^0.55.0",
     "oxlint": "^1.70.0",
+    "vitest": "5.1.1",
     "yaml": "2.9.0"
   },
   "engines": {

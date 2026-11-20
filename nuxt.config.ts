@@ -59,18 +59,7 @@ export default defineNuxtConfig({
     "nuxt-studio",
     "@nuxt/fonts",
     "nuxt-og-image",
-    "evlog/nuxt",
   ],
-
-  // Wide-event logging for our own server routes (they run at build time: output lands in
-  // the Vercel build log). Server-only: the prerendered pages don't need client logging.
-  evlog: {
-    env: { service: "joelkuijper.me" },
-    client: false,
-    include: ["/api/**", "/rss.xml", "/__sitemap__/**"],
-    exclude: ["/api/_nuxt_icon/**", "/api/component-meta/**"],
-    redact: true,
-  },
 
   studio: {
     route: "/admin",
@@ -148,8 +137,6 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: "vercel",
-    // `useEvent()` in server utils (e.g. fetchUpstream → request-scoped evlog logger).
-    experimental: { asyncContext: true },
     vercel: {
       functions: {
         runtime: "nodejs24.x",

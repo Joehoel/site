@@ -20,7 +20,7 @@ bun run format:check # oxfmt --check (CI enforces this)
 bun run fix          # lint:fix + format — run before pushing
 ```
 
-Linting/formatting use **OxLint + OxFmt** (not ESLint/Prettier). CI (`.github/workflows/ci.yml`) fails on lint or format violations; `autofix.ci.yml` auto-applies `bun run fix` on PRs. There is no test suite.
+Linting/formatting use **OxLint + OxFmt** (not ESLint/Prettier). CI (`.github/workflows/ci.yml`) fails on lint or format violations; `autofix.ci.yml` auto-applies `bun run fix` on PRs. Tests run with `bun run test` (vitest).
 
 ## Architecture
 
@@ -66,14 +66,17 @@ Instant search uses Nuxt Content's `queryCollectionSearchSections` in Nuxt UI's 
 - Global site metadata, nav, socials, and date-formatting options live in `app/app.config.ts` (`useAppConfig()`). Locale is Dutch (`nl-NL`).
 - Theming is in `app/assets/css/main.css` — Tailwind v4 (`@theme`) with CSS-variable color tokens (`--color-accent`, etc.) driven by `[data-theme]` / `.dark`. Color mode (`@nuxtjs/color-mode`) uses `classSuffix: ""` so the dark class is plain `.dark`.
 
-### Server logging & errors (evlog)
+### Server code (Effect)
 
-Server routes log with [evlog](https://www.evlog.dev) wide events (`evlog/nuxt`, config under `evlog` in `nuxt.config.ts`; server-only, scoped to `/api/**`, `/rss.xml`, `/__sitemap__/**`). One event per request, emitted automatically:
+Server routes are [Effect](https://effect.website) v4 programs (`effect` is pinned exactly: `effect/http`, `effect/http-api` and `effect/observability` are unstable, `effect/graphql` is experimental).
 
-- `const log = useLogger(event)` (auto-imported), then `log.set({ ... })` for context, `log.warn()`/`log.error()` for problems. Thrown errors are captured automatically; use `createEvlogError({ message, status, why, fix })` for structured ones (Nuxt's own `createError` stays as-is in pages).
-- Third-party calls go through `fetchUpstream()` (`server/utils/upstream.ts`): it records `upstream.<name>` (ok/status/ms) and logs failures with why/fix, then returns `null`. It finds the request logger via `useEvent()` (`nitro.experimental.asyncContext`).
-- Build-time routes must degrade (return empty data + `log.error`), never throw: a failed prerender leaves a live endpoint that spends the token. Never log raw `FetchError`s (their `options` include the `Authorization` header).
-- These routes run during prerender, so their events show up in the Vercel **build** log.
+- `defineEffectHandler(program, { fallback? })` (`server/utils/effect.ts`, auto-imported) runs a route on the shared `ManagedRuntime` inside a root server span, providing `CurrentEvent` (the h3 event) and `Content` (Nuxt Content queries). Failures are logged with their cause, then answered with `fallback`, or a 500 without one.
+- Services live in `server/services/`: `GitHub` (`effect/graphql`), `WakaTime` (a declarative `HttpApi` client), `Content`. Each maps transport/schema errors to one `Schema.TaggedError` with a `reason` and a `message` saying why. Upstream responses are Schema-decoded.
+- Tokens come from `runtimeConfig` via `Config.Redacted(...)` (Nuxt runtimeConfig is the services' ConfigProvider). A missing token selects a different layer, never an if-check in a route.
+- Timeouts and retries are set once on the HttpClient (`HttpPolicy`), and trace headers are never sent to third parties.
+- Build-time routes must degrade, never fail: handle the domain error (`Effect.catchTag` + `logDegraded`) and pass a `fallback`. A failed prerender leaves a live endpoint that spends the token.
+- Observability is Effect's own: `Effect.log*` with `Effect.annotateLogs` (JSON lines when `CI` is set, as in Vercel builds; pretty locally), spans from `Effect.fn`/`withSpan` and the HttpClient. OTLP export is wired but off until `OTEL_EXPORTER_OTLP_ENDPOINT` and `OTEL_TRACES_EXPORTER`/`OTEL_LOGS_EXPORTER=otlp` are set.
+- Tests: `bun run test` (vitest + `@effect/vitest`); services are tested against a fake HttpClient (`tests/support/http.ts`).
 
 ### Deployment
 

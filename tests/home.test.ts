@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { test } from "node:test";
+import { test } from "vitest";
 import { parseMarkdown } from "@nuxtjs/mdc/runtime/parser/index";
 import { selectCurrent, type Role } from "../shared/career.ts";
 import { currentRoleSentence, homeSchema } from "../shared/home.ts";
