@@ -129,6 +129,7 @@ describe("aiModels", () => {
           { name: "Sonnet", lines: 100 },
           { name: "GPT", lines: 400 },
         ],
+        ai_models: [],
       }),
       [
         { name: "Claude", color: "#d97757", percent: 40 },
@@ -139,8 +140,9 @@ describe("aiModels", () => {
   });
 
   it("falls back to public AI-time percentages", () => {
-    assert.deepStrictEqual(aiModels({ ai_models: [{ name: "Gemini", percent: 12.5 }] }), [
-      { name: "Gemini", color: "#4285f4", percent: 100 },
-    ]);
+    assert.deepStrictEqual(
+      aiModels({ ai_model_breakdown: [], ai_models: [{ name: "Gemini", percent: 12.5 }] }),
+      [{ name: "Gemini", color: "#4285f4", percent: 100 }],
+    );
   });
 });

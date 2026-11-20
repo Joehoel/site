@@ -1,4 +1,18 @@
-import { Config, Context, Effect, Layer, Option, Schema, identity } from "effect";
+import {
+  Array as Arr,
+  Config,
+  Context,
+  Effect,
+  Layer,
+  Match,
+  Number as Num,
+  Option,
+  Order,
+  Record,
+  Schema,
+  identity,
+  pipe,
+} from "effect";
 import { HttpClient, HttpClientError, HttpClientRequest } from "effect/http";
 import { HttpApi, HttpApiClient, HttpApiEndpoint, HttpApiGroup } from "effect/http-api";
 
@@ -14,10 +28,16 @@ const Language = Schema.Struct({
   name: Schema.String,
   percent: Schema.Number,
   total_seconds: Schema.Number,
-  // WakaTime sends this as a numeric string.
-  ai_coding_seconds: Schema.optional(Schema.Union([Schema.NumberFromString, Schema.Number])),
+  // WakaTime sends this as a numeric string, and only for languages with AI time.
+  ai_coding_seconds: Schema.Union([Schema.NumberFromString, Schema.Number]).pipe(
+    Schema.withDecodingDefault(Effect.succeed(0)),
+  ),
 });
-const OptionalNumber = Schema.optional(Schema.NullOr(Schema.Number));
+/** A list WakaTime may leave out: decodes to `[]`. */
+const List = <S extends Schema.Top>(item: S) =>
+  Schema.Array(item).pipe(Schema.withDecodingDefault(Effect.succeed([])));
+/** A value WakaTime may leave out or send as `null`: decodes to an `Option`. */
+const Maybe = Schema.OptionFromOptionalNullOr;
 
 const Stats = Schema.Struct({
   total_seconds: Schema.Number,
@@ -25,24 +45,20 @@ const Stats = Schema.Struct({
   human_readable_range: Schema.String,
   days_including_holidays: Schema.Number,
   holidays: Schema.Number,
-  best_day: Schema.optional(
-    Schema.NullOr(Schema.Struct({ date: Schema.String, total_seconds: Schema.Number })),
-  ),
+  best_day: Maybe(Schema.Struct({ date: Schema.String, total_seconds: Schema.Number })),
   languages: Schema.Array(Language),
   editors: Schema.Array(Share),
-  categories: Schema.optional(Schema.Array(Category)),
+  categories: List(Category),
   // Public stats: a percentage per "AI model" (which mixes models and harnesses).
-  ai_models: Schema.optional(Schema.Array(Share)),
+  ai_models: List(Share),
   // Private stats only.
-  ai_model_breakdown: Schema.optional(
-    Schema.Array(Schema.Struct({ name: Schema.String, lines: Schema.Number })),
-  ),
-  ai_sessions: OptionalNumber,
-  ai_prompt_events_total: OptionalNumber,
-  ai_additions: OptionalNumber,
-  ai_deletions: OptionalNumber,
-  ai_input_tokens: OptionalNumber,
-  ai_output_tokens: OptionalNumber,
+  ai_model_breakdown: List(Schema.Struct({ name: Schema.String, lines: Schema.Number })),
+  ai_sessions: Maybe(Schema.Number),
+  ai_prompt_events_total: Maybe(Schema.Number),
+  ai_additions: Maybe(Schema.Number),
+  ai_deletions: Maybe(Schema.Number),
+  ai_input_tokens: Maybe(Schema.Number),
+  ai_output_tokens: Maybe(Schema.Number),
 });
 export type Stats = typeof Stats.Type;
 
@@ -86,40 +102,56 @@ export class WakaTimeApi extends HttpApi.make("wakatime")
 // WakaTime's "AI model" mixes model names with harness names (OpenCode, Pi, VS Code…), and splits
 // Claude into Claude/Opus/Sonnet/… Group real models into families; harness-only lines have no
 // known model (colour null → neutral on the client).
-const FAMILIES: Record<string, { family: string; color: string }> = {
-  Claude: { family: "Claude", color: "#d97757" },
-  Opus: { family: "Claude", color: "#d97757" },
-  Sonnet: { family: "Claude", color: "#d97757" },
-  Haiku: { family: "Claude", color: "#d97757" },
-  Fable: { family: "Claude", color: "#d97757" },
-  GPT: { family: "GPT", color: "#10a37f" },
-  Gemini: { family: "Gemini", color: "#4285f4" },
+const modelFamily = Match.type<string>().pipe(
+  Match.when(Match.is("Claude", "Opus", "Sonnet", "Haiku", "Fable"), () => ({
+    family: "Claude",
+    color: "#d97757",
+  })),
+  Match.when("GPT", () => ({ family: "GPT", color: "#10a37f" })),
+  Match.when("Gemini", () => ({ family: "Gemini", color: "#4285f4" })),
+  Match.orElse((): { family: string; color: string | null } => ({
+    family: "Model unknown",
+    color: null,
+  })),
+);
+
+type ModelShare = {
+  readonly name: string;
+  readonly color: string | null;
+  readonly percent: number;
 };
-const UNKNOWN = { family: "Model unknown", color: null };
+
+/** Known families by size, the unknown bucket last. */
+const byKnownThenSize = Order.combine(
+  Order.mapInput(Order.Boolean, (model: ModelShare) => model.color === null),
+  Order.flip(Order.mapInput(Order.Number, (model: ModelShare) => model.percent)),
+);
 
 /** Share of AI line changes per model family (private), or of AI time (public). */
-export function aiModels(stats: Pick<Stats, "ai_model_breakdown" | "ai_models">) {
-  const rows = stats.ai_model_breakdown?.length
-    ? stats.ai_model_breakdown.map(({ name, lines }) => ({ name, value: lines }))
-    : (stats.ai_models ?? []).map(({ name, percent }) => ({ name, value: percent }));
-  const totals = new Map<string, { color: string | null; value: number }>();
-  for (const { name, value } of rows) {
-    const { family, color } = FAMILIES[name] ?? UNKNOWN;
-    totals.set(family, { color, value: (totals.get(family)?.value ?? 0) + value });
-  }
-  const sum = [...totals.values()].reduce((a, b) => a + b.value, 0);
-  return [...totals]
-    .filter(([, { value }]) => value > 0)
-    .map(([name, { color, value }]) => ({
-      name,
-      color,
-      percent: Math.round((value / sum) * 1000) / 10,
-    }))
-    .toSorted(
-      // Known families by size, the unknown bucket last.
-      (a, b) => Number(!a.color) - Number(!b.color) || b.percent - a.percent,
-    );
-}
+export const aiModels = (stats: Pick<Stats, "ai_model_breakdown" | "ai_models">) => {
+  const rows = Arr.match(stats.ai_model_breakdown, {
+    onEmpty: () => Arr.map(stats.ai_models, ({ name, percent }) => ({ name, value: percent })),
+    onNonEmpty: Arr.map(({ name, lines }) => ({ name, value: lines })),
+  });
+  const total = Num.sumAll(Arr.map(rows, (row) => row.value));
+  return pipe(
+    Arr.groupBy(rows, (row) => modelFamily(row.name).family),
+    Record.toEntries,
+    Arr.map(
+      ([family, members]): ModelShare => ({
+        name: family,
+        color: modelFamily(members[0].name).color,
+        percent: pipe(
+          Num.divide(Num.sumAll(Arr.map(members, (row) => row.value)), total),
+          Option.map((share) => Num.round(share * 100, 1)),
+          Option.getOrElse(() => 0),
+        ),
+      }),
+    ),
+    Arr.filter((model) => model.percent > 0),
+    Arr.sort(byKnownThenSize),
+  );
+};
 
 export class WakaTimeError extends Schema.TaggedError<WakaTimeError>()("WakaTimeError", {
   reason: Schema.Literals(["Unauthorized", "Unavailable", "InvalidResponse"]),
@@ -133,21 +165,25 @@ export class WakaTimeError extends Schema.TaggedError<WakaTimeError>()("WakaTime
   }
 }
 
-const toWakaTimeError = (error: HttpClientError.HttpClientError | Schema.SchemaError) => {
-  if (error._tag === "SchemaError") {
-    return new WakaTimeError({ reason: "InvalidResponse", detail: error.message });
-  }
-  const status = error.response?.status;
-  return new WakaTimeError({
-    reason:
-      status === 401 || status === 403
-        ? "Unauthorized"
-        : status === 200 && error.reason._tag === "DecodeError"
-          ? "InvalidResponse"
-          : "Unavailable",
-    status,
-  });
-};
+const httpReason = (error: HttpClientError.HttpClientError) =>
+  Match.value({ status: error.response?.status, kind: error.reason._tag }).pipe(
+    Match.withReturnType<WakaTimeError["reason"]>(),
+    Match.when({ status: Match.is(401, 403) }, () => "Unauthorized"),
+    Match.when({ status: 200, kind: "DecodeError" }, () => "InvalidResponse"),
+    Match.orElse(() => "Unavailable"),
+  );
+
+const toWakaTimeError = Match.type<HttpClientError.HttpClientError | Schema.SchemaError>().pipe(
+  Match.tag(
+    "SchemaError",
+    (error) => new WakaTimeError({ reason: "InvalidResponse", detail: error.message }),
+  ),
+  Match.tag(
+    "HttpClientError",
+    (error) => new WakaTimeError({ reason: httpReason(error), status: error.response?.status }),
+  ),
+  Match.exhaustive,
+);
 
 export type CodingStats = {
   /** "private" with NUXT_WAKATIME_TOKEN (past year), "public" without (all time). */
